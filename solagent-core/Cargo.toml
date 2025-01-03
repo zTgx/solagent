@@ -5,4 +5,8 @@ edition.workspace = true
 authors.workspace = true
 description.workspace = true
 
+[[example]]
+name = "solagent"
+path = "../examples/solagent.rs"
+
 [dependencies]
