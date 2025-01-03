@@ -1,30 +1,61 @@
-use solana_client::client_error::ClientError;
-use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
+use crate::{actions::get_balance, agent::SolAgent};
+use rig::{completion::ToolDefinition, tool::Tool};
+use serde::{Deserialize, Serialize};
+use serde_json::json;
+use solana_sdk::pubkey::Pubkey;
 
-use crate::agent::SolAgent;
+use crate::json_schema;
 
-/// Gets the balance of SOL or an SPL token for the agent's wallet.
-///
-/// # Parameters
-///
-/// - `agent`: An instance of `SolAgent`.
-/// - `token_address`: An optional SPL token mint address. If not provided, returns the SOL balance.
-///
-/// # Returns
-///
-/// A `Result` that resolves to the balance as a number (in UI units) or an error if the account doesn't exist.
-pub async fn call(agent: &SolAgent, token_address: Option<Pubkey>) -> Result<f64, ClientError> {
-    if token_address.is_none() {
-        // Get SOL balance
-        let balance = agent.connection.get_balance(&agent.wallet.address).await?;
-        return Ok(balance as f64 / LAMPORTS_PER_SOL as f64);
+#[derive(Deserialize)]
+pub struct GetBalanceArgs {
+    token_address: Option<Pubkey>,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct GetBalanceOutput {
+    pub balance: f64,
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("GetBalance error")]
+pub struct GetBalanceError;
+
+pub struct GetBalance {
+    agent: SolAgent,
+}
+
+impl GetBalance {
+    pub fn new(agent: SolAgent) -> Self {
+        GetBalance { agent }
+    }
+}
+
+impl Tool for GetBalance {
+    const NAME: &'static str = "get_balance";
+
+    type Error = GetBalanceError;
+    type Args = GetBalanceArgs;
+    type Output = GetBalanceOutput;
+
+    async fn definition(&self, _prompt: String) -> ToolDefinition {
+        ToolDefinition {
+            name: "get_balance".to_string(),
+            description: "Get the balance of a Solana wallet or token account.
+  If you want to get the balance of your wallet, you don't need to provide the tokenAddress.
+  If no tokenAddress is provided, the balance will be in SOL."
+                .to_string(),
+            parameters: json_schema!(
+                token_address: string,
+            ),
+        }
     }
 
-    // Get SPL token account balance
-    let token_account = agent
-        .connection
-        .get_token_account_balance(&token_address.unwrap())
-        .await?;
-    let ui_amount = token_account.ui_amount.unwrap_or(0.0);
-    Ok(ui_amount)
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let token_address = args.token_address;
+        let balance = get_balance(&self.agent, token_address)
+            .await
+            .expect("get_balance");
+
+        Ok(GetBalanceOutput { balance })
+    }
 }

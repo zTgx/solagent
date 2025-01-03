@@ -4,7 +4,7 @@ use crate::{
     config::{AgentConfig, CONFIG},
     primitives::wallet::Wallet,
 };
-use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_client::rpc_client::RpcClient;
 
 pub struct SolAgent {
     pub wallet: Wallet,
