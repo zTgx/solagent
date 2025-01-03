@@ -1,9 +1,10 @@
+pub mod agent_impl;
+
 use crate::{
     config::{AgentConfig, CONFIG},
-    primitives::wallet::Wallet, tools::get_balance,
+    primitives::wallet::Wallet,
 };
-use solana_client::{client_error::ClientError, nonblocking::rpc_client::RpcClient};
-use solana_sdk::pubkey::Pubkey;
+use solana_client::nonblocking::rpc_client::RpcClient;
 
 pub struct SolAgent {
     pub wallet: Wallet,
@@ -22,11 +23,5 @@ impl SolAgent {
             config,
             connection,
         }
-    }
-}
-
-impl SolAgent {
-    pub async fn get_balance(&self, token_address: Option<Pubkey>) -> Result<f64, ClientError> {
-        get_balance::call(&self, token_address).await
     }
 }

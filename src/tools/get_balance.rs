@@ -1,12 +1,12 @@
 use solana_client::client_error::ClientError;
 use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
 
-use crate::core::agent::SolAgent;
+use crate::agent::SolAgent;
 
 /// Gets the balance of SOL or an SPL token for the agent's wallet.
-/// 
+///
 /// # Parameters
-/// 
+///
 /// - `agent`: An instance of `SolAgent`.
 /// - `token_address`: An optional SPL token mint address. If not provided, returns the SOL balance.
 ///
