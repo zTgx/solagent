@@ -2,5 +2,7 @@
 name = "solagent-core"
 version.workspace = true
 edition.workspace = true
+authors.workspace = true
+description.workspace = true
 
 [dependencies]
