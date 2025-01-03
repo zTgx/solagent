@@ -1,0 +1,6 @@
+[package]
+name = "solagent-core"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
