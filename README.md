@@ -1,4 +1,6 @@
-# solagent.rs
+# solagent.rs   
+![Crates.io Version](https://img.shields.io/crates/v/solagent?style=for-the-badge) ![docs.rs](https://img.shields.io/docsrs/solagent?style=for-the-badge)
+
 
 connect any Ai agents to solana protocols in Rust.
 
