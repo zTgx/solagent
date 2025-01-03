@@ -1,14 +1,14 @@
 use crate::{
     config::{AgentConfig, CONFIG},
-    primitives::wallet::Wallet,
+    primitives::wallet::Wallet, tools::get_balance,
 };
 use solana_client::{client_error::ClientError, nonblocking::rpc_client::RpcClient};
-use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
+use solana_sdk::pubkey::Pubkey;
 
 pub struct SolAgent {
-    wallet: Wallet,
+    pub wallet: Wallet,
     pub config: AgentConfig,
-    connection: RpcClient,
+    pub connection: RpcClient,
 }
 
 impl SolAgent {
@@ -27,18 +27,6 @@ impl SolAgent {
 
 impl SolAgent {
     pub async fn get_balance(&self, token_address: Option<Pubkey>) -> Result<f64, ClientError> {
-        if token_address.is_none() {
-            // Get SOL balance
-            let balance = self.connection.get_balance(&self.wallet.address).await?;
-            return Ok(balance as f64 / LAMPORTS_PER_SOL as f64);
-        }
-
-        // Get SPL token account balance
-        let token_account = self
-            .connection
-            .get_token_account_balance(&token_address.unwrap())
-            .await?;
-        let ui_amount = token_account.ui_amount.unwrap_or(0.0);
-        Ok(ui_amount)
+        get_balance::call(&self, token_address).await
     }
 }
