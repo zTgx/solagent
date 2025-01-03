@@ -1,10 +1,9 @@
 use rig::{completion::Prompt, providers::openai};
-use solagent::{tools::get_balance::GetBalance, SolAgent};
+use solagent::{tools::get_balance::GetBalance, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {
-    let agent = SolAgent::new();
-    let get_balance_tool = GetBalance::new(&agent);
+    let get_balance_tool = GetBalance::new(&SOL_AGENT);
 
     let openai_client = openai::Client::from_env();
     let agent = openai_client

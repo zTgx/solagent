@@ -13,7 +13,12 @@ macro_rules! parameters_json_schema {
                 "bool" => json!({
                     "type": "boolean"
                 }),
-                _ => panic!("Unsupported type"),
+
+                _ => {
+                    json!({
+                        "type": "object"
+                    })
+                }
             };
             properties.insert(stringify!($name).to_string(), property);
         )*

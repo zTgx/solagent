@@ -1,14 +1,12 @@
+use crate::parameters_json_schema;
 use crate::{actions::get_balance, agent::SolAgent};
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use solana_sdk::pubkey::Pubkey;
-
-use crate::parameters_json_schema;
 
 #[derive(Deserialize)]
 pub struct GetBalanceArgs {
-    token_address: Option<Pubkey>,
+    token_address: Option<String>,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -45,7 +43,7 @@ impl<'a> Tool for GetBalance<'a> {
   If no tokenAddress is provided, the balance will be in SOL."
                 .to_string(),
             parameters: parameters_json_schema!(
-                token_address: string,
+                token_address: String,
             ),
         }
     }

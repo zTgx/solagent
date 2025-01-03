@@ -38,7 +38,7 @@ pub async fn get_balance_other(
         return Ok(lamports as f64 / LAMPORTS_PER_SOL as f64);
     } else {
         // Get SOL balance if no token address is provided
-        let balance = agent.get_balance(Some(wallet_address)).await?;
+        let balance = agent.get_balance(Some(wallet_address.to_string())).await?;
         return Ok(balance);
     }
 }

@@ -2834,8 +2834,6 @@ dependencies = [
 [[package]]
 name = "rig-core"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "468788f7c4e5aca46ed9294cfa38a89da577a4c93602f1d4759793acd1bc6d86"
 dependencies = [
  "futures",
  "glob",
