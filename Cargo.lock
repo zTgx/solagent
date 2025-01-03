@@ -3,9 +3,29 @@
 version = 3
 
 [[package]]
+name = "solagent"
+version = "0.1.0"
+
+[[package]]
 name = "solagent-config"
 version = "0.1.0"
 
 [[package]]
-name = "solagent-core"
+name = "solagent-constants"
+version = "0.1.0"
+
+[[package]]
+name = "solagent-primitives"
+version = "0.1.0"
+
+[[package]]
+name = "solagent-rig"
+version = "0.1.0"
+
+[[package]]
+name = "solagent-tools"
+version = "0.1.0"
+
+[[package]]
+name = "solagent-utils"
 version = "0.1.0"

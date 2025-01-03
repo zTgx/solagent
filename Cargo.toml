@@ -1,7 +1,12 @@
 [workspace]
 members = [
-    "solagent-core",
-    "solagent-config"
+    "solagent",
+    "solagent-config", 
+    "solagent-primitives", 
+    "solagent-constants", 
+    "solagent-rig", 
+    "solagent-tools", 
+    "solagent-utils"
 ]
 
 resolver = "2"

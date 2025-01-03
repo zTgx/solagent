@@ -1,12 +1,8 @@
 [package]
-name = "solagent-core"
+name = "solagent-tools"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 description.workspace = true
-
-[[example]]
-name = "solagent"
-path = "../examples/solagent.rs"
 
 [dependencies]

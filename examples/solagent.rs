@@ -1,3 +1,5 @@
+use solagent::print_solagent;
+
 fn main() {
-    println!("Hello Solagent");
+    print_solagent();
 }
