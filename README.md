@@ -6,7 +6,7 @@ connect any Ai agents to solana protocols in Rust.
 
 ```bash
 [dependencies]
-solagent = { git = "https://github.com/zTgx/solagent.rs.git" }
+solagent = "0.1.0"
 ```
 
 ## Quick Start

@@ -1,11 +1,11 @@
 [package]
 name = "solagent"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs.git"
 readme = "README.md"
-keywords = ["solana", "ai"]
+keywords = ["solana", "ai", "agent"]
 license = "MIT"
 description = "connect any Ai agents to solana protocols in Rust."
 
