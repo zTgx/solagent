@@ -1,5 +1,6 @@
-use solagent::core::print_solagent;
-
-fn main() {
-    print_solagent();
+#[tokio::main]
+async fn main() {
+    let agent = solagent::core::agent::SolAgent::new();
+    let balance = agent.get_balance(None).await.unwrap();
+    println!("My balance: {}", balance);
 }

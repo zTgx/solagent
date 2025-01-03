@@ -1,3 +1,2 @@
-pub fn print_solagent() {
-    println!(">>> Hello, solagent.");
-}
+pub mod agent;
+pub mod wallet;
