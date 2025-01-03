@@ -1,6 +1,6 @@
 use crate::{
+    actions::{get_balance, request_faucet_funds},
     agent::SolAgent,
-    tools::{get_balance, request_faucet_funds},
 };
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;

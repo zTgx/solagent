@@ -1,5 +1,5 @@
-mod get_balance;
-pub use get_balance::get_balance;
+pub mod get_balance;
+pub mod request_faucet_funds;
 
-mod request_faucet_funds;
-pub use request_faucet_funds::request_faucet_funds;
+// mod deploy_token;
+// pub use deploy_token::deploy_token;

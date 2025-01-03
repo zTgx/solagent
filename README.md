@@ -15,7 +15,7 @@ cp exampel.config.toml config.toml
 ```
 ```rust
 use rig::{completion::Prompt, providers::openai};
-use solagent::rig::get_balance::GetBalance;
+use solagent::tools::get_balance::GetBalance;
 
 #[tokio::main]
 async fn main() {
