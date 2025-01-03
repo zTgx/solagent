@@ -1,8 +1,9 @@
-use crate::config::{AgentConfig, CONFIG};
+use crate::{
+    config::{AgentConfig, CONFIG},
+    primitives::wallet::Wallet,
+};
 use solana_client::{client_error::ClientError, nonblocking::rpc_client::RpcClient};
 use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
-
-use super::wallet::Wallet;
 
 pub struct SolAgent {
     wallet: Wallet,
