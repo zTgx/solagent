@@ -1,48 +1,28 @@
-use crate::{actions::request_faucet_funds, agent::SolAgent};
-use rig::{completion::ToolDefinition, tool::Tool};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use crate::agent::SolAgent;
+use solana_client::client_error::ClientError;
+use solana_sdk::native_token::LAMPORTS_PER_SOL;
 
-use crate::json_schema;
+/// Requests SOL from the Solana faucet (devnet/testnet only).
+///
+/// # Parameters
+///
+/// - `agent`: An instance of `SolanaAgentKit`.
+///
+/// # Returns
+///
+/// A transaction signature as a `String`.
+///
+/// # Errors
+///
+/// Returns an error if the request fails or times out.
+pub async fn request_faucet_funds(agent: &SolAgent) -> Result<String, ClientError> {
+    // Request airdrop of 5 SOL (5 * LAMPORTS_PER_SOL)
+    let tx = agent
+        .connection
+        .request_airdrop(&agent.wallet.address, 5 * LAMPORTS_PER_SOL)?;
 
-#[derive(Deserialize)]
-pub struct RequestFaucetFundsArgs;
+    // Confirm the transaction
+    agent.connection.confirm_transaction(&tx)?;
 
-#[derive(Deserialize, Serialize)]
-pub struct RequestFaucetFundsOutput {
-    pub tx: String,
-}
-
-#[derive(Debug, thiserror::Error)]
-#[error("RequestFaucetFunds error")]
-pub struct RequestFaucetFundsError;
-
-pub struct RequestFaucetFunds {
-    agent: SolAgent,
-}
-
-impl Tool for RequestFaucetFunds {
-    const NAME: &'static str = "request_faucet_funds";
-
-    type Error = RequestFaucetFundsError;
-    type Args = RequestFaucetFundsArgs;
-    type Output = RequestFaucetFundsOutput;
-
-    async fn definition(&self, _prompt: String) -> ToolDefinition {
-        ToolDefinition {
-            name: "request_faucet_funds".to_string(),
-            description: "Request SOL from Solana faucet (devnet/testnet only)".to_string(),
-            parameters: json_schema!(
-                token_address: string,
-            ),
-        }
-    }
-
-    async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = request_faucet_funds(&self.agent)
-            .await
-            .expect("request_faucet_funds");
-
-        Ok(RequestFaucetFundsOutput { tx })
-    }
+    Ok(tx.to_string())
 }
