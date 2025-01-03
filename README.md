@@ -10,7 +10,9 @@ solagent = "0.1.1"
 ```
 
 ## Quick Start
-
+```shell
+cp exampel.config.toml config.toml
+```
 ```rust
 #[tokio::main]
 async fn main() {

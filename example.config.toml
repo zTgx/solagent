@@ -1,0 +1,4 @@
+[agent]
+wallet_path = "~/.config/solana/id.json"
+rpc_url = "https://api.devnet.solana.com"
+api_key = "openapi_key"
