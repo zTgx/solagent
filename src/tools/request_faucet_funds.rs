@@ -3,7 +3,7 @@ use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::json_schema;
+use crate::parameters_json_schema;
 
 #[derive(Deserialize)]
 pub struct RequestFaucetFundsArgs;
@@ -17,11 +17,16 @@ pub struct RequestFaucetFundsOutput {
 #[error("RequestFaucetFunds error")]
 pub struct RequestFaucetFundsError;
 
-pub struct RequestFaucetFunds {
-    agent: SolAgent,
+pub struct RequestFaucetFunds<'a> {
+    agent: &'a SolAgent,
+}
+impl<'a> RequestFaucetFunds<'a> {
+    pub fn new(agent: &'a SolAgent) -> Self {
+        RequestFaucetFunds { agent }
+    }
 }
 
-impl Tool for RequestFaucetFunds {
+impl<'a> Tool for RequestFaucetFunds<'a> {
     const NAME: &'static str = "request_faucet_funds";
 
     type Error = RequestFaucetFundsError;
@@ -32,7 +37,7 @@ impl Tool for RequestFaucetFunds {
         ToolDefinition {
             name: "request_faucet_funds".to_string(),
             description: "Request SOL from Solana faucet (devnet/testnet only)".to_string(),
-            parameters: json_schema!(
+            parameters: parameters_json_schema!(
                 token_address: string,
             ),
         }

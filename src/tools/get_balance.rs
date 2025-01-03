@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use solana_sdk::pubkey::Pubkey;
 
-use crate::json_schema;
+use crate::parameters_json_schema;
 
 #[derive(Deserialize)]
 pub struct GetBalanceArgs {
@@ -20,17 +20,17 @@ pub struct GetBalanceOutput {
 #[error("GetBalance error")]
 pub struct GetBalanceError;
 
-pub struct GetBalance {
-    agent: SolAgent,
+pub struct GetBalance<'a> {
+    agent: &'a SolAgent,
 }
 
-impl GetBalance {
-    pub fn new(agent: SolAgent) -> Self {
+impl<'a> GetBalance<'a> {
+    pub fn new(agent: &'a SolAgent) -> Self {
         GetBalance { agent }
     }
 }
 
-impl Tool for GetBalance {
+impl<'a> Tool for GetBalance<'a> {
     const NAME: &'static str = "get_balance";
 
     type Error = GetBalanceError;
@@ -44,7 +44,7 @@ impl Tool for GetBalance {
   If you want to get the balance of your wallet, you don't need to provide the tokenAddress.
   If no tokenAddress is provided, the balance will be in SOL."
                 .to_string(),
-            parameters: json_schema!(
+            parameters: parameters_json_schema!(
                 token_address: string,
             ),
         }

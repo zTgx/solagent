@@ -1,7 +1,7 @@
 pub mod agent_impl;
 
 use crate::{
-    config::{AgentConfig, CONFIG},
+    primitives::config::{AgentConfig, CONFIG},
     primitives::wallet::Wallet,
 };
 use solana_client::rpc_client::RpcClient;

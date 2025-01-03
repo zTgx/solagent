@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! json_schema {
+macro_rules! parameters_json_schema {
     ($($name:ident: $type:tt),* $(,)?) => {{
         let mut properties = serde_json::Map::new();
         $(

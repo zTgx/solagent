@@ -1,7 +1,8 @@
-pub mod actions;
+mod actions;
 pub mod agent;
-pub mod config;
-pub mod constants;
-pub mod primitives;
+mod primitives;
 pub mod tools;
 pub mod utils;
+
+pub use agent::SolAgent;
+pub use tools::create_solana_tools;

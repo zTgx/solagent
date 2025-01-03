@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use solana_sdk::pubkey::Pubkey;
 
-use crate::json_schema;
+use crate::parameters_json_schema;
 
 #[derive(Deserialize)]
 pub struct GetBalanceOtherArgs {
@@ -21,17 +21,17 @@ pub struct GetBalanceOtherOutput {
 #[error("GetBalanceOther error")]
 pub struct GetBalanceOtherError;
 
-pub struct GetBalanceOther {
-    agent: SolAgent,
+pub struct GetBalanceOther<'a> {
+    agent: &'a SolAgent,
 }
 
-impl GetBalanceOther {
-    pub fn new(agent: SolAgent) -> Self {
+impl<'a> GetBalanceOther<'a> {
+    pub fn new(agent: &'a SolAgent) -> Self {
         GetBalanceOther { agent }
     }
 }
 
-impl Tool for GetBalanceOther {
+impl<'a> Tool for GetBalanceOther<'a> {
     const NAME: &'static str = "get_balance_other";
 
     type Error = GetBalanceOtherError;
@@ -46,7 +46,7 @@ impl Tool for GetBalanceOther {
   Inputs ( input is a JSON string ):
   walletAddress: string, eg "GDEkQF7UMr7RLv1KQKMtm8E2w3iafxJLtyXu3HVQZnME" (required)
   tokenAddress: string, eg "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)"#.to_string(),
-            parameters: json_schema!(
+            parameters: parameters_json_schema!(
                 wallet_address: object,
                 token_address: object,
             ),
