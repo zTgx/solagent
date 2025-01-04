@@ -40,3 +40,7 @@ async fn main() {
     println!("Gemini response: {response}");
 }
 ```
+
+## More examples
+More examples can be found in the [examples](examples/).  
+
