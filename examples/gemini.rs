@@ -2,11 +2,11 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_FLASH},
 };
-use solagent::{tools::get_balance::GetBalance, SOL_AGENT};
+use solagent::{tools::get_tps::GetTps, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {
-    let get_balance_tool = GetBalance::new(&SOL_AGENT);
+    let tool = GetTps::new(&SOL_AGENT);
 
     let client = gemini::Client::from_env();
     let agent = client
@@ -15,11 +15,11 @@ async fn main() {
             You are an assistant here to help the user select which tool is most appropriate to perform operations.
         ")
         .max_tokens(1024)
-        .tool(get_balance_tool)
+        .tool(tool)
         .build();
 
     let response = agent
-        .prompt("Get balance")
+        .prompt("Get TPS")
         .await
         .expect("Failed to prompt Gemini");
 

@@ -1,5 +1,5 @@
 use crate::{
-    actions::{get_balance, get_balance_other, request_faucet_funds},
+    actions::{get_balance, get_balance_other, get_tps, request_faucet_funds},
     agent::SolAgent,
 };
 use solana_client::client_error::ClientError;
@@ -20,5 +20,9 @@ impl SolAgent {
         token_address: Option<Pubkey>,
     ) -> Result<f64, ClientError> {
         get_balance_other(&self, wallet_address, token_address).await
+    }
+
+    pub async fn get_tps(&self) -> Result<f64, ClientError> {
+        get_tps(&self).await
     }
 }

@@ -5,6 +5,7 @@ use request_faucet_funds::RequestFaucetFunds;
 
 pub mod get_balance;
 pub mod get_balance_other;
+pub mod get_tps;
 pub mod request_faucet_funds;
 
 /// An enumeration representing a set of tools that can be used with Solana.
