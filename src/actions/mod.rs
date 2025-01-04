@@ -9,3 +9,6 @@ pub use get_balance_other::get_balance_other;
 
 mod get_tps;
 pub use get_tps::get_tps;
+
+mod deploy_token;
+pub use deploy_token::deploy_token;

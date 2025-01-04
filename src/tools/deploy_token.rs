@@ -1,138 +1,73 @@
+use crate::actions::deploy_token;
 use crate::agent::SolAgent;
-use solana_client::client_error::ClientError;
-use solana_sdk::program_pack::Pack;
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signature::{Keypair, Signer};
-use solana_client::rpc_client::RpcClient;
-use solana_program::system_instruction;
-use solana_sdk::{
-    commitment_config::CommitmentConfig,
-    transaction::Transaction,
-};
-use spl_associated_token_account::get_associated_token_address;
-use spl_token::instruction as spl_token_instruction;
+use rig::{completion::ToolDefinition, tool::Tool};
+use serde::{Deserialize, Serialize};
 
-pub struct SolanaAgentKit {
-    pub rpc_client: RpcClient,
-    pub wallet: Keypair,
+#[derive(Deserialize)]
+pub struct DeployTokenArgs {
+    pub name: String,
+    pub uri: String,
+    pub symbol: String,
+    pub decimals: u8,
+    pub initial_supply: Option<u64>,
 }
 
-/// Deploys a new SPL token.
-///
-/// # Parameters
-///
-/// - `agent`: An instance of `SolanaAgent`.
-/// - `name`: Name of the token.
-/// - `uri`: URI for the token metadata.
-/// - `symbol`: Symbol of the token.
-/// - `decimals`: Number of decimals for the token (default: 9).
-/// - `initial_supply`: Initial supply to mint (optional).
-///
-/// # Returns
-///
-/// An object containing the token mint address.
-pub async fn deploy_token(
-    agent: &SolAgent,
-    name: String,
-    uri: String,
-    symbol: String,
-    decimals: u8,
-    initial_supply: Option<u64>,
-) -> Result<Pubkey, ClientError> {
-    let mint = Keypair::new();
-    let mint_pubkey = mint.pubkey();
+#[derive(Deserialize, Serialize)]
+pub struct DeployTokenOutput {
+    pub tx: String,
+}
 
-    // Create token mint account
-    let min_rent = agent
-        .connection
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN).await?;
+#[derive(Debug, thiserror::Error)]
+#[error("DeployToken error")]
+pub struct DeployTokenError;
 
-    let create_mint_account_ix = system_instruction::create_account(
-        &agent.wallet.address,
-        &mint_pubkey,
-        min_rent,
-        spl_token::state::Mint::LEN as u64,
-        &spl_token::id(),
-    );
+pub struct DeployToken<'a> {
+    agent: &'a SolAgent,
+}
 
-    let initialize_mint_ix = spl_token_instruction::initialize_mint(
-        &spl_token::id(),
-        &mint_pubkey,
-        &agent.wallet.address,
-        Some(&agent.wallet.address),
-        decimals,
-    ).expect("initialize_mint");
+impl<'a> DeployToken<'a> {
+    pub fn new(agent: &'a SolAgent) -> Self {
+        DeployToken { agent }
+    }
+}
 
-    // Create metadata account
-    let metadata_account = mpl_token_metadata::find_metadata_account(&mint_pubkey).0;
-    let create_metadata_ix = mpl_token_metadata::instructions::CreateMetadataAccountV3Cpi{
-        mpl_token_metadata::ID,
-        metadata_account,
-        mint_pubkey,
-        agent.wallet.address,
-        agent.wallet.address,
-        agent.wallet.address,
-        name,
-        symbol,
-        uri,
-        None,
-        0,
-        true,
-        true,
-        None,
-        None,
-        None,
-    };
+impl<'a> Tool for DeployToken<'a> {
+    const NAME: &'static str = "deploy_token";
 
-    let mut instructions = vec![
-        create_mint_account_ix,
-        initialize_mint_ix,
-        create_metadata_ix,
-    ];
+    type Error = DeployTokenError;
+    type Args = DeployTokenArgs;
+    type Output = DeployTokenOutput;
 
-    if let Some(supply) = initial_supply {
-        let associated_token_account =
-            get_associated_token_address(&agent.wallet.address, &mint_pubkey);
-
-        let create_associated_token_account_ix =
-            spl_associated_token_account::instruction::create_associated_token_account(
-                &agent.wallet.address,
-                &agent.wallet.address,
-                &mint_pubkey,
-                &spl_token::id(),
-            );
-
-        let mint_to_ix = spl_token_instruction::mint_to(
-            &spl_token::id(),
-            &mint_pubkey,
-            &associated_token_account,
-            &agent.wallet.address,
-            &[&agent.wallet.address],
-            supply,
-        ).expect("mint_to");
-
-        instructions.push(create_associated_token_account_ix);
-        instructions.push(mint_to_ix);
+    async fn definition(&self, _prompt: String) -> ToolDefinition {
+        ToolDefinition {
+            name: "deploy_token".to_string(),
+            description:
+                r#"Deploy a new SPL token on the Solana blockchain with specified parameters:
+            input: {
+                name: "My Token",
+                uri: "https://example.com/token.json",
+                symbol: "MTK",
+                decimals: 9,
+                initialSupply: 1000000,
+            },
+            "#
+                .to_string(),
+            parameters: serde_json::Value::Null,
+        }
     }
 
-    let recent_blockhash = agent.connection.get_latest_blockhash().await?;
-    let transaction = Transaction::new_signed_with_payer(
-        &instructions,
-        Some(&agent.wallet.address),
-        &[&agent.wallet.wallet, &mint],
-        recent_blockhash,
-    );
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let tx = deploy_token(
+            &self.agent,
+            args.name,
+            args.uri,
+            args.symbol,
+            args.decimals,
+            args.initial_supply,
+        )
+        .await
+        .expect("deploy_token");
 
-    agent
-        .connection
-        .send_and_confirm_transaction_with_spinner_and_config(
-            &transaction,
-            CommitmentConfig::finalized(),
-            solana_client::rpc_config::RpcSendTransactionConfig {
-                skip_preflight: true,
-                ..Default::default()
-            },
-        ).await?;
-
-    Ok(mint_pubkey)
+        Ok(DeployTokenOutput { tx: tx.to_string() })
+    }
 }

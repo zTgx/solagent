@@ -25,7 +25,7 @@ shellexpand = "3.1.0"
 mpl-token-metadata = "5.1.0"
 spl-token = "7.0.0"
 spl-associated-token-account = "6.0.0"
-# solana-program = "2.1.7"
+solana-program = "2.1.7"
 thiserror = "2.0.9"
 
 [dev-dependencies]

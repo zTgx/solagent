@@ -1,4 +1,4 @@
-pub mod agent_impl;
+mod agent_impl;
 
 use crate::{
     primitives::config::{AgentConfig, CONFIG},

@@ -3,6 +3,7 @@ use get_balance::GetBalance;
 use get_balance_other::GetBalanceOther;
 use request_faucet_funds::RequestFaucetFunds;
 
+pub mod deploy_token;
 pub mod get_balance;
 pub mod get_balance_other;
 pub mod get_tps;
