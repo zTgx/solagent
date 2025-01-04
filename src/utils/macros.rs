@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 macro_rules! parameters_json_schema {
     ($($name:ident: $type:tt),* $(,)?) => {{

@@ -1,8 +1,7 @@
-use std::str::FromStr;
-
 use crate::agent::SolAgent;
 use solana_client::client_error::ClientError;
 use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
+use std::str::FromStr;
 
 /// Gets the balance of SOL or an SPL token for the agent's wallet.
 ///

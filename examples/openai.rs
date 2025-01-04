@@ -1,5 +1,5 @@
 use rig::{completion::Prompt, providers::openai};
-use solagent::{tools::get_balance::GetBalance, SOL_AGENT};
+use solagent::{get_balance::GetBalance, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {

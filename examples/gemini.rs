@@ -2,7 +2,7 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_FLASH},
 };
-use solagent::{tools::get_tps::GetTps, SOL_AGENT};
+use solagent::{get_tps::GetTps, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {

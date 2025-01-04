@@ -16,7 +16,7 @@ pub struct SolAgent {
 
 impl SolAgent {
     /// Creates a new instance of `SolAgent` by loading configuration and wallet information.
-    fn new() -> Self {
+    pub fn new() -> Self {
         let config = CONFIG.agent.clone();
         let connection = RpcClient::new(config.rpc_url.clone());
         let wallet = Wallet::load(&config.wallet_path);
@@ -31,5 +31,7 @@ impl SolAgent {
 
 lazy_static! {
     /// A static instance of `SolAgent`, initialized lazily.
+    /// Main class for interacting with Solana blockchain
+    /// Provides a unified interface for token operations, NFT management, trading and more
     pub static ref SOL_AGENT: SolAgent = SolAgent::new();
 }
