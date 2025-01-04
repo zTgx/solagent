@@ -8,7 +8,7 @@ connect any Ai agents to solana protocols in Rust.
 
 ```bash
 [dependencies]
-solagent = "0.1.1"
+solagent = "0.1.2"
 ```
 
 ## Quick Start
@@ -16,17 +16,13 @@ solagent = "0.1.1"
 cp exampel.config.toml config.toml
 ```
 ```rust
-use rig::{completion::Prompt, providers::openai};
-use solagent::tools::get_balance::GetBalance;
-
 #[tokio::main]
 async fn main() {
-    let agent = solagent::agent::SolAgent::new();
-    let get_balance_tool = GetBalance::new(agent);
+    let get_balance_tool = GetBalance::new(&SOL_AGENT);
 
-    let openai_client = openai::Client::from_env();
-    let agent = openai_client
-        .agent("gpt-4")
+    let client = gemini::Client::from_env();
+    let agent = client
+        .agent(GEMINI_1_5_FLASH)
         .preamble("
             You are an assistant here to help the user select which tool is most appropriate to perform operations.
         ")
@@ -37,8 +33,8 @@ async fn main() {
     let response = agent
         .prompt("Get balance")
         .await
-        .expect("Failed to prompt GPT-4");
+        .expect("Failed to prompt Gemini");
 
-    println!("GPT-4: {response}");
+    println!("Gemini response: {response}");
 }
 ```
