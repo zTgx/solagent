@@ -12,3 +12,6 @@ pub use get_tps::get_tps;
 
 mod deploy_token;
 pub use deploy_token::deploy_token;
+
+mod deploy_collection;
+pub use deploy_collection::deploy_collection;

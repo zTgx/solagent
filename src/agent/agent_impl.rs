@@ -1,6 +1,10 @@
 use crate::{
-    actions::{deploy_token, get_balance, get_balance_other, get_tps, request_faucet_funds},
+    actions::{
+        deploy_collection, deploy_token, get_balance, get_balance_other, get_tps,
+        request_faucet_funds,
+    },
     agent::SolAgent,
+    primitives::token::CollectionOptions,
 };
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;
@@ -35,5 +39,12 @@ impl SolAgent {
         initial_supply: Option<u64>,
     ) -> Result<Pubkey, ClientError> {
         deploy_token(&self, name, uri, symbol, decimals, initial_supply).await
+    }
+
+    pub async fn deploy_collection(
+        &self,
+        options: CollectionOptions,
+    ) -> Result<Pubkey, ClientError> {
+        deploy_collection(&self, &options).await
     }
 }
