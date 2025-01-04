@@ -18,6 +18,33 @@ async fn main() {
         .tool(tool)
         .build();
 
+    // Demo : how to use create_solana_tools
+    // {
+    //     let model = client.completion_model(GEMINI_1_5_FLASH);
+
+    //     let mut builder = AgentBuilder::new(model).preamble("System prompt");
+
+    //     let toolset = create_solana_tools(&SOL_AGENT);
+
+    //     for tool in toolset {
+    //         match tool {
+    //             solagent::tools::ToolSet::GetBalance(t) => {
+    //                 builder = builder.tool(t);
+    //             }
+    //             _ => todo!(),
+    //         }
+    //     }
+
+    //     let agent = builder.temperature(0.8).build();
+
+    //     let response = agent
+    //         .prompt("Get TPS")
+    //         .await
+    //         .expect("Failed to prompt Gemini");
+
+    //     println!("Gemini response: {response}");
+    // }
+
     let response = agent
         .prompt("Get TPS")
         .await
