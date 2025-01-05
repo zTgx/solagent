@@ -15,3 +15,6 @@ pub use deploy_token::deploy_token;
 
 mod deploy_collection;
 pub use deploy_collection::deploy_collection;
+
+mod fetch_price;
+pub use fetch_price::fetch_price;

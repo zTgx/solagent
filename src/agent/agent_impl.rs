@@ -1,6 +1,6 @@
 use crate::{
     actions::{
-        deploy_collection, deploy_token, get_balance, get_balance_other, get_tps,
+        deploy_collection, deploy_token, fetch_price, get_balance, get_balance_other, get_tps,
         request_faucet_funds,
     },
     agent::SolAgent,
@@ -46,5 +46,9 @@ impl SolAgent {
         options: CollectionOptions,
     ) -> Result<Pubkey, ClientError> {
         deploy_collection(&self, &options).await
+    }
+
+    pub async fn fetch_price(token_id: &str) -> Result<String, Box<dyn std::error::Error>> {
+        fetch_price(token_id).await
     }
 }
