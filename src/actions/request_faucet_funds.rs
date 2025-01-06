@@ -6,7 +6,7 @@ use solana_sdk::native_token::LAMPORTS_PER_SOL;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolanaAgentKit`.
+/// - `agent`: An instance of `SolAgent`.
 ///
 /// # Returns
 ///

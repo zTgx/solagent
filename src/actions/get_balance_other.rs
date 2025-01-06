@@ -6,7 +6,7 @@ use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolanaAgentKit`, which contains the connection to the Solana cluster.
+/// - `agent`: An instance of `SolAgent`, which contains the connection to the Solana cluster.
 /// - `wallet_address`: The public key of the wallet to check balance for.
 /// - `token_address`: An optional SPL token mint address. If not provided, returns SOL balance.
 ///
