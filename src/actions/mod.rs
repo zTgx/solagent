@@ -18,3 +18,6 @@ pub use deploy_collection::deploy_collection;
 
 mod fetch_price;
 pub use fetch_price::fetch_price;
+
+mod fetch_price_by_pyth;
+pub use fetch_price_by_pyth::fetch_price_by_pyth;
