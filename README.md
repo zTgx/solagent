@@ -18,14 +18,24 @@ solagent = "0.1.2"
 cp exampel.config.toml config.toml
 ```
 ```rust
-use solagent::SolAgent;
+use solagent::{toolset::create_solana_tools, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {
-    let price_feed_id = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d";
-    let price = SolAgent::fetch_price_by_pyth(price_feed_id).await.unwrap();
-    println!("Pyth Price: {}", price);
+    let tools = create_solana_tools(&SOL_AGENT);
 }
+```
+
+## Usage Examples
+### Deploy a New Token
+```rust
+    let name = "my ai token".to_string();
+    let uri = "uri".to_string();
+    let symbol = "SOLA".to_string();
+    let decimals = 9;
+    let initial_supply = 1_000_000_000_u64;
+    let mint_pubkey = SOL_AGENT.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
+    println!("Token Mint Address: {:?}", mint_pubkey);
 ```
 
 ## More examples
