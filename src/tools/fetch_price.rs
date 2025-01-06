@@ -1,9 +1,12 @@
-use crate::actions::fetch_price;
+use crate::{actions::fetch_price, parameters_json_schema};
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 
-#[derive(Deserialize)]
-pub struct FetchPriceArgs {}
+#[derive(Debug, Deserialize)]
+pub struct FetchPriceArgs {
+    token_id: String,
+}
 
 #[derive(Deserialize, Serialize)]
 pub struct FetchPriceOutput {
@@ -14,17 +17,14 @@ pub struct FetchPriceOutput {
 #[error("FetchPrice error")]
 pub struct FetchPriceError;
 
-pub struct FetchPrice<'a> {
-    token_id: &'a str,
-}
-
-impl<'a> FetchPrice<'a> {
-    pub fn new(token_id: &'a str) -> Self {
-        FetchPrice { token_id }
+pub struct FetchPrice;
+impl FetchPrice {
+    pub fn new() -> Self {
+        FetchPrice {}
     }
 }
 
-impl<'a> Tool for FetchPrice<'a> {
+impl Tool for FetchPrice {
     const NAME: &'static str = "fetch_price";
 
     type Error = FetchPriceError;
@@ -34,14 +34,29 @@ impl<'a> Tool for FetchPrice<'a> {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "fetch_price".to_string(),
-            description: "Fetch the current price of a Solana token in USDC using Jupiter API"
-                .to_string(),
-            parameters: serde_json::Value::Null,
+            description: r#"Fetch the current price of a Solana token in USDC using Jupiter API
+                input: {
+                    token_id: "",
+                },
+            "#
+            .to_string(),
+            parameters: parameters_json_schema!(
+                token_id: String,
+            ),
         }
     }
 
-    async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let price = fetch_price(self.token_id).await.expect("fetch_price");
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let token_id = args.token_id;
+
+        //TODO:
+        // if input: So11111111111111111111111111111111111111112
+        // receive token_id: So1111111111111111111111111111111111111112
+        // have to check the reson
+        // others tokenid is fine.
+        println!("Will fetch price of : {}", token_id);
+
+        let price = fetch_price(&token_id).await.expect("fetch_price");
 
         Ok(FetchPriceOutput { price })
     }
