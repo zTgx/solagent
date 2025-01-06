@@ -2,11 +2,12 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_FLASH},
 };
-use solagent::{get_tps::GetTps, SOL_AGENT};
+use solagent::{get_balance::GetBalance, get_tps::GetTps, SOL_AGENT};
 
 #[tokio::main]
 async fn main() {
     let tool = GetTps::new(&SOL_AGENT);
+    let balance_tool = GetBalance::new(&SOL_AGENT);
 
     let client = gemini::Client::from_env();
     let agent = client
@@ -16,6 +17,7 @@ async fn main() {
         ")
         .max_tokens(1024)
         .tool(tool)
+        .tool(balance_tool)
         .build();
 
     // Demo : how to use create_solana_tools
@@ -45,10 +47,16 @@ async fn main() {
     //     println!("Gemini response: {response}");
     // }
 
+    // call get balance tool
     let response = agent
-        .prompt("Get TPS")
+        .prompt("get balance")
         .await
         .expect("Failed to prompt Gemini");
 
     println!("Gemini response: {response}");
+
+    /* Output:
+        token address: None
+        Gemini response: {"balance":16.485390645}
+    */
 }
