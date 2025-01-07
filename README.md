@@ -60,6 +60,25 @@ async fn main() -> Result<(), String> {
     println!("Token Mint Address: {:?}", mint_pubkey);
 ```
 
+### Create NFT Collection
+```rust
+    let wallet_path = &CONFIG.agent.wallet_path;
+    let wallet = Wallet::load(wallet_path);
+
+    let options = CollectionOptions {
+        name: "Solagent Collection".to_string(),
+        uri: "https://arweave.net/metadata.json".to_string(),
+        royalty_basis_points: Some(500),
+        creators: Some(vec![Creator {
+            address: wallet.address,
+            verified: true,
+            share: 100,
+        }]),
+    };
+
+    let _tx = SOL_AGENT.deploy_collection(options).await;
+```
+
 ### Fetch Price Data from Pyth
 ```rust
     let price_feed_id = SOL_AGENT.fetch_pyth_price_feed_id("SOL")
