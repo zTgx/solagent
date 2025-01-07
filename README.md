@@ -3,7 +3,6 @@
   [<img alt="docs.rs" src="https://img.shields.io/docsrs/solagent?style=for-the-badge&logo=docs.rs">](https://docs.rs/solagent)
   [<img alt="crates.io" src="https://img.shields.io/crates/d/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
   
-### WIP
 connect any Ai agents to solana protocols in Rust.
 
 ## 📦 Installation
@@ -69,3 +68,8 @@ async fn main() -> Result<(), String> {
 ## More examples
 More examples can be found in the [examples](examples/).  
 
+## SDKs
+### You can use API wrappers in your favorite language.
+Typscript - [solana-agent-kit](https://github.com/sendaifun/solana-agent-kit)  
+Python - [agentipy](https://github.com/niceberginc/agentipy)  
+Rust - [solagent.rs](https://github.com/zTgx/solagent.rs)
