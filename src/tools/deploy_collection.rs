@@ -9,7 +9,8 @@ pub struct DeployCollectionArgs {}
 
 #[derive(Deserialize, Serialize)]
 pub struct DeployCollectionOutput {
-    pub tx: String,
+    pub mint_address: String,
+    pub tx_signature: String,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -50,10 +51,13 @@ impl<'a> Tool for DeployCollection<'a> {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = deploy_collection(&self.agent, &self.options)
+        let (mint_address, tx_signature) = deploy_collection(&self.agent, &self.options)
             .await
             .expect("deploy_collection");
 
-        Ok(DeployCollectionOutput { tx: tx.to_string() })
+        Ok(DeployCollectionOutput {
+            mint_address,
+            tx_signature,
+        })
     }
 }

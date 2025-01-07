@@ -44,7 +44,7 @@ impl SolAgent {
     pub async fn deploy_collection(
         &self,
         options: CollectionOptions,
-    ) -> Result<Pubkey, ClientError> {
+    ) -> Result<(String, String), ClientError> {
         deploy_collection(&self, &options).await
     }
 
