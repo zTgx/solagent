@@ -6,7 +6,7 @@ use solagent::fetch_price_by_pyth::FetchPricePyTh;
 
 #[tokio::main]
 async fn main() {
-    let price_feed_id = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d";
+    let token_symbol = "SOL";
 
     let fetch_price_tool = FetchPricePyTh;
     let client = gemini::Client::from_env();
@@ -17,7 +17,7 @@ async fn main() {
         .tool(fetch_price_tool)
         .build();
 
-    let prompt = format!("fetch price of price_feed_id {}", price_feed_id);
+    let prompt = format!("fetch price of token symbol {}", token_symbol);
     let response = agent
         .prompt(&prompt)
         .await

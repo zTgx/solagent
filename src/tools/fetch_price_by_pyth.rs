@@ -1,11 +1,14 @@
-use crate::{actions::fetch_price_by_pyth, parameters_json_schema};
+use crate::{
+    actions::{fetch_price_by_pyth, fetch_pyth_price_feed_id},
+    parameters_json_schema,
+};
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 #[derive(Debug, Deserialize)]
 pub struct FetchPricePyThArgs {
-    price_feed_id: String,
+    token_symbol: String,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -36,18 +39,21 @@ impl Tool for FetchPricePyTh {
             name: "fetch_price_by_pyth".to_string(),
             description: r#"Fetch the current price from a Pyth oracle price feed
                 input: {
-                    price_feed_id: "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d",
+                    token_symbol: "SOL", // SOL/USD price feed
                 },
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                price_feed_id: String,
+                token_symbol: String,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let price_feed_id = args.price_feed_id;
+        let token_symbol = args.token_symbol;
+        let price_feed_id = fetch_pyth_price_feed_id(&token_symbol)
+            .await
+            .expect("fetch_pyth_price_feed_id");
         let price = fetch_price_by_pyth(&price_feed_id)
             .await
             .expect("fetch_price_by_pyth");

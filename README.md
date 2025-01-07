@@ -62,7 +62,13 @@ async fn main() -> Result<(), String> {
 
 ### Fetch Price Data from Pyth
 ```rust
-
+    let price_feed_id = SOL_AGENT.fetch_pyth_price_feed_id("SOL")
+        .await
+        .expect("fetch_pyth_price_feed_id");
+    let price = SOL_AGENT.fetch_price_by_pyth(&price_feed_id)
+        .await
+        .expect("fetch_price_by_pyth");
+    println!("Price of SOL/USD: {}", price)
 ```
 
 ## More examples

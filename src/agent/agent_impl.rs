@@ -1,7 +1,7 @@
 use crate::{
     actions::{
-        deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth, get_balance,
-        get_balance_other, get_tps, request_faucet_funds,
+        deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
+        fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, request_faucet_funds,
     },
     agent::SolAgent,
     primitives::token::CollectionOptions,
@@ -56,5 +56,11 @@ impl SolAgent {
         price_feed_id: &str,
     ) -> Result<f64, Box<dyn std::error::Error>> {
         fetch_price_by_pyth(price_feed_id).await
+    }
+
+    pub async fn fetch_pyth_price_feed_id(
+        token_symbol: &str,
+    ) -> Result<String, Box<dyn std::error::Error>> {
+        fetch_pyth_price_feed_id(token_symbol).await
     }
 }
