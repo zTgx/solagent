@@ -8,8 +8,6 @@ async fn main() -> Result<(), String> {
     let token_id = "So11111111111111111111111111111111111111112";
     let prompt = format!("fetch price of token_id {}", token_id);
 
-    let fetch_price_tool = FetchPrice;
-
     // Create an OpenAI client with a custom base url, a local ollama endpoint
     // The API Key is unnecessary for most local endpoints
     let client = providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
@@ -17,7 +15,7 @@ async fn main() -> Result<(), String> {
     let comedian_agent = client
         .agent("llama3.2")
         .preamble("You are an assistant here to help the user select which tool is most appropriate to perform operations.")
-        .tool(fetch_price_tool)
+        .tool(FetchPrice)
         .build();
 
     // Prompt the agent and print the response
