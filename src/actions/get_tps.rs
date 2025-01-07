@@ -5,7 +5,7 @@ use solana_client::client_error::ClientError;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `RpcClient` that connects to the Solana cluster.
+/// - `agent`: An instance of `SolAgent` that connects to the Solana cluster.
 ///
 /// # Returns
 ///
