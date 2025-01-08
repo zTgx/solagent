@@ -9,7 +9,7 @@ connect any Ai agents to solana protocols in Rust.
 
 ```bash
 [dependencies]
-solagent = "0.1.2"
+solagent = "0.1.3"
 ```
 
 ## Quick Start

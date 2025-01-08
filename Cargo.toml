@@ -14,8 +14,8 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 lazy_static = "1.5.0"
 toml = "0.8.19"
-# rig-core = "0.6.0"
-rig-core = { path = "../rig/rig-core" } # main branch
+rig-core = "0.6.0"
+# rig-core = { path = "../rig/rig-core" } # main branch
 
 async-trait = "0.1.83"
 uuid = { version = "1.11.0", features = ["v4"] }
@@ -31,7 +31,7 @@ reqwest = { version = "0.12", features = ["json"] }
 
 [dev-dependencies]
 tokio = { version = "1.42.0", features = ["full"] }
-# rig-core = "0.6.0"
-rig-core = { path = "../rig/rig-core" } # main branch
+rig-core = "0.6.0"
+# rig-core = { path = "../rig/rig-core" } # main branch
 
 
