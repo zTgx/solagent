@@ -106,7 +106,24 @@ async fn main() {
 More examples can be found in the [examples](examples/).  
 
 ## SDKs
-### You can use API wrappers in your favorite language.
-Typscript - [solana-agent-kit](https://github.com/sendaifun/solana-agent-kit)  
-Python - [agentipy](https://github.com/niceberginc/agentipy)  
-Rust - [solagent.rs](https://github.com/zTgx/solagent.rs)
+| Name | Language | Framework | GitHub |
+|---|---|---|---|
+| **solana-agent-kit** | Typscript | Langchain | [solana-agent-kit](https://github.com/sendaifun/solana-agent-kit) |
+| **agentipy** | Python | Langchain, pydantic | [agentipy](https://github.com/niceberginc/agentipy) |
+| **solagent.rs** | Rust | rig | [solagent.rs](https://github.com/zTgx/solagent.rs) |
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=solagent/solagent&type=Date)](https://star-history.com/#solagent/solagent&Date)
+
+## License
+
+MIT License
+
+## Security
+
+This toolkit handles private keys and transactions. Always ensure you're using it in a secure environment and never share your private keys.
