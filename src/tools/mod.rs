@@ -7,6 +7,7 @@ pub mod get_balance_other;
 pub mod get_tps;
 pub mod get_wallet_address;
 pub mod request_faucet_funds;
+pub mod transfer;
 
 use super::{
     deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh,

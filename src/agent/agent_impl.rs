@@ -2,6 +2,7 @@ use crate::{
     actions::{
         deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
         fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, request_faucet_funds,
+        transfer,
     },
     agent::SolAgent,
     primitives::token::CollectionOptions,
@@ -62,5 +63,14 @@ impl SolAgent {
         token_symbol: &str,
     ) -> Result<String, Box<dyn std::error::Error>> {
         fetch_pyth_price_feed_id(token_symbol).await
+    }
+
+    pub async fn transfer(
+        &self,
+        to: &str,
+        amount: u64,
+        mint: Option<String>,
+    ) -> Result<String, ClientError> {
+        transfer(&self, to, amount, mint).await
     }
 }
