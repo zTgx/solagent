@@ -6,14 +6,18 @@
   [<img alt="crates.io" src="https://img.shields.io/crates/d/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
 
 </div>
-
 An open-source toolkit for connecting AI agents to Solana protocols.
+
+## WIP
+Solagent.rs is still in the early stage of development, and its interfaces may change in the future.  
+Contributions are welcome! Please feel free to submit a Pull Request.
+
 
 ## 📦 Installation
 
 ```bash
 [dependencies]
-solagent = "0.1.3"
+solagent = "0.1.4"
 ```
 
 ## Quick Start
