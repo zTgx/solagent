@@ -1,27 +1,24 @@
 [package]
 name = "solagent"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs.git"
 readme = "README.md"
 keywords = ["solana", "ai", "agent"]
 license = "MIT"
-description = "connect any Ai agents to solana protocols in Rust."
+description = "connect any ai agents to solana protocols in Rust."
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 lazy_static = "1.5.0"
-toml = "0.8.19"
-# rig-core = "0.6.0"
-rig-core = { path = "../rig/rig-core" } # main branch
+rig-core = "0.6.0"
+# rig-core = { path = "../rig/rig-core" } # main branch
 
 async-trait = "0.1.83"
-uuid = { version = "1.11.0", features = ["v4"] }
 solana-client = "2.1.7"
 solana-sdk = "2.1.7"
-shellexpand = "3.1.0"
 mpl-token-metadata = "5.1.0"
 spl-token = "7.0.0"
 spl-associated-token-account = "6.0.0"
@@ -31,7 +28,7 @@ reqwest = { version = "0.12", features = ["json"] }
 
 [dev-dependencies]
 tokio = { version = "1.42.0", features = ["full"] }
-# rig-core = "0.6.0"
-rig-core = { path = "../rig/rig-core" } # main branch
+rig-core = "0.6.0"
+# rig-core = { path = "../rig/rig-core" } # main branch
 
 

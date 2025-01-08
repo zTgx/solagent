@@ -1,6 +1,8 @@
+use std::sync::Arc;
+
+use crate::actions::deploy_collection;
 use crate::agent::SolAgent;
 use crate::primitives::token::NftMetadata;
-use crate::{actions::deploy_collection, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -20,18 +22,18 @@ pub struct DeployCollectionOutput {
 #[error("DeployCollection error")]
 pub struct DeployCollectionError;
 
-pub struct DeployCollection<'a> {
-    agent: &'a SolAgent,
+pub struct DeployCollection {
+    agent: Arc<SolAgent>,
     options: NftMetadata,
 }
 
-impl<'a> DeployCollection<'a> {
-    pub fn new(agent: &'a SolAgent, options: NftMetadata) -> Self {
+impl DeployCollection {
+    pub fn new(agent: Arc<SolAgent>, options: NftMetadata) -> Self {
         DeployCollection { agent, options }
     }
 }
 
-impl<'a> Tool for DeployCollection<'a> {
+impl Tool for DeployCollection {
     const NAME: &'static str = "deploy_token";
 
     type Error = DeployCollectionError;
@@ -69,15 +71,15 @@ impl<'a> Tool for DeployCollection<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for DeployCollection<'a> {
+impl ToolEmbedding for DeployCollection {
     type InitError = InitError;
     type Context = ();
-    type State = NftMetadata;
+    type State = (Arc<SolAgent>, NftMetadata);
 
-    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+    fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(DeployCollection {
-            agent: &SOL_AGENT,
-            options: _state,
+            agent: state.0,
+            options: state.1,
         })
     }
 

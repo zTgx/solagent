@@ -1,6 +1,8 @@
+use std::sync::Arc;
+
+use crate::actions::transfer;
 use crate::agent::SolAgent;
 use crate::parameters_json_schema;
-use crate::{actions::transfer, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -24,17 +26,17 @@ pub struct TransferOutput {
 #[error("Transfer error")]
 pub struct TransferError;
 
-pub struct Transfer<'a> {
-    agent: &'a SolAgent,
+pub struct Transfer {
+    agent: Arc<SolAgent>,
 }
 
-impl<'a> Transfer<'a> {
-    pub fn new() -> Self {
-        Transfer { agent: &SOL_AGENT }
+impl Transfer {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        Transfer { agent }
     }
 }
 
-impl<'a> Tool for Transfer<'a> {
+impl Tool for Transfer {
     const NAME: &'static str = "transfer";
 
     type Error = TransferError;
@@ -74,13 +76,13 @@ impl<'a> Tool for Transfer<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for Transfer<'a> {
+impl ToolEmbedding for Transfer {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(Transfer { agent: &SOL_AGENT })
+        Ok(Transfer { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

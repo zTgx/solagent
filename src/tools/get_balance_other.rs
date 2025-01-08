@@ -1,5 +1,7 @@
+use std::sync::Arc;
+
+use crate::parameters_json_schema;
 use crate::{actions::get_balance_other, agent::SolAgent};
-use crate::{agent::SOL_AGENT, parameters_json_schema};
 use rig::tool::ToolEmbedding;
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
@@ -21,17 +23,17 @@ pub struct GetBalanceOtherOutput {
 #[error("GetBalanceOther error")]
 pub struct GetBalanceOtherError;
 
-pub struct GetBalanceOther<'a> {
-    agent: &'a SolAgent,
+pub struct GetBalanceOther {
+    agent: Arc<SolAgent>,
 }
 
-impl<'a> GetBalanceOther<'a> {
-    pub fn new() -> Self {
-        GetBalanceOther { agent: &SOL_AGENT }
+impl GetBalanceOther {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        GetBalanceOther { agent }
     }
 }
 
-impl<'a> Tool for GetBalanceOther<'a> {
+impl Tool for GetBalanceOther {
     const NAME: &'static str = "get_balance_other";
 
     type Error = GetBalanceOtherError;
@@ -68,13 +70,13 @@ impl<'a> Tool for GetBalanceOther<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for GetBalanceOther<'a> {
+impl ToolEmbedding for GetBalanceOther {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetBalanceOther { agent: &SOL_AGENT })
+        Ok(GetBalanceOther { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

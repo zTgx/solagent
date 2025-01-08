@@ -1,5 +1,7 @@
+use std::sync::Arc;
+
+use crate::actions::get_tps;
 use crate::agent::SolAgent;
-use crate::{actions::get_tps, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -18,17 +20,17 @@ pub struct GetTpsOutput {
 #[error("GetTps error")]
 pub struct GetTpsError;
 
-pub struct GetTps<'a> {
-    agent: &'a SolAgent,
+pub struct GetTps {
+    agent: Arc<SolAgent>,
 }
 
-impl<'a> GetTps<'a> {
-    pub fn new() -> Self {
-        GetTps { agent: &SOL_AGENT }
+impl GetTps {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        GetTps { agent }
     }
 }
 
-impl<'a> Tool for GetTps<'a> {
+impl Tool for GetTps {
     const NAME: &'static str = "get_tps";
 
     type Error = GetTpsError;
@@ -55,13 +57,13 @@ impl<'a> Tool for GetTps<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for GetTps<'a> {
+impl ToolEmbedding for GetTps {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetTps { agent: &SOL_AGENT })
+        Ok(GetTps { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

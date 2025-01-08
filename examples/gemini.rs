@@ -2,11 +2,17 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_FLASH},
 };
-use solagent::get_balance::GetBalance;
+use solagent::{get_balance::GetBalance, SolAgent};
+use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let balance_tool = GetBalance::new();
+    let agent = Arc::new(SolAgent::new(
+        "private_key",
+        "https://api.devnet.solana.com",
+        "openai_api_key",
+    ));
+    let balance_tool = GetBalance::new(agent);
 
     let client = gemini::Client::from_env();
     let agent = client
@@ -24,6 +30,7 @@ async fn main() {
 
     println!("Gemini response: {response}");
 
+    drop(agent)
     /* Output:
         token address: None
         Gemini response: {"balance":16.485390645}

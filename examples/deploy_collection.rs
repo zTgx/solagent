@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use solagent::{NftMetadata, SolAgent};
 use solana_sdk::pubkey::Pubkey;
 
@@ -12,7 +14,11 @@ async fn main() {
     )];
     let options = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
-    let agent = SolAgent::new();
+    let agent = Arc::new(SolAgent::new(
+        "private_key",
+        "https://api.devnet.solana.com",
+        "openai_api_key",
+    ));
     let tx = agent.deploy_collection(options).await.unwrap();
     println!("Mint: {:?}", tx.0);
 }

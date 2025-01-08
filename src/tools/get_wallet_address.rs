@@ -1,10 +1,11 @@
+use crate::actions::get_wallet_address;
 use crate::agent::SolAgent;
-use crate::{actions::get_wallet_address, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
 };
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
 #[derive(Deserialize)]
 pub struct GetWalletAddressArgs {}
@@ -18,17 +19,17 @@ pub struct GetWalletAddressOutput {
 #[error("GetWalletAddress error")]
 pub struct GetWalletAddressError;
 
-pub struct GetWalletAddress<'a> {
-    agent: &'a SolAgent,
+pub struct GetWalletAddress {
+    agent: Arc<SolAgent>,
 }
 
-impl<'a> GetWalletAddress<'a> {
-    pub fn new() -> Self {
-        GetWalletAddress { agent: &SOL_AGENT }
+impl GetWalletAddress {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        GetWalletAddress { agent }
     }
 }
 
-impl<'a> Tool for GetWalletAddress<'a> {
+impl Tool for GetWalletAddress {
     const NAME: &'static str = "get_wallet_address";
 
     type Error = GetWalletAddressError;
@@ -54,13 +55,13 @@ impl<'a> Tool for GetWalletAddress<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for GetWalletAddress<'a> {
+impl ToolEmbedding for GetWalletAddress {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetWalletAddress { agent: &SOL_AGENT })
+        Ok(GetWalletAddress { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

@@ -1,13 +1,11 @@
 mod agent_impl;
 
-use crate::{
-    primitives::config::{AgentConfig, CONFIG},
-    primitives::wallet::Wallet,
-};
-use lazy_static::lazy_static;
+use crate::{primitives::config::AgentConfig, primitives::wallet::Wallet};
 use solana_client::rpc_client::RpcClient;
 
 /// Represents a Solana agent that interacts with the blockchain.
+/// Main class for interacting with Solana blockchain
+/// Provides a unified interface for token operations, NFT management, trading and more
 pub struct SolAgent {
     pub wallet: Wallet,
     pub config: AgentConfig,
@@ -15,23 +13,11 @@ pub struct SolAgent {
 }
 
 impl SolAgent {
-    /// Creates a new instance of `SolAgent` by loading configuration and wallet information.
-    pub fn new() -> Self {
-        let config = CONFIG.agent.clone();
-        let connection = RpcClient::new(config.rpc_url.clone());
-        let wallet = Wallet::load(&config.wallet_path);
-
+    pub fn new(private_key: &str, rpc_url: &str, openai_api_key: &str) -> Self {
         SolAgent {
-            wallet,
-            config,
-            connection,
+            wallet: Wallet::load(private_key),
+            config: AgentConfig::new(openai_api_key),
+            connection: RpcClient::new(rpc_url),
         }
     }
-}
-
-lazy_static! {
-    /// A static instance of `SolAgent`, initialized lazily.
-    /// Main class for interacting with Solana blockchain
-    /// Provides a unified interface for token operations, NFT management, trading and more
-    pub static ref SOL_AGENT: SolAgent = SolAgent::new();
 }

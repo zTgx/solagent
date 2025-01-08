@@ -4,14 +4,19 @@ use rig::{
     providers::gemini::{self, completion::GEMINI_1_5_FLASH, embedding::EMBEDDING_001},
     vector_store::in_memory_store::InMemoryVectorStore,
 };
-use solagent::create_solana_tools;
+use solagent::{create_solana_tools, SolAgent};
+use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
+    let agent = Arc::new(SolAgent::new(
+        "private_key",
+        "https://api.devnet.solana.com",
+        "openai_api_key",
+    ));
+    let toolset = create_solana_tools(agent);
+
     let client = gemini::Client::from_env();
-
-    let toolset = create_solana_tools();
-
     let embedding_model = client.embedding_model(EMBEDDING_001);
     let embeddings = EmbeddingsBuilder::new(embedding_model.clone())
         .documents(toolset.schemas().unwrap())

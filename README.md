@@ -21,15 +21,14 @@ solagent = "0.1.4"
 ```
 
 ## Quick Start
-```shell
-cp exampel.config.toml config.toml
-```
 ```rust
+use std::sync::Arc;
 use solagent::create_solana_tools;
 
 #[tokio::main]
 async fn main() {
-    let tools = create_solana_tools();
+    let agent = Arc::new(SolAgent::new("private_key_bs58", "https://api.devnet.solana.com", "openai_api_key"));
+    let toolset = create_solana_tools(agent);
 }
 ```
 
@@ -42,7 +41,7 @@ async fn main() {
     let decimals = 9;
     let initial_supply = 1_000_000_000_u64;
 
-    let agent = SolAgent::new();
+    let agent = Arc::new(SolAgent::new("private_key_bs58", "https://api.devnet.solana.com", "openai_api_key"));
     let mint_pubkey = agent
       .deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
     println!("Token Mint Address: {:?}", mint_pubkey);
@@ -50,9 +49,6 @@ async fn main() {
 
 ### Create NFT Collection
 ```rust
-    let wallet_path = &CONFIG.agent.wallet_path;
-    let wallet = Wallet::load(wallet_path);
-
     let options = CollectionOptions {
         name: "Solagent Collection".to_string(),
         uri: "https://arweave.net/metadata.json".to_string(),
@@ -64,14 +60,12 @@ async fn main() {
         }]),
     };
 
-    let agent = SolAgent::new();
+    let agent = Arc::new(SolAgent::new("private_key_bs58", "https://api.devnet.solana.com", "openai_api_key"));
     let _tx = agent.deploy_collection(options).await;
 ```
 
 ### Mint NFT to Collection
 ```rust
-#[tokio::main]
-async fn main() {
     let name = "My First SolAgent NFT";
     let uri = "https://arweave.net/metadata.json";
     let royalty_basis_points = Some(500);
@@ -85,7 +79,7 @@ async fn main() {
     let collection = Pubkey::from_str_const("
         HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt");
 
-    let agent = SolAgent::new();
+    let agent = Arc::new(SolAgent::new("private_key_bs58", "https://api.devnet.solana.com", "openai_api_key"));
     let deployed_data = agent
         .mint_nft_to_collection(collection, metadata)
         .await
@@ -96,7 +90,7 @@ async fn main() {
 
 ### Fetch Price Data from Pyth
 ```rust
-    let agent = SolAgent::new();
+    let agent = Arc::new(SolAgent::new("private_key_bs58", "https://api.devnet.solana.com", "openai_api_key"));
     let price_feed_id = agent.fetch_pyth_price_feed_id("SOL")
         .await
         .expect("fetch_pyth_price_feed_id");

@@ -1,4 +1,6 @@
-use crate::{actions::request_faucet_funds, agent::SolAgent, agent::SOL_AGENT};
+use std::sync::Arc;
+
+use crate::{actions::request_faucet_funds, agent::SolAgent};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -20,16 +22,16 @@ pub struct RequestFaucetFundsOutput {
 #[error("RequestFaucetFunds error")]
 pub struct RequestFaucetFundsError;
 
-pub struct RequestFaucetFunds<'a> {
-    agent: &'a SolAgent,
+pub struct RequestFaucetFunds {
+    agent: Arc<SolAgent>,
 }
-impl<'a> RequestFaucetFunds<'a> {
-    pub fn new() -> Self {
-        RequestFaucetFunds { agent: &SOL_AGENT }
+impl RequestFaucetFunds {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        RequestFaucetFunds { agent }
     }
 }
 
-impl<'a> Tool for RequestFaucetFunds<'a> {
+impl Tool for RequestFaucetFunds {
     const NAME: &'static str = "request_faucet_funds";
 
     type Error = RequestFaucetFundsError;
@@ -59,13 +61,13 @@ impl<'a> Tool for RequestFaucetFunds<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for RequestFaucetFunds<'a> {
+impl ToolEmbedding for RequestFaucetFunds {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(RequestFaucetFunds { agent: &SOL_AGENT })
+        Ok(RequestFaucetFunds { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

@@ -1,10 +1,11 @@
+use crate::actions::deploy_token;
 use crate::agent::SolAgent;
-use crate::{actions::deploy_token, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
 };
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
 #[derive(Deserialize)]
 pub struct DeployTokenArgs {
@@ -24,17 +25,17 @@ pub struct DeployTokenOutput {
 #[error("DeployToken error")]
 pub struct DeployTokenError;
 
-pub struct DeployToken<'a> {
-    agent: &'a SolAgent,
+pub struct DeployToken {
+    agent: Arc<SolAgent>,
 }
 
-impl<'a> DeployToken<'a> {
-    pub fn new() -> Self {
-        DeployToken { agent: &SOL_AGENT }
+impl DeployToken {
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        DeployToken { agent }
     }
 }
 
-impl<'a> Tool for DeployToken<'a> {
+impl Tool for DeployToken {
     const NAME: &'static str = "deploy_token";
 
     type Error = DeployTokenError;
@@ -79,13 +80,13 @@ impl<'a> Tool for DeployToken<'a> {
 #[error("Init error")]
 pub struct InitError;
 
-impl<'a> ToolEmbedding for DeployToken<'a> {
+impl ToolEmbedding for DeployToken {
     type InitError = InitError;
     type Context = ();
-    type State = ();
+    type State = Arc<SolAgent>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(DeployToken { agent: &SOL_AGENT })
+        Ok(DeployToken { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

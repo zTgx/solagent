@@ -1,5 +1,0 @@
-[agent]
-wallet_path = "~/.config/solana/id.json"
-rpc_url = "https://api.devnet.solana.com"
-# openai_api_key = ""
-gemini_api_key = "gemini_api_key"
