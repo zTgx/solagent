@@ -1,5 +1,7 @@
 use super::{
-    deploy_collection::DeployCollection, deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh, get_balance::GetBalance, get_balance_other::GetBalanceOther, get_tps::GetTps, get_wallet_address::GetWalletAddress, request_faucet_funds::RequestFaucetFunds
+    deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh,
+    get_balance::GetBalance, get_balance_other::GetBalanceOther, get_tps::GetTps,
+    get_wallet_address::GetWalletAddress, request_faucet_funds::RequestFaucetFunds,
 };
 use rig::tool::ToolSet;
 
@@ -18,8 +20,7 @@ pub fn create_solana_tools() -> ToolSet {
         .dynamic_tool(FetchPrice::new())
         .dynamic_tool(FetchPricePyTh::new())
         .dynamic_tool(GetTps::new())
-        .dynamic_tool(GetWalletAddress::new())       
-        ;
+        .dynamic_tool(GetWalletAddress::new());
 
     builder.build()
 }
