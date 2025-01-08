@@ -1,9 +1,13 @@
+<div align="center">
+
 # solagent.rs   
   [<img alt="crates.io" src="https://img.shields.io/crates/v/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
   [<img alt="docs.rs" src="https://img.shields.io/docsrs/solagent?style=for-the-badge&logo=docs.rs">](https://docs.rs/solagent)
   [<img alt="crates.io" src="https://img.shields.io/crates/d/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
-  
-connect any Ai agents to solana protocols in Rust.
+
+</div>
+
+An open-source toolkit for connecting AI agents to Solana protocols.
 
 ## 📦 Installation
 
@@ -22,32 +26,6 @@ use solagent::create_solana_tools;
 #[tokio::main]
 async fn main() {
     let tools = create_solana_tools();
-}
-```
-## Or running it locally
-```rust
-use rig::{completion::Prompt, providers};
-use solagent::fetch_price::FetchPrice;
-
-#[tokio::main]
-async fn main() -> Result<(), String> {
-    let token_id = "So11111111111111111111111111111111111111112";
-    let prompt = format!("fetch price of token_id {}", token_id);
-
-    let client = providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
-    let comedian_agent = client
-        .agent("llama3.2")
-        .preamble(r#"
-You are an assistant here to help the user select
-which tool is most appropriate to perform operations.
-        "#)
-        .tool(FetchPrice)
-        .build();
-
-    let response = comedian_agent.prompt(&prompt).await.unwrap();
-    println!("{}", response);
-
-    Ok(())
 }
 ```
 
@@ -84,6 +62,32 @@ which tool is most appropriate to perform operations.
 
     let agent = SolAgent::new();
     let _tx = agent.deploy_collection(options).await;
+```
+
+### Mint NFT to Collection
+```rust
+#[tokio::main]
+async fn main() {
+    let name = "My First SolAgent NFT";
+    let uri = "https://arweave.net/metadata.json";
+    let royalty_basis_points = Some(500);
+    let creators = vec![(
+        Pubkey::from_str_const("
+            8QB5VckaW3CWv4oZWiMLs1GkdrR5pVcjarAS1U6rG6Wh"),
+        100,
+    )];
+    let metadata = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
+
+    let collection = Pubkey::from_str_const("
+        HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt");
+
+    let agent = SolAgent::new();
+    let deployed_data = agent
+        .mint_nft_to_collection(collection, metadata)
+        .await
+        .unwrap();
+    println!("Mint: {}", deployed_data.mint);
+}
 ```
 
 ### Fetch Price Data from Pyth
