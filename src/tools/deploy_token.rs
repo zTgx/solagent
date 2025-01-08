@@ -1,5 +1,5 @@
 use crate::agent::SolAgent;
-use crate::{actions::deploy_token, SOL_AGENT};
+use crate::{actions::deploy_token, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

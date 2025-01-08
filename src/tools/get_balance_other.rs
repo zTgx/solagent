@@ -1,5 +1,5 @@
 use crate::{actions::get_balance_other, agent::SolAgent};
-use crate::{parameters_json_schema, SOL_AGENT};
+use crate::{agent::SOL_AGENT, parameters_json_schema};
 use rig::tool::ToolEmbedding;
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};

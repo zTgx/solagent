@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use crate::constants::PYTH_API;
+use crate::primitives::constants::PYTH_API;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]

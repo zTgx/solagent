@@ -1,4 +1,4 @@
 pub mod config;
-pub mod constants;
-pub mod token;
-pub mod wallet;
+pub(crate) mod constants;
+pub(crate) mod token;
+pub(crate) mod wallet;

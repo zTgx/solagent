@@ -1,4 +1,4 @@
-use crate::{actions::request_faucet_funds, agent::SolAgent, SOL_AGENT};
+use crate::{actions::request_faucet_funds, agent::SolAgent, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

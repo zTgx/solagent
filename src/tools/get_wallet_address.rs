@@ -1,5 +1,5 @@
 use crate::agent::SolAgent;
-use crate::{actions::get_wallet_address, SOL_AGENT};
+use crate::{actions::get_wallet_address, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

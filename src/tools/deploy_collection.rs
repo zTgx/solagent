@@ -1,6 +1,6 @@
 use crate::agent::SolAgent;
 use crate::primitives::token::CollectionOptions;
-use crate::{actions::deploy_collection, SOL_AGENT};
+use crate::{actions::deploy_collection, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
