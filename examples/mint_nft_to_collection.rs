@@ -3,7 +3,7 @@ use solana_sdk::pubkey::Pubkey;
 
 #[tokio::main]
 async fn main() {
-    let name = "My First SolAgent NFT";
+    let name = "My Second SolAgent NFT";
     let uri = "https://arweave.net/metadata.json";
     let royalty_basis_points = Some(500);
     let creators = vec![(
