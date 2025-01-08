@@ -1,5 +1,6 @@
-use crate::parameters_json_schema;
 use crate::{actions::get_balance, agent::SolAgent};
+use crate::{parameters_json_schema, SOL_AGENT};
+use rig::tool::ToolEmbedding;
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -56,4 +57,24 @@ impl<'a> Tool for GetBalance<'a> {
 
         Ok(GetBalanceOutput { balance })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for GetBalance<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(GetBalance { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["call get_balance function to request".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

@@ -2,7 +2,8 @@ use super::{
     get_balance::GetBalance, get_balance_other::GetBalanceOther,
     request_faucet_funds::RequestFaucetFunds,
 };
-use crate::agent::SolAgent;
+use crate::{agent::SolAgent, SOL_AGENT};
+use rig::tool::ToolSet as RigToolSet;
 
 /// An enumeration representing a set of tools that can be used with Solana.
 ///
@@ -39,4 +40,13 @@ pub fn create_solana_tools<'a>(solagent: &'a SolAgent) -> Vec<ToolSet<'a>> {
         ToolSet::GetBalanceOther(GetBalanceOther::new(solagent)),
         ToolSet::RequestFaucetFunds(RequestFaucetFunds::new(solagent)),
     ]
+}
+
+pub fn create_solana_toolx() -> RigToolSet {
+    let mut builder = RigToolSet::builder();
+    builder = builder.dynamic_tool(GetBalance::new(&SOL_AGENT));
+    // builder = builder.static_tool(GetBalanceOther::new(&SOL_AGENT));
+    // builder = builder.static_tool(RequestFaucetFunds::new(&SOL_AGENT));
+
+    builder.build()
 }
