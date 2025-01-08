@@ -37,7 +37,9 @@ async fn main() -> Result<(), String> {
     let client = providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
     let comedian_agent = client
         .agent("llama3.2")
-        .preamble("You are an assistant here to help the user select which tool is most appropriate to perform operations.")
+        .preamble("
+You are an assistant here to help the user select which tool is most appropriate to perform operations.
+        ")
         .tool(FetchPrice)
         .build();
 
@@ -58,7 +60,8 @@ async fn main() -> Result<(), String> {
     let initial_supply = 1_000_000_000_u64;
 
     let agent = SolAgent::new();
-    let mint_pubkey = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
+    let mint_pubkey = agent
+      .deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
     println!("Token Mint Address: {:?}", mint_pubkey);
 ```
 
