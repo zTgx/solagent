@@ -27,3 +27,6 @@ pub use get_wallet_address::get_wallet_address;
 
 mod transfer;
 pub use transfer::transfer;
+
+mod mint_nft;
+pub use mint_nft::mint_nft_to_collection;

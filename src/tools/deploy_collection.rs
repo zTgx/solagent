@@ -1,5 +1,5 @@
 use crate::agent::SolAgent;
-use crate::primitives::token::CollectionOptions;
+use crate::primitives::token::NftMetadata;
 use crate::{actions::deploy_collection, agent::SOL_AGENT};
 use rig::{
     completion::ToolDefinition,
@@ -22,11 +22,11 @@ pub struct DeployCollectionError;
 
 pub struct DeployCollection<'a> {
     agent: &'a SolAgent,
-    options: CollectionOptions,
+    options: NftMetadata,
 }
 
 impl<'a> DeployCollection<'a> {
-    pub fn new(agent: &'a SolAgent, options: CollectionOptions) -> Self {
+    pub fn new(agent: &'a SolAgent, options: NftMetadata) -> Self {
         DeployCollection { agent, options }
     }
 }
@@ -72,7 +72,7 @@ pub struct InitError;
 impl<'a> ToolEmbedding for DeployCollection<'a> {
     type InitError = InitError;
     type Context = ();
-    type State = CollectionOptions;
+    type State = NftMetadata;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(DeployCollection {

@@ -1,26 +1,27 @@
 use mpl_token_metadata::types::Creator;
+use serde::{Deserialize, Serialize};
 use solana_sdk::pubkey::Pubkey;
 
-/// Options for deploying an NFT collection.
+/// Metadata for deploying an NFT/Collection.
 ///
 /// # Fields
 ///
-/// - `name`: The name of the collection.
+/// - `name`: The name of the NFT.
 /// - `uri`: The URI for the collection's metadata.
-/// - `royalty_basis_points`: Optional. The royalty basis points for the collection.
-/// - `creators`: Optional. A list of creators associated with the collection.
-pub struct CollectionOptions {
+/// - `basis_points`: Optional. The basis points for the NFT.
+/// - `creators`: Optional. A list of creators associated with the NFT.
+pub struct NftMetadata {
     pub(crate) name: String,
     pub(crate) uri: String,
-    pub(crate) royalty_basis_points: Option<u16>, // Optional royalty basis points
-    pub(crate) creators: Option<Vec<Creator>>,    // Optional list of creators
+    pub(crate) basis_points: Option<u16>, // Optional basis points
+    pub(crate) creators: Option<Vec<Creator>>, // Optional list of creators
 }
 
-impl CollectionOptions {
+impl NftMetadata {
     pub fn new(
         name: &str,
         uri: &str,
-        royalty_basis_points: Option<u16>,
+        basis_points: Option<u16>,
         creators: Option<Vec<(Pubkey, u8)>>,
     ) -> Self {
         let creators = creators.map(|creator_tuples| {
@@ -34,11 +35,17 @@ impl CollectionOptions {
                 .collect::<Vec<Creator>>()
         });
 
-        CollectionOptions {
+        NftMetadata {
             name: name.to_string(),
             uri: uri.to_string(),
-            royalty_basis_points,
+            basis_points,
             creators,
         }
     }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DeployedData {
+    pub mint: String,      // mint address
+    pub signature: String, // Tx hash
 }

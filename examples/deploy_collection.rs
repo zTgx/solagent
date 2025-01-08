@@ -1,4 +1,4 @@
-use solagent::{CollectionOptions, SolAgent};
+use solagent::{NftMetadata, SolAgent};
 use solana_sdk::pubkey::Pubkey;
 
 #[tokio::main]
@@ -10,7 +10,7 @@ async fn main() {
         Pubkey::from_str_const("HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt"),
         100,
     )];
-    let options = CollectionOptions::new(name, uri, royalty_basis_points, Some(creators));
+    let options = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
     let agent = SolAgent::new();
     let tx = agent.deploy_collection(options).await.unwrap();

@@ -1,11 +1,11 @@
 use crate::{
     actions::{
         deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
-        fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, request_faucet_funds,
-        transfer,
+        fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, mint_nft_to_collection,
+        request_faucet_funds, transfer,
     },
     agent::SolAgent,
-    primitives::token::CollectionOptions,
+    primitives::token::{DeployedData, NftMetadata},
 };
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;
@@ -44,9 +44,17 @@ impl SolAgent {
 
     pub async fn deploy_collection(
         &self,
-        options: CollectionOptions,
+        metadata: NftMetadata,
     ) -> Result<(String, String), ClientError> {
-        deploy_collection(&self, &options).await
+        deploy_collection(&self, &metadata).await
+    }
+
+    pub async fn mint_nft_to_collection(
+        &self,
+        collection: Pubkey,
+        metadata: NftMetadata,
+    ) -> Result<DeployedData, ClientError> {
+        mint_nft_to_collection(&self, collection, metadata).await
     }
 
     pub async fn fetch_price(token_id: &str) -> Result<String, Box<dyn std::error::Error>> {

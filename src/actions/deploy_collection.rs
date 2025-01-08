@@ -1,5 +1,5 @@
 use crate::agent::SolAgent;
-use crate::primitives::token::CollectionOptions;
+use crate::primitives::token::NftMetadata;
 use mpl_token_metadata::instructions::{
     CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs,
 };
@@ -24,7 +24,7 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 /// An object containing the collection address and metadata.
 pub async fn deploy_collection(
     agent: &SolAgent,
-    options: &CollectionOptions,
+    options: &NftMetadata,
 ) -> Result<(String, String), ClientError> {
     // Create a new mint for the collection
     let collection_mint = Keypair::new();
@@ -111,7 +111,7 @@ pub async fn deploy_collection(
             name: options.name.clone(),
             symbol: "SOLAGENT".to_string(),
             uri: options.uri.clone(),
-            seller_fee_basis_points: options.royalty_basis_points.unwrap_or(0),
+            seller_fee_basis_points: options.basis_points.unwrap_or(0),
             creators: options.creators.clone(),
             collection: None,
             uses: None,

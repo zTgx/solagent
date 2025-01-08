@@ -5,5 +5,5 @@ mod tools;
 mod utils;
 
 pub use agent::SolAgent;
-pub use primitives::token::CollectionOptions;
+pub use primitives::token::NftMetadata;
 pub use tools::*;
