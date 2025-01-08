@@ -1,6 +1,9 @@
-use crate::actions::get_tps;
 use crate::agent::SolAgent;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::get_tps, SOL_AGENT};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -20,8 +23,8 @@ pub struct GetTps<'a> {
 }
 
 impl<'a> GetTps<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        GetTps { agent }
+    pub fn new() -> Self {
+        GetTps { agent: &SOL_AGENT }
     }
 }
 
@@ -46,4 +49,24 @@ impl<'a> Tool for GetTps<'a> {
 
         Ok(GetTpsOutput { tps })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for GetTps<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(GetTps { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Get wallet address of the agent".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

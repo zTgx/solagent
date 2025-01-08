@@ -1,6 +1,9 @@
-use crate::actions::deploy_token;
 use crate::agent::SolAgent;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::deploy_token, SOL_AGENT};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -26,8 +29,8 @@ pub struct DeployToken<'a> {
 }
 
 impl<'a> DeployToken<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        DeployToken { agent }
+    pub fn new() -> Self {
+        DeployToken { agent: &SOL_AGENT }
     }
 }
 
@@ -70,4 +73,24 @@ impl<'a> Tool for DeployToken<'a> {
 
         Ok(DeployTokenOutput { tx: tx.to_string() })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for DeployToken<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(DeployToken { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Get the balance of a Solana wallet or token account.".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

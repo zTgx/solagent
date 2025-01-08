@@ -1,5 +1,5 @@
 use mpl_token_metadata::types::Creator;
-use solagent::{config::CONFIG, token::CollectionOptions, wallet::Wallet, SOL_AGENT};
+use solagent::{config::CONFIG, token::CollectionOptions, wallet::Wallet, SolAgent};
 
 #[tokio::main]
 async fn main() {
@@ -17,7 +17,8 @@ async fn main() {
         }]),
     };
 
-    let tx = SOL_AGENT.deploy_collection(options).await;
+    let agent = SolAgent::new();
+    let tx = agent.deploy_collection(options).await;
     println!(">>> deploy collection tx: {:?}", tx);
     // Ok(("HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt", "5EfTZauKpjULT9748c5w5pawAEhkjf5PLWUepA9XAgQymVsV2d92wpgohVR1JeqDGuKg2SBqCSLBKtyrrBYyjhEE"))
 }

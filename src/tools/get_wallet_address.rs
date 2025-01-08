@@ -1,6 +1,9 @@
-use crate::actions::get_wallet_address;
 use crate::agent::SolAgent;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::get_wallet_address, SOL_AGENT};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -20,8 +23,8 @@ pub struct GetWalletAddress<'a> {
 }
 
 impl<'a> GetWalletAddress<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        GetWalletAddress { agent }
+    pub fn new() -> Self {
+        GetWalletAddress { agent: &SOL_AGENT }
     }
 }
 
@@ -45,4 +48,24 @@ impl<'a> Tool for GetWalletAddress<'a> {
 
         Ok(GetWalletAddressOutput { address })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for GetWalletAddress<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(GetWalletAddress { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Get wallet address of the agent".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

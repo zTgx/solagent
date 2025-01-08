@@ -17,11 +17,11 @@ solagent = "0.1.2"
 cp exampel.config.toml config.toml
 ```
 ```rust
-use solagent::{toolset::create_solana_tools, SOL_AGENT};
+use solagent::create_solana_tools;
 
 #[tokio::main]
 async fn main() {
-    let tools = create_solana_tools(&SOL_AGENT);
+    let tools = create_solana_tools();
 }
 ```
 ## Or running it locally
@@ -56,7 +56,9 @@ async fn main() -> Result<(), String> {
     let symbol = "SOLA".to_string();
     let decimals = 9;
     let initial_supply = 1_000_000_000_u64;
-    let mint_pubkey = SOL_AGENT.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
+
+    let agent = SolAgent::new();
+    let mint_pubkey = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
     println!("Token Mint Address: {:?}", mint_pubkey);
 ```
 
@@ -76,15 +78,17 @@ async fn main() -> Result<(), String> {
         }]),
     };
 
-    let _tx = SOL_AGENT.deploy_collection(options).await;
+    let agent = SolAgent::new();
+    let _tx = agent.deploy_collection(options).await;
 ```
 
 ### Fetch Price Data from Pyth
 ```rust
-    let price_feed_id = SOL_AGENT.fetch_pyth_price_feed_id("SOL")
+    let agent = SolAgent::new();
+    let price_feed_id = agent.fetch_pyth_price_feed_id("SOL")
         .await
         .expect("fetch_pyth_price_feed_id");
-    let price = SOL_AGENT.fetch_price_by_pyth(&price_feed_id)
+    let price = agent.fetch_price_by_pyth(&price_feed_id)
         .await
         .expect("fetch_price_by_pyth");
     println!("Price of SOL/USD: {}", price)

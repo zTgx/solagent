@@ -1,5 +1,8 @@
 use crate::{actions::fetch_price, parameters_json_schema};
-use rig::{completion::ToolDefinition, tool::Tool};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -48,16 +51,28 @@ impl Tool for FetchPrice {
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
         let token_id = args.token_id;
-
-        //TODO:
-        // if input: So11111111111111111111111111111111111111112
-        // receive token_id: So1111111111111111111111111111111111111112
-        // have to check the reson
-        // others tokenid is fine.
-        println!("Will fetch price of : {}", token_id);
-
         let price = fetch_price(&token_id).await.expect("fetch_price");
 
         Ok(FetchPriceOutput { price })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl ToolEmbedding for FetchPrice {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(FetchPrice {})
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Fetch the current price of a Solana token in USDC using Jupiter API".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

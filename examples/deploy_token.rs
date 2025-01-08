@@ -1,4 +1,4 @@
-use solagent::SOL_AGENT;
+use solagent::SolAgent;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,10 @@ async fn main() {
     let symbol = "SOLA".to_string();
     let decimals = 1;
     let initial_supply = 1_000_000_000_u64;
-    let tx = SOL_AGENT
+
+    let agent = SolAgent::new();
+
+    let tx = agent
         .deploy_token(name, uri, symbol, decimals, Some(initial_supply))
         .await;
     println!(">>> deploy tx: {:?}", tx);

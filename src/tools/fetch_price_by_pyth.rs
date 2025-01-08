@@ -2,7 +2,10 @@ use crate::{
     actions::{fetch_price_by_pyth, fetch_pyth_price_feed_id},
     parameters_json_schema,
 };
-use rig::{completion::ToolDefinition, tool::Tool};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -60,4 +63,24 @@ impl Tool for FetchPricePyTh {
 
         Ok(FetchPricePyThOutput { price })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl ToolEmbedding for FetchPricePyTh {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(FetchPricePyTh {})
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Fetch the current price from a Pyth oracle price feed".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

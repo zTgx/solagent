@@ -4,13 +4,13 @@ use rig::{
     providers::gemini::{self, completion::GEMINI_1_5_FLASH, embedding::EMBEDDING_001},
     vector_store::in_memory_store::InMemoryVectorStore,
 };
-use solagent::toolset::create_solana_toolx;
+use solagent::create_solana_tools;
 
 #[tokio::main]
 async fn main() {
     let client = gemini::Client::from_env();
 
-    let toolset = create_solana_toolx();
+    let toolset = create_solana_tools();
 
     let embedding_model = client.embedding_model(EMBEDDING_001);
     let embeddings = EmbeddingsBuilder::new(embedding_model.clone())

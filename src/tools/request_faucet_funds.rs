@@ -1,5 +1,8 @@
-use crate::{actions::request_faucet_funds, agent::SolAgent};
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::request_faucet_funds, agent::SolAgent, SOL_AGENT};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -21,8 +24,8 @@ pub struct RequestFaucetFunds<'a> {
     agent: &'a SolAgent,
 }
 impl<'a> RequestFaucetFunds<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        RequestFaucetFunds { agent }
+    pub fn new() -> Self {
+        RequestFaucetFunds { agent: &SOL_AGENT }
     }
 }
 
@@ -50,4 +53,24 @@ impl<'a> Tool for RequestFaucetFunds<'a> {
 
         Ok(RequestFaucetFundsOutput { tx })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for RequestFaucetFunds<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(RequestFaucetFunds { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Request SOL from Solana faucet (devnet/testnet only)".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

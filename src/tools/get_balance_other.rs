@@ -1,5 +1,6 @@
-use crate::parameters_json_schema;
 use crate::{actions::get_balance_other, agent::SolAgent};
+use crate::{parameters_json_schema, SOL_AGENT};
+use rig::tool::ToolEmbedding;
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -25,8 +26,8 @@ pub struct GetBalanceOther<'a> {
 }
 
 impl<'a> GetBalanceOther<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        GetBalanceOther { agent }
+    pub fn new() -> Self {
+        GetBalanceOther { agent: &SOL_AGENT }
     }
 }
 
@@ -61,4 +62,24 @@ impl<'a> Tool for GetBalanceOther<'a> {
 
         Ok(GetBalanceOtherOutput { balance })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for GetBalanceOther<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = ();
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(GetBalanceOther { agent: &SOL_AGENT })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Get the balance of a Solana wallet or token account.".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

@@ -1,7 +1,10 @@
-use crate::actions::deploy_collection;
 use crate::agent::SolAgent;
 use crate::primitives::token::CollectionOptions;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::deploy_collection, SOL_AGENT};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
@@ -60,4 +63,27 @@ impl<'a> Tool for DeployCollection<'a> {
             tx_signature,
         })
     }
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("Init error")]
+pub struct InitError;
+
+impl<'a> ToolEmbedding for DeployCollection<'a> {
+    type InitError = InitError;
+    type Context = ();
+    type State = CollectionOptions;
+
+    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
+        Ok(DeployCollection {
+            agent: &SOL_AGENT,
+            options: _state,
+        })
+    }
+
+    fn embedding_docs(&self) -> Vec<String> {
+        vec!["Get the balance of a Solana wallet or token account.".into()]
+    }
+
+    fn context(&self) -> Self::Context {}
 }

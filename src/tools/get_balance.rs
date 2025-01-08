@@ -1,5 +1,5 @@
 use crate::{actions::get_balance, agent::SolAgent};
-use crate::{parameters_json_schema, SOL_AGENT};
+use crate::{agent::SOL_AGENT, parameters_json_schema};
 use rig::tool::ToolEmbedding;
 use rig::{completion::ToolDefinition, tool::Tool};
 use serde::{Deserialize, Serialize};
@@ -24,8 +24,8 @@ pub struct GetBalance<'a> {
 }
 
 impl<'a> GetBalance<'a> {
-    pub fn new(agent: &'a SolAgent) -> Self {
-        GetBalance { agent }
+    pub fn new() -> Self {
+        GetBalance { agent: &SOL_AGENT }
     }
 }
 
@@ -73,7 +73,7 @@ impl<'a> ToolEmbedding for GetBalance<'a> {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["call get_balance function to request".into()]
+        vec!["Get the balance of a Solana wallet or token account.".into()]
     }
 
     fn context(&self) -> Self::Context {}
