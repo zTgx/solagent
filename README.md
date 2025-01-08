@@ -37,9 +37,10 @@ async fn main() -> Result<(), String> {
     let client = providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
     let comedian_agent = client
         .agent("llama3.2")
-        .preamble("
-You are an assistant here to help the user select which tool is most appropriate to perform operations.
-        ")
+        .preamble(r#"
+You are an assistant here to help the user select
+which tool is most appropriate to perform operations.
+        "#)
         .tool(FetchPrice)
         .build();
 
