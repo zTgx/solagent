@@ -103,13 +103,7 @@ async fn main() {
 ## More examples
 More examples can be found in the [examples](examples/).  
 
-## SDKs
-| Name | Language | Framework | GitHub |
-|---|---|---|---|
-| **solana-agent-kit** | Typscript | Langchain | [solana-agent-kit](https://github.com/sendaifun/solana-agent-kit) |
-| **agentipy** | Python | Langchain, pydantic | [agentipy](https://github.com/niceberginc/agentipy) |
-| **solagent.rs** | Rust | rig | [solagent.rs](https://github.com/zTgx/solagent.rs) |
-
+## 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -120,7 +114,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License
+Apache-2 License
 
 ## Security
 
