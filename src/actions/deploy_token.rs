@@ -29,7 +29,7 @@ use spl_token::instruction as spl_token_instruction;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolanaAgent`.
+/// - `agent`: An instance of `SolAgent`.
 /// - `name`: Name of the token.
 /// - `uri`: URI for the token metadata.
 /// - `symbol`: Symbol of the token.

@@ -12,6 +12,31 @@ An open-source toolkit for connecting AI agents to Solana protocols.
 Solagent.rs is still in the early stage of development, and its interfaces may change in the future.  
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## ✍️  Features
+- **Basic Operations**  
+    - [x] Get the balance of a Solana wallet or token account
+    - [x] Transfer tokens or SOL 
+    - [x] Deploy SPL tokens
+    - [x] Deploy NFT Collection
+    - [x] Mint NFT 
+    - [x] Request SOL from Solana faucet
+
+- **DeFi Operations**
+    - [x] Jupiter Exchange swaps
+    - [x] Jupiter Exchange stake
+    - [x] Launch Token on pump.fun
+
+- **AI Operations**
+    - [x] Integrate Rig-core tools
+
+- **Utils Operations**
+    - [x] Fetch price
+        - [x] By Jupiter API
+        - [x] By Pyth API
+    - [x] Get wallet address of the agent
+    - [x] Get the current transactions per second (TPS)
+
+- **More...**
 
 ## 📦 Installation
 
