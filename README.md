@@ -108,9 +108,15 @@ More examples can be found in the [examples](examples/).
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## Contributors
+
+<a href="https://github.com/zTgx/solagent.rs/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=zTgx/solagent.rs" />
+</a>
+
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=solagent/solagent&type=Date)](https://star-history.com/#solagent/solagent&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=zTgx/solagent.rs&type=Date)](https://star-history.com/#zTgx/solagent.rs&Date)
 
 ## License
 
