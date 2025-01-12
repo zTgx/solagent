@@ -24,10 +24,9 @@ pub mod request_faucet_funds;
 pub mod transfer;
 
 use super::{
-    deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh,
-    get_balance::GetBalance, get_balance_other::GetBalanceOther, get_tps::GetTps,
-    get_wallet_address::GetWalletAddress, request_faucet_funds::RequestFaucetFunds,
-    transfer::Transfer,
+    deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh, get_balance::GetBalance,
+    get_balance_other::GetBalanceOther, get_tps::GetTps, get_wallet_address::GetWalletAddress,
+    request_faucet_funds::RequestFaucetFunds, transfer::Transfer,
 };
 use crate::SolAgent;
 use rig::tool::ToolSet;

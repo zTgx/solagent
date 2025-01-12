@@ -27,9 +27,7 @@ use solana_client::client_error::ClientError;
 pub async fn get_tps(agent: &SolAgent) -> Result<f64, ClientError> {
     // Fetch recent performance samples
     let limit = 1;
-    let perf_samples = agent
-        .connection
-        .get_recent_performance_samples(Some(limit))?;
+    let perf_samples = agent.connection.get_recent_performance_samples(Some(limit))?;
 
     // Check if there are any samples available
     if !perf_samples.is_empty() {

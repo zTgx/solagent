@@ -61,9 +61,7 @@ impl Tool for RequestFaucetFunds {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = request_faucet_funds(&self.agent)
-            .await
-            .expect("request_faucet_funds");
+        let tx = request_faucet_funds(&self.agent).await.expect("request_faucet_funds");
 
         Ok(RequestFaucetFundsOutput { tx })
     }

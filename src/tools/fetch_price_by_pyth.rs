@@ -68,12 +68,8 @@ impl Tool for FetchPricePyTh {
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
         let token_symbol = args.token_symbol;
-        let price_feed_id = fetch_pyth_price_feed_id(&token_symbol)
-            .await
-            .expect("fetch_pyth_price_feed_id");
-        let price = fetch_price_by_pyth(&price_feed_id)
-            .await
-            .expect("fetch_price_by_pyth");
+        let price_feed_id = fetch_pyth_price_feed_id(&token_symbol).await.expect("fetch_pyth_price_feed_id");
+        let price = fetch_price_by_pyth(&price_feed_id).await.expect("fetch_price_by_pyth");
 
         Ok(FetchPricePyThOutput { price })
     }

@@ -17,11 +17,7 @@ use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new(
-        "private_key",
-        "https://api.devnet.solana.com",
-        "openai_api_key",
-    ));
+    let agent = Arc::new(SolAgent::new("private_key", "https://api.devnet.solana.com", "openai_api_key"));
     //swap 0.01 SOL to USDC
     let swap = agent
         .jupiter_swap(

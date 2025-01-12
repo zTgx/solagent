@@ -35,17 +35,13 @@ lazy_static! {
 }
 
 /// Default configuration options
-pub const DEFAULT_OPTIONS: Options = Options {
-    slippage_bps: 300,
-    token_decimals: 9,
-    referral_fee: 200,
-};
+pub const DEFAULT_OPTIONS: Options = Options { slippage_bps: 300, token_decimals: 9, referral_fee: 200 };
 
 #[derive(Debug)]
 pub struct Options {
-    pub slippage_bps: u32, // Default slippage tolerance in basis points (300 = 3%)
+    pub slippage_bps: u32,   // Default slippage tolerance in basis points (300 = 3%)
     pub token_decimals: u32, // Default number of decimals for new tokens
-    pub referral_fee: u32, // Referral fee
+    pub referral_fee: u32,   // Referral fee
 }
 
 /// Jupiter API URL

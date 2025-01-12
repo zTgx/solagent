@@ -28,7 +28,9 @@ async fn main() -> Result<(), String> {
     // Create agent with a single context prompt
     let comedian_agent = client
         .agent("llama3.2")
-        .preamble("You are an assistant here to help the user select which tool is most appropriate to perform operations.")
+        .preamble(
+            "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
+        )
         .tool(FetchPrice)
         .build();
 

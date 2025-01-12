@@ -27,34 +27,20 @@ use solana_sdk::pubkey::Pubkey;
 pub struct NftMetadata {
     pub(crate) name: String,
     pub(crate) uri: String,
-    pub(crate) basis_points: Option<u16>, // Optional basis points
+    pub(crate) basis_points: Option<u16>,      // Optional basis points
     pub(crate) creators: Option<Vec<Creator>>, // Optional list of creators
 }
 
 impl NftMetadata {
-    pub fn new(
-        name: &str,
-        uri: &str,
-        basis_points: Option<u16>,
-        creators: Option<Vec<(Pubkey, u8)>>,
-    ) -> Self {
+    pub fn new(name: &str, uri: &str, basis_points: Option<u16>, creators: Option<Vec<(Pubkey, u8)>>) -> Self {
         let creators = creators.map(|creator_tuples| {
             creator_tuples
                 .into_iter()
-                .map(|(pubkey, share)| Creator {
-                    address: pubkey,
-                    verified: true,
-                    share,
-                })
+                .map(|(pubkey, share)| Creator { address: pubkey, verified: true, share })
                 .collect::<Vec<Creator>>()
         });
 
-        NftMetadata {
-            name: name.to_string(),
-            uri: uri.to_string(),
-            basis_points,
-            creators,
-        }
+        NftMetadata { name: name.to_string(), uri: uri.to_string(), basis_points, creators }
     }
 }
 

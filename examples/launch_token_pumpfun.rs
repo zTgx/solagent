@@ -17,11 +17,7 @@ use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new(
-        "YOUR_PRIVAE_KEY_bs58",
-        "https://api.devnet.solana.com",
-        "openai_api_key",
-    ));
+    let agent = Arc::new(SolAgent::new("YOUR_PRIVAE_KEY_bs58", "https://api.devnet.solana.com", "openai_api_key"));
 
     let res = agent
         .launch_token_pumpfun(

@@ -66,9 +66,7 @@ impl Tool for GetBalance {
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
         let token_address = args.token_address;
-        let balance = get_balance(&self.agent, token_address)
-            .await
-            .expect("get_balance");
+        let balance = get_balance(&self.agent, token_address).await.expect("get_balance");
 
         Ok(GetBalanceOutput { balance })
     }

@@ -14,9 +14,9 @@
 
 use crate::{
     actions::{
-        deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
-        fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, launch_token_pumpfun,
-        mint_nft_to_collection, request_faucet_funds, stake_sol, swap, transfer,
+        deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id, get_balance,
+        get_balance_other, get_tps, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_sol,
+        swap, transfer,
     },
     agent::SolAgent,
     primitives::{
@@ -59,10 +59,7 @@ impl SolAgent {
         deploy_token(&self, name, uri, symbol, decimals, initial_supply).await
     }
 
-    pub async fn deploy_collection(
-        &self,
-        metadata: NftMetadata,
-    ) -> Result<(String, String), ClientError> {
+    pub async fn deploy_collection(&self, metadata: NftMetadata) -> Result<(String, String), ClientError> {
         deploy_collection(&self, &metadata).await
     }
 
@@ -78,24 +75,15 @@ impl SolAgent {
         fetch_price(token_id).await
     }
 
-    pub async fn fetch_price_by_pyth(
-        price_feed_id: &str,
-    ) -> Result<f64, Box<dyn std::error::Error>> {
+    pub async fn fetch_price_by_pyth(price_feed_id: &str) -> Result<f64, Box<dyn std::error::Error>> {
         fetch_price_by_pyth(price_feed_id).await
     }
 
-    pub async fn fetch_pyth_price_feed_id(
-        token_symbol: &str,
-    ) -> Result<String, Box<dyn std::error::Error>> {
+    pub async fn fetch_pyth_price_feed_id(token_symbol: &str) -> Result<String, Box<dyn std::error::Error>> {
         fetch_pyth_price_feed_id(token_symbol).await
     }
 
-    pub async fn transfer(
-        &self,
-        to: &str,
-        amount: u64,
-        mint: Option<String>,
-    ) -> Result<String, ClientError> {
+    pub async fn transfer(&self, to: &str, amount: u64, mint: Option<String>) -> Result<String, ClientError> {
         transfer(&self, to, amount, mint).await
     }
 
@@ -107,15 +95,7 @@ impl SolAgent {
         image_url: &str,
         options: Option<PumpFunTokenOptions>,
     ) -> Result<PumpfunTokenResponse, Box<dyn std::error::Error>> {
-        launch_token_pumpfun(
-            &self,
-            token_name,
-            token_ticker,
-            description,
-            image_url,
-            options,
-        )
-        .await
+        launch_token_pumpfun(&self, token_name, token_ticker, description, image_url, options).await
     }
 
     pub async fn jupiter_swap(
@@ -128,10 +108,7 @@ impl SolAgent {
         swap(&self, to_token, amount, from_token, slippage).await
     }
 
-    pub async fn jupiter_stake_sol(
-        &self,
-        amount: f64,
-    ) -> Result<String, Box<dyn std::error::Error>> {
+    pub async fn jupiter_stake_sol(&self, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
         stake_sol(&self, amount).await
     }
 }

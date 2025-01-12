@@ -59,8 +59,7 @@ impl Tool for DeployToken {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "deploy_token".to_string(),
-            description:
-                r#"Deploy a new SPL token on the Solana blockchain with specified parameters:
+            description: r#"Deploy a new SPL token on the Solana blockchain with specified parameters:
             input: {
                 name: "My Token",
                 uri: "https://example.com/token.json",
@@ -69,22 +68,15 @@ impl Tool for DeployToken {
                 initialSupply: 1000000,
             },
             "#
-                .to_string(),
+            .to_string(),
             parameters: serde_json::Value::Null,
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = deploy_token(
-            &self.agent,
-            args.name,
-            args.uri,
-            args.symbol,
-            args.decimals,
-            args.initial_supply,
-        )
-        .await
-        .expect("deploy_token");
+        let tx = deploy_token(&self.agent, args.name, args.uri, args.symbol, args.decimals, args.initial_supply)
+            .await
+            .expect("deploy_token");
 
         Ok(DeployTokenOutput { tx: tx.to_string() })
     }

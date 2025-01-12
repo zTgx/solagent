@@ -69,14 +69,10 @@ impl Tool for DeployCollection {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let (mint_address, tx_signature) = deploy_collection(&self.agent, &self.options)
-            .await
-            .expect("deploy_collection");
+        let (mint_address, tx_signature) =
+            deploy_collection(&self.agent, &self.options).await.expect("deploy_collection");
 
-        Ok(DeployCollectionOutput {
-            mint_address,
-            tx_signature,
-        })
+        Ok(DeployCollectionOutput { mint_address, tx_signature })
     }
 }
 
@@ -90,10 +86,7 @@ impl ToolEmbedding for DeployCollection {
     type State = (Arc<SolAgent>, NftMetadata);
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(DeployCollection {
-            agent: state.0,
-            options: state.1,
-        })
+        Ok(DeployCollection { agent: state.0, options: state.1 })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

@@ -27,10 +27,7 @@ use std::str::FromStr;
 /// # Returns
 ///
 /// A `Result` that resolves to the balance as a number (in UI units) or an error if the account doesn't exist.
-pub async fn get_balance(
-    agent: &SolAgent,
-    token_address: Option<String>,
-) -> Result<f64, ClientError> {
+pub async fn get_balance(agent: &SolAgent, token_address: Option<String>) -> Result<f64, ClientError> {
     if token_address.is_none() {
         // Get SOL balance
         let balance = agent.connection.get_balance(&agent.wallet.address)?;
@@ -38,9 +35,8 @@ pub async fn get_balance(
     }
 
     // Get SPL token account balance
-    let token_account = agent
-        .connection
-        .get_token_account_balance(&Pubkey::from_str(&token_address.unwrap()).unwrap())?;
+    let token_account =
+        agent.connection.get_token_account_balance(&Pubkey::from_str(&token_address.unwrap()).unwrap())?;
     let ui_amount = token_account.ui_amount.unwrap_or(0.0);
     Ok(ui_amount)
 }

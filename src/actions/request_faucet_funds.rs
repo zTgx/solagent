@@ -31,9 +31,7 @@ use solana_sdk::native_token::LAMPORTS_PER_SOL;
 /// Returns an error if the request fails or times out.
 pub async fn request_faucet_funds(agent: &SolAgent) -> Result<String, ClientError> {
     // Request airdrop of 5 SOL (5 * LAMPORTS_PER_SOL)
-    let tx = agent
-        .connection
-        .request_airdrop(&agent.wallet.address, 5 * LAMPORTS_PER_SOL)?;
+    let tx = agent.connection.request_airdrop(&agent.wallet.address, 5 * LAMPORTS_PER_SOL)?;
 
     // Confirm the transaction
     agent.connection.confirm_transaction(&tx)?;

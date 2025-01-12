@@ -17,9 +17,7 @@ use crate::{
     SolAgent,
 };
 use mpl_token_metadata::{
-    instructions::{
-        CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs,
-    },
+    instructions::{CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs},
     types::{Collection, DataV2},
 };
 use solana_client::client_error::ClientError;
@@ -54,18 +52,11 @@ pub async fn mint_nft_to_collection(
     let mint_pubkey = mint_keypair.pubkey();
 
     // Create token mint account
-    let min_rent = agent
-        .connection
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
+    let min_rent = agent.connection.get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
 
     // Find the metadata account
-    let metadata_seeds = &[
-        "metadata".as_bytes(),
-        mpl_token_metadata::ID.as_ref(),
-        mint_pubkey.as_ref(),
-    ];
-    let (metadata_account, _) =
-        Pubkey::find_program_address(metadata_seeds, &mpl_token_metadata::ID);
+    let metadata_seeds = &["metadata".as_bytes(), mpl_token_metadata::ID.as_ref(), mint_pubkey.as_ref()];
+    let (metadata_account, _) = Pubkey::find_program_address(metadata_seeds, &mpl_token_metadata::ID);
 
     // Create the mint account
     let create_mint_account_ix = solana_sdk::system_instruction::create_account(
@@ -87,17 +78,14 @@ pub async fn mint_nft_to_collection(
     .unwrap();
 
     // Create Associated Token Account
-    let associated_token_account = spl_associated_token_account::get_associated_token_address(
+    let associated_token_account =
+        spl_associated_token_account::get_associated_token_address(&agent.wallet.address, &mint_pubkey);
+    let create_assoc_account_ix = spl_associated_token_account::instruction::create_associated_token_account(
+        &agent.wallet.address,
         &agent.wallet.address,
         &mint_pubkey,
+        &spl_token::id(),
     );
-    let create_assoc_account_ix =
-        spl_associated_token_account::instruction::create_associated_token_account(
-            &agent.wallet.address,
-            &agent.wallet.address,
-            &mint_pubkey,
-            &spl_token::id(),
-        );
 
     // Mint one token
     let mint_to_ix = spl_token::instruction::mint_to(
@@ -127,10 +115,7 @@ pub async fn mint_nft_to_collection(
             uri: metadata.uri.clone(),
             seller_fee_basis_points: metadata.basis_points.unwrap_or(0),
             creators: metadata.creators,
-            collection: Some(Collection {
-                verified: false,
-                key: collection,
-            }),
+            collection: Some(Collection { verified: false, key: collection }),
             uses: None,
         },
         is_mutable: true,
@@ -138,14 +123,9 @@ pub async fn mint_nft_to_collection(
     });
 
     // Create master edition account
-    let master_edition_seeds = &[
-        "metadata".as_bytes(),
-        mpl_token_metadata::ID.as_ref(),
-        mint_pubkey.as_ref(),
-        "edition".as_bytes(),
-    ];
-    let (master_edition_account, _) =
-        Pubkey::find_program_address(master_edition_seeds, &mpl_token_metadata::ID);
+    let master_edition_seeds =
+        &["metadata".as_bytes(), mpl_token_metadata::ID.as_ref(), mint_pubkey.as_ref(), "edition".as_bytes()];
+    let (master_edition_account, _) = Pubkey::find_program_address(master_edition_seeds, &mpl_token_metadata::ID);
 
     let create_master_edition_ix = CreateMasterEditionV3 {
         edition: master_edition_account,
@@ -158,29 +138,17 @@ pub async fn mint_nft_to_collection(
         system_program: solana_program::system_program::id(),
         rent: Some(sysvar::rent::id()),
     }
-    .instruction(
-        mpl_token_metadata::instructions::CreateMasterEditionV3InstructionArgs {
-            max_supply: Some(1),
-        },
-    );
+    .instruction(mpl_token_metadata::instructions::CreateMasterEditionV3InstructionArgs { max_supply: Some(1) });
 
     // Verify the collection
     use mpl_token_metadata::instructions::VerifyCollection;
 
-    let collection_metadata_seeds = &[
-        "metadata".as_bytes(),
-        mpl_token_metadata::ID.as_ref(),
-        collection.as_ref(),
-    ];
+    let collection_metadata_seeds = &["metadata".as_bytes(), mpl_token_metadata::ID.as_ref(), collection.as_ref()];
     let (collection_metadata_account, _) =
         Pubkey::find_program_address(collection_metadata_seeds, &mpl_token_metadata::ID);
 
-    let collection_master_edition_seeds = &[
-        "metadata".as_bytes(),
-        mpl_token_metadata::ID.as_ref(),
-        collection.as_ref(),
-        "edition".as_bytes(),
-    ];
+    let collection_master_edition_seeds =
+        &["metadata".as_bytes(), mpl_token_metadata::ID.as_ref(), collection.as_ref(), "edition".as_bytes()];
     let (collection_master_edition_account, _) =
         Pubkey::find_program_address(collection_master_edition_seeds, &mpl_token_metadata::ID);
 
@@ -213,11 +181,6 @@ pub async fn mint_nft_to_collection(
     );
 
     // Send and confirm the transaction
-    let signature = agent
-        .connection
-        .send_and_confirm_transaction(&transaction)?;
-    Ok(DeployedData {
-        mint: mint_pubkey.to_string(),
-        signature: signature.to_string(),
-    })
+    let signature = agent.connection.send_and_confirm_transaction(&transaction)?;
+    Ok(DeployedData { mint: mint_pubkey.to_string(), signature: signature.to_string() })
 }

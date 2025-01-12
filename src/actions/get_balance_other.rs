@@ -40,10 +40,7 @@ pub async fn get_balance_other(
             .expect("get_token_accounts_by_owner");
 
         if token_accounts.is_empty() {
-            println!(
-                "No token accounts found for wallet {} and token {}",
-                wallet_address, token_address
-            );
+            println!("No token accounts found for wallet {} and token {}", wallet_address, token_address);
             return Ok(0.0);
         }
 

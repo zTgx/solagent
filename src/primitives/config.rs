@@ -33,8 +33,6 @@ pub struct AgentConfig {
 
 impl AgentConfig {
     pub fn new(openai_api_key: &str) -> Self {
-        AgentConfig {
-            openai_api_key: openai_api_key.to_string(),
-        }
+        AgentConfig { openai_api_key: openai_api_key.to_string() }
     }
 }

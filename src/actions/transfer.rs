@@ -13,9 +13,7 @@
 // limitations under the License.
 
 use solana_client::client_error::ClientError;
-use solana_sdk::{
-    program_pack::Pack, pubkey::Pubkey, system_instruction, transaction::Transaction,
-};
+use solana_sdk::{program_pack::Pack, pubkey::Pubkey, system_instruction, transaction::Transaction};
 use spl_associated_token_account::get_associated_token_address;
 use spl_token::instruction::transfer as transfer_instruct;
 use spl_token::state::Mint;
@@ -30,12 +28,7 @@ use crate::SolAgent;
 /// `mint` - Optional mint address for SPL tokens
 ///
 /// Returns the transaction signature.
-pub async fn transfer(
-    agent: &SolAgent,
-    to: &str,
-    amount: u64,
-    mint: Option<String>,
-) -> Result<String, ClientError> {
+pub async fn transfer(agent: &SolAgent, to: &str, amount: u64, mint: Option<String>) -> Result<String, ClientError> {
     match mint {
         Some(mint) => {
             // Transfer SPL Token
@@ -67,18 +60,12 @@ pub async fn transfer(
                 agent.connection.get_latest_blockhash().unwrap(),
             );
 
-            let signature = agent
-                .connection
-                .send_and_confirm_transaction(&transaction)
-                .unwrap();
+            let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
             return Ok(signature.to_string());
         }
         None => {
-            let transfer_instruction = system_instruction::transfer(
-                &agent.wallet.address,
-                &Pubkey::from_str_const(to),
-                amount,
-            );
+            let transfer_instruction =
+                system_instruction::transfer(&agent.wallet.address, &Pubkey::from_str_const(to), amount);
             let transaction = Transaction::new_signed_with_payer(
                 &[transfer_instruction],
                 Some(&agent.wallet.address),
@@ -86,10 +73,7 @@ pub async fn transfer(
                 agent.connection.get_latest_blockhash().unwrap(),
             );
 
-            let signature = agent
-                .connection
-                .send_and_confirm_transaction(&transaction)
-                .unwrap();
+            let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
             return Ok(signature.to_string());
         }
     }

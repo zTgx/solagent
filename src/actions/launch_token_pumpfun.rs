@@ -18,8 +18,7 @@ use crate::{
 };
 use reqwest::{multipart::Part, Client as ReqwestClient};
 use solana_sdk::{
-    commitment_config::CommitmentConfig, signature::Signer, signer::keypair::Keypair,
-    transaction::VersionedTransaction,
+    commitment_config::CommitmentConfig, signature::Signer, signer::keypair::Keypair, transaction::VersionedTransaction,
 };
 
 /// Launch a token on Pump.fun.
@@ -65,22 +64,14 @@ pub async fn launch_token_pumpfun(
     let reqwest_client = ReqwestClient::new();
 
     // 0. download image
-    let image_data = fetch_image(&reqwest_client, &image_url)
-        .await
-        .expect("fetch_image");
+    let image_data = fetch_image(&reqwest_client, &image_url).await.expect("fetch_image");
     println!(">>> 0. done");
 
     // 1. fetch token metadata metadataUri
-    let token_metadata = fetch_token_metadata(
-        &reqwest_client,
-        token_name,
-        token_symbol,
-        description,
-        options,
-        &image_data,
-    )
-    .await
-    .expect("fetch_token_metadata");
+    let token_metadata =
+        fetch_token_metadata(&reqwest_client, token_name, token_symbol, description, options, &image_data)
+            .await
+            .expect("fetch_token_metadata");
 
     println!(">>> 1. done");
 
@@ -89,24 +80,18 @@ pub async fn launch_token_pumpfun(
     println!(">>> 2. done");
 
     // 3. request pumpportal tx
-    let mut versioned_tx =
-        request_pumpportal_tx(&agent, &reqwest_client, &token_metadata, &mint_keypair)
-            .await
-            .expect("request_pumpportal_tx");
+    let mut versioned_tx = request_pumpportal_tx(&agent, &reqwest_client, &token_metadata, &mint_keypair)
+        .await
+        .expect("request_pumpportal_tx");
 
     println!(">>> 3. done");
 
     // 4. sign&send transaction
-    let signature = sign_and_send_tx(agent, &mut versioned_tx, &mint_keypair)
-        .await
-        .expect("sign_and_send_tx");
+    let signature = sign_and_send_tx(agent, &mut versioned_tx, &mint_keypair).await.expect("sign_and_send_tx");
     println!(">>> 4. done, tx signature = {}", signature);
 
-    let res = PumpfunTokenResponse {
-        signature,
-        mint: mint_keypair.pubkey().to_string(),
-        metadata_uri: token_metadata.uri,
-    };
+    let res =
+        PumpfunTokenResponse { signature, mint: mint_keypair.pubkey().to_string(), metadata_uri: token_metadata.uri };
 
     Ok(res)
 }
@@ -117,34 +102,24 @@ async fn sign_and_send_tx(
     vtx: &mut VersionedTransaction,
     mint_keypair: &Keypair,
 ) -> Result<String, Box<std::io::Error>> {
-    let recent_blockhash = agent
-        .connection
-        .get_latest_blockhash()
-        .expect("get_latest_blockhash");
+    let recent_blockhash = agent.connection.get_latest_blockhash().expect("get_latest_blockhash");
     vtx.message.set_recent_blockhash(recent_blockhash);
-    let signed_vtx =
-        VersionedTransaction::try_new(vtx.message.clone(), &[&mint_keypair, &agent.wallet.wallet])
-            .expect("try signed vtx");
+    let signed_vtx = VersionedTransaction::try_new(vtx.message.clone(), &[&mint_keypair, &agent.wallet.wallet])
+        .expect("try signed vtx");
 
     let signature = agent
         .connection
         .send_and_confirm_transaction_with_spinner_and_config(
             &signed_vtx,
             CommitmentConfig::finalized(),
-            solana_client::rpc_config::RpcSendTransactionConfig {
-                skip_preflight: false,
-                ..Default::default()
-            },
+            solana_client::rpc_config::RpcSendTransactionConfig { skip_preflight: false, ..Default::default() },
         )
         .expect("send_and_confirm_tx");
 
     Ok(signature.to_string())
 }
 
-async fn fetch_image(
-    client: &ReqwestClient,
-    image_url: &str,
-) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+async fn fetch_image(client: &ReqwestClient, image_url: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let response = client.get(image_url).send().await?;
     if response.status().is_success() {
         let image_data = response.bytes().await.expect("image data");
@@ -162,9 +137,7 @@ async fn fetch_token_metadata(
     options: Option<PumpFunTokenOptions>,
     image_data: &Vec<u8>,
 ) -> Result<TokenMetadata, Box<dyn std::error::Error>> {
-    let part = Part::bytes(image_data.to_vec())
-        .file_name("image_name")
-        .mime_str("image/png")?; // Important: set the correct MIME type
+    let part = Part::bytes(image_data.to_vec()).file_name("image_name").mime_str("image/png")?; // Important: set the correct MIME type
 
     let mut form = reqwest::multipart::Form::new()
         .text("name", name.to_owned())
@@ -188,11 +161,7 @@ async fn fetch_token_metadata(
         form = form.text("showName", "true");
     }
 
-    let res = client
-        .post("https://pump.fun/api/ipfs")
-        .multipart(form)
-        .send()
-        .await?;
+    let res = client.post("https://pump.fun/api/ipfs").multipart(form).send().await?;
 
     let status = res.status();
     if !status.is_success() {

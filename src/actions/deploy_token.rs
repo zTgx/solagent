@@ -51,9 +51,7 @@ pub async fn deploy_token(
     let mint_pubkey = mint.pubkey();
 
     // Create token mint account
-    let min_rent = agent
-        .connection
-        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
+    let min_rent = agent.connection.get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
 
     let create_mint_account_ix = system_instruction::create_account(
         &agent.wallet.address,
@@ -106,15 +104,10 @@ pub async fn deploy_token(
     };
     let create_metadata_ix = create_ix.instruction(args);
 
-    let mut instructions = vec![
-        create_mint_account_ix,
-        initialize_mint_ix,
-        create_metadata_ix,
-    ];
+    let mut instructions = vec![create_mint_account_ix, initialize_mint_ix, create_metadata_ix];
 
     if let Some(supply) = initial_supply {
-        let associated_token_account =
-            get_associated_token_address(&agent.wallet.address, &mint_pubkey);
+        let associated_token_account = get_associated_token_address(&agent.wallet.address, &mint_pubkey);
 
         let create_associated_token_account_ix =
             spl_associated_token_account::instruction::create_associated_token_account(
@@ -146,16 +139,11 @@ pub async fn deploy_token(
         recent_blockhash,
     );
 
-    agent
-        .connection
-        .send_and_confirm_transaction_with_spinner_and_config(
-            &transaction,
-            CommitmentConfig::finalized(),
-            solana_client::rpc_config::RpcSendTransactionConfig {
-                skip_preflight: true,
-                ..Default::default()
-            },
-        )?;
+    agent.connection.send_and_confirm_transaction_with_spinner_and_config(
+        &transaction,
+        CommitmentConfig::finalized(),
+        solana_client::rpc_config::RpcSendTransactionConfig { skip_preflight: true, ..Default::default() },
+    )?;
 
     Ok(mint_pubkey)
 }

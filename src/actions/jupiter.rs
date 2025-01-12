@@ -70,10 +70,7 @@ pub async fn swap(
 ) -> Result<String, Box<dyn std::error::Error>> {
     // Convert strings to Pubkeys
     let output_mint = Pubkey::from_str(output_mint)?;
-    let input_mint = input_mint
-        .map(Pubkey::from_str)
-        .transpose()?
-        .unwrap_or(spl_token::native_mint::id());
+    let input_mint = input_mint.map(Pubkey::from_str).transpose()?.unwrap_or(spl_token::native_mint::id());
 
     // Use defaults if not provided
     let slippage_bps = slippage_bps.unwrap_or(300);
@@ -96,11 +93,7 @@ pub async fn swap(
     // Build quote URL
     let quote_url = format!(
         "{}/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}&onlyDirectRoutes=true&maxAccounts=20",
-        JUP_API,
-        input_mint,
-        output_mint,
-        scaled_amount,
-        slippage_bps
+        JUP_API, input_mint, output_mint, scaled_amount, slippage_bps
     );
 
     // Get quote
@@ -117,32 +110,20 @@ pub async fn swap(
         fee_account: None,
     };
 
-    let swap_response: SwapResponse = client
-        .post(format!("{}/swap", JUP_API))
-        .json(&swap_request)
-        .send()
-        .await?
-        .json()
-        .await?;
+    let swap_response: SwapResponse =
+        client.post(format!("{}/swap", JUP_API)).json(&swap_request).send().await?.json().await?;
 
-    let swap_transaction = general_purpose::STANDARD
-        .decode(&swap_response.swap_transaction)
-        .unwrap();
+    let swap_transaction = general_purpose::STANDARD.decode(&swap_response.swap_transaction).unwrap();
 
     let versioned_transaction: VersionedTransaction = bincode::deserialize(&swap_transaction)?;
 
-    let signed_transaction =
-        VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
 
     let signature = agent.connection.send_transaction(&signed_transaction)?;
 
     let latest_blockhash = agent.connection.get_latest_blockhash()?;
 
-    agent.connection.confirm_transaction_with_spinner(
-        &signature,
-        &latest_blockhash,
-        CommitmentConfig::confirmed(),
-    )?;
+    agent.connection.confirm_transaction_with_spinner(&signature, &latest_blockhash, CommitmentConfig::confirmed())?;
 
     Ok(signature.to_string())
 }
@@ -157,10 +138,7 @@ pub async fn swap(
 /// # Returns
 ///
 /// Transaction signature as a string
-pub async fn stake_sol(
-    agent: &SolAgent,
-    amount: f64,
-) -> Result<String, Box<dyn std::error::Error>> {
+pub async fn stake_sol(agent: &SolAgent, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
     // Convert SOL amount to lamports
     let amount_lamports = (amount * 1e9) as u64;
 
@@ -179,29 +157,21 @@ pub async fn stake_sol(
     let response = client.post(&stake_url).json(&stake_request).send().await?;
 
     let data: serde_json::Value = response.json().await?;
-    let transaction_data =
-        general_purpose::STANDARD.decode(data["transaction"].as_str().unwrap())?;
+    let transaction_data = general_purpose::STANDARD.decode(data["transaction"].as_str().unwrap())?;
 
     let mut versioned_transaction: VersionedTransaction = bincode::deserialize(&transaction_data)?;
 
     let blockhash = agent.connection.get_latest_blockhash()?;
-    versioned_transaction
-        .message
-        .set_recent_blockhash(blockhash);
+    versioned_transaction.message.set_recent_blockhash(blockhash);
 
     // Sign and send transaction
-    let signed_transaction =
-        VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
 
     let signature = agent.connection.send_transaction(&signed_transaction)?;
 
     // Confirm transaction
     let latest_blockhash = agent.connection.get_latest_blockhash()?;
-    agent.connection.confirm_transaction_with_spinner(
-        &signature,
-        &latest_blockhash,
-        CommitmentConfig::confirmed(),
-    )?;
+    agent.connection.confirm_transaction_with_spinner(&signature, &latest_blockhash, CommitmentConfig::confirmed())?;
 
     Ok(signature.to_string())
 }
