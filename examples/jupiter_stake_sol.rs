@@ -26,4 +26,3 @@ async fn main() {
     let stake = agent.jupiter_stake_sol(0.01).await.unwrap();
     println!("Signature: {}", stake);
 }
-

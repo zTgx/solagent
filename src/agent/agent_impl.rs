@@ -16,7 +16,7 @@ use crate::{
     actions::{
         deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
         fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, launch_token_pumpfun,
-        mint_nft_to_collection, request_faucet_funds, transfer, swap, stake_sol
+        mint_nft_to_collection, request_faucet_funds, stake_sol, swap, transfer,
     },
     agent::SolAgent,
     primitives::{
@@ -134,5 +134,4 @@ impl SolAgent {
     ) -> Result<String, Box<dyn std::error::Error>> {
         stake_sol(&self, amount).await
     }
-
 }

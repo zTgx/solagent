@@ -49,5 +49,5 @@ mod launch_token_pumpfun;
 pub use launch_token_pumpfun::launch_token_pumpfun;
 
 mod jupiter;
-pub use jupiter::swap;
 pub use jupiter::stake_sol;
+pub use jupiter::swap;

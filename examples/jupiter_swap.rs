@@ -23,6 +23,14 @@ async fn main() {
         "openai_api_key",
     ));
     //swap 0.01 SOL to USDC
-    let swap = agent.jupiter_swap(Some("So11111111111111111111111111111111111111112"), 0.01, "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", None).await.unwrap();
+    let swap = agent
+        .jupiter_swap(
+            Some("So11111111111111111111111111111111111111112"),
+            0.01,
+            "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+            None,
+        )
+        .await
+        .unwrap();
     println!("Signature: {}", swap);
 }
