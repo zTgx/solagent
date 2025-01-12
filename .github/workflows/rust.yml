@@ -1,4 +1,4 @@
-name: Rust
+name: solagentrs
 
 on:
   push:
@@ -12,10 +12,12 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v4
+    - name: Format
+      run: cargo fmt --all -- --check 
     - name: Build
       run: cargo build --verbose
     - name: Run tests
