@@ -2922,6 +2922,7 @@ dependencies = [
  "js-sys",
  "log",
  "mime",
+ "mime_guess",
  "native-tls",
  "once_cell",
  "percent-encoding",
@@ -3436,6 +3437,7 @@ name = "solagent"
 version = "0.1.4"
 dependencies = [
  "async-trait",
+ "bincode",
  "lazy_static",
  "mpl-token-metadata",
  "reqwest 0.12.12",

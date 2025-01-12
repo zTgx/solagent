@@ -44,3 +44,6 @@ pub use transfer::transfer;
 
 mod mint_nft;
 pub use mint_nft::mint_nft_to_collection;
+
+mod launch_token_pumpfun;
+pub use launch_token_pumpfun::launch_token_pumpfun;

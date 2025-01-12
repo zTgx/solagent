@@ -12,8 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod config;
-pub(crate) mod constants;
-pub(crate) mod pumpfun;
-pub(crate) mod token;
-pub(crate) mod wallet;
+use serde::{Deserialize, Serialize};
+
+pub struct PumpFunTokenOptions {
+    pub twitter: Option<String>,
+    pub telegram: Option<String>,
+    pub website: Option<String>,
+    pub initial_liquidity_sol: f64,
+    pub slippage_bps: u16,
+    pub priority_fee: f64,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct PumpfunTokenResponse {
+    pub signature: String,
+    pub mint: String,
+    pub metadata_uri: String,
+}
+
+pub struct TokenMetadata {
+    pub name: String,
+    pub symbol: String,
+    pub uri: String,
+}
