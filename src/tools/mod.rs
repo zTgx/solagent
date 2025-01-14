@@ -19,6 +19,7 @@ pub mod get_balance;
 pub mod get_balance_other;
 pub mod get_tps;
 pub mod get_wallet_address;
+pub mod launch_token_pumpfun;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
 pub mod stake_with_jup;

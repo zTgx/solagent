@@ -12,14 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::actions::deploy_collection;
 use crate::agent::SolAgent;
 use crate::primitives::token::NftMetadata;
+use crate::{actions::deploy_collection, parameters_json_schema};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
 };
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
@@ -58,14 +59,45 @@ impl Tool for DeployCollection {
             name: "deploy_collection".to_string(),
             description: r#"
             Deploy a new NFT collection on Solana blockchain.:
-            input: {
-                name: "My Collection",
-                uri: "https://example.com/collection.json",
-                royaltyBasisPoints: 500,
-            },
+            examples: [
+                [
+                {
+                    input: {
+                        name: "My Collection",
+                        uri: "https://example.com/collection.json",
+                        royaltyBasisPoints: 500,
+                    },
+                    output: {
+                        status: "success",
+                        message: "Collection deployed successfully",
+                        collectionAddress: "7nE9GvcwsqzYxmJLSrYmSB1V1YoJWVK1KWzAcWAzjXkN",
+                        name: "My Collection",
+                    },
+                    explanation: "Deploy an NFT collection with 5% royalty",
+                },
+                ],
+                [
+                {
+                    input: {
+                        name: "Basic Collection",
+                        uri: "https://example.com/basic.json",
+                    },
+                    output: {
+                        status: "success",
+                        message: "Collection deployed successfully",
+                        collectionAddress: "8nE9GvcwsqzYxmJLSrYmSB1V1YoJWVK1KWzAcWAzjXkM",
+                        name: "Basic Collection",
+                    },
+                    explanation: "Deploy a basic NFT collection without royalties",
+                },
+                ],
+            ],
+
             "#
             .to_string(),
-            parameters: serde_json::Value::Null,
+            parameters: parameters_json_schema!(
+                options: NftMetadata
+            ),
         }
     }
 

@@ -56,16 +56,20 @@ impl Tool for GetBalanceOther {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "get_balance_other".to_string(),
-            description:
-                r#"Get the balance of a Solana wallet or token account which is different from the agent's wallet.
-  If no tokenAddress is provided, the SOL balance of the wallet will be returned.
-  Inputs ( input is a JSON string ):
-  walletAddress: string, eg "GDEkQF7UMr7RLv1KQKMtm8E2w3iafxJLtyXu3HVQZnME" (required)
-  tokenAddress: string, eg "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)"#
-                    .to_string(),
+            description: r#"
+            
+            Get the balance of a Solana wallet or token account which is different from the agent's wallet.
+            If no tokenAddress is provided, the SOL balance of the wallet will be returned.
+            
+            Inputs {
+                walletAddress: string, eg "GDEkQF7UMr7RLv1KQKMtm8E2w3iafxJLtyXu3HVQZnME" (required)
+                tokenAddress: string, eg "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)  
+            }
+            "#
+            .to_string(),
             parameters: parameters_json_schema!(
-                wallet_address: object,
-                token_address: object,
+                wallet_address: String,
+                token_address: String,
             ),
         }
     }
@@ -93,7 +97,10 @@ impl ToolEmbedding for GetBalanceOther {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get the balance of a Solana wallet or token account.".into()]
+        vec![
+            "Get the balance of a Solana wallet or token account which is different from the agent's wallet.".into(),
+            "If no tokenAddress is provided, the SOL balance of the wallet will be returned.".into(),
+        ]
     }
 
     fn context(&self) -> Self::Context {}

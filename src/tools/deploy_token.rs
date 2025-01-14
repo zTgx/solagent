@@ -62,13 +62,42 @@ impl Tool for DeployToken {
             name: "deploy_token".to_string(),
             description: r#"
             Deploy a new SPL token on the Solana blockchain with specified parameters:
-            input: {
-                name: "My Token",
-                uri: "https://example.com/token.json",
-                symbol: "MTK",
-                decimals: 9,
-                initialSupply: 1000000,
-            },
+
+            examples: [
+                [
+                {
+                    input: {
+                        name: "My Token",
+                        uri: "https://example.com/token.json",
+                        symbol: "MTK",
+                        decimals: 9,
+                        initialSupply: 1000000,
+                    },
+                    output: {
+                        mint: "7nE9GvcwsqzYxmJLSrYmSB1V1YoJWVK1KWzAcWAzjXkN",
+                        status: "success",
+                        message: "Token deployed successfully",
+                    },
+                    explanation: "Deploy a token with initial supply and metadata",
+                },
+                ],
+                [
+                {
+                    input: {
+                        name: "Basic Token",
+                        uri: "https://example.com/basic.json",
+                        symbol: "BASIC",
+                    },
+                    output: {
+                        mint: "8nE9GvcwsqzYxmJLSrYmSB1V1YoJWVK1KWzAcWAzjXkM",
+                        status: "success",
+                        message: "Token deployed successfully",
+                    },
+                    explanation: "Deploy a basic token with minimal parameters",
+                },
+                ],
+            ],
+            
             "#
             .to_string(),
             parameters: serde_json::Value::Null,

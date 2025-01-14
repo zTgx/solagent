@@ -14,6 +14,7 @@
 
 use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct PumpFunTokenOptions {
     pub twitter: Option<String>,
     pub telegram: Option<String>,

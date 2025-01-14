@@ -53,7 +53,23 @@ impl Tool for GetWalletAddress {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "get_wallet_address".to_string(),
-            description: "Get wallet address of the agent".to_string(),
+            description: r#"
+            Get wallet address of the agent".to_string(),
+            
+            examples: [
+                [
+                    {
+                        input: {},
+                        output: {
+                            status: "success",
+                            address: "0x1234567890abcdef",
+                        },
+                        explanation: "The agent's wallet address is 0x1234567890abcdef",
+                    },
+                ],
+            ]
+            "#
+            .to_string(),
             parameters: serde_json::Value::Null,
         }
     }

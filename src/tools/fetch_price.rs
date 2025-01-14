@@ -53,10 +53,23 @@ impl Tool for FetchPrice {
             name: "fetch_price".to_string(),
             description: r#"
             Fetch the current price of a Solana token in USDC using Jupiter API.
-            input: {
-                token_address: "",
-            },
-            "#
+
+            examples: [
+                [
+                {
+                    input: {
+                        tokenAddress: "So11111111111111111111111111111111111111112",
+                    },
+                    output: {
+                        status: "success",
+                        price: "23.45",
+                        message: "Current price: $23.45 USDC",
+                    },
+                    explanation: "Get the current price of SOL token in USDC",
+                },
+                ],
+            ]
+              "#
             .to_string(),
             parameters: parameters_json_schema!(
                 token_id: String,

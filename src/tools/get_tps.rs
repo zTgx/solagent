@@ -53,7 +53,26 @@ impl Tool for GetTps {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "get_tps".to_string(),
-            description: "Get the current transactions per second (TPS) of the Solana network".to_string(),
+            description: r#"
+            
+            Get the current transactions per second (TPS) of the Solana network"
+            
+            examples: [
+                [
+                    {
+                        input: {},
+                        output: {
+                            status: "success",
+                            tps: 3500,
+                            message: "Current network TPS: 3500",
+                        },
+                        explanation: "Get the current TPS of the Solana network",
+                    },
+                ],
+            ]
+            
+            "#
+            .to_string(),
             parameters: serde_json::Value::Null,
         }
     }
