@@ -24,6 +24,9 @@ use solana_sdk::pubkey::Pubkey;
 /// - `uri`: The URI for the collection's metadata.
 /// - `basis_points`: Optional. The basis points for the NFT.
 /// - `creators`: Optional. A list of creators associated with the NFT.
+///
+// #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct NftMetadata {
     pub(crate) name: String,
     pub(crate) uri: String,

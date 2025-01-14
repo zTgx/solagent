@@ -24,7 +24,9 @@ use serde_json::json;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
-pub struct DeployCollectionArgs {}
+pub struct DeployCollectionArgs {
+    metadata: NftMetadata,
+}
 
 #[derive(Deserialize, Serialize)]
 pub struct DeployCollectionOutput {
@@ -38,12 +40,11 @@ pub struct DeployCollectionError;
 
 pub struct DeployCollection {
     agent: Arc<SolAgent>,
-    options: NftMetadata,
 }
 
 impl DeployCollection {
-    pub fn new(agent: Arc<SolAgent>, options: NftMetadata) -> Self {
-        DeployCollection { agent, options }
+    pub fn new(agent: Arc<SolAgent>) -> Self {
+        DeployCollection { agent }
     }
 }
 
@@ -63,9 +64,11 @@ impl Tool for DeployCollection {
                 [
                 {
                     input: {
-                        name: "My Collection",
-                        uri: "https://example.com/collection.json",
-                        royaltyBasisPoints: 500,
+                        metadata: {
+                            name: "My NFT",
+                            uri: "https://example.com/nft.json",
+                            basis_points: 500,
+                        }
                     },
                     output: {
                         status: "success",
@@ -79,8 +82,10 @@ impl Tool for DeployCollection {
                 [
                 {
                     input: {
-                        name: "Basic Collection",
-                        uri: "https://example.com/basic.json",
+                        metadata: {
+                            name: "My NFT",
+                            uri: "https://example.com/nft.json",
+                        }                        
                     },
                     output: {
                         status: "success",
@@ -96,13 +101,13 @@ impl Tool for DeployCollection {
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                options: NftMetadata
+                metadata: NftMetadata
             ),
         }
     }
 
-    async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let res = deploy_collection(&self.agent, &self.options).await.expect("deploy_collection");
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let res = deploy_collection(&self.agent, &args.metadata).await.expect("deploy_collection");
 
         Ok(DeployCollectionOutput { mint_address: res.mint, tx_signature: res.signature })
     }
@@ -115,10 +120,10 @@ pub struct InitError;
 impl ToolEmbedding for DeployCollection {
     type InitError = InitError;
     type Context = ();
-    type State = (Arc<SolAgent>, NftMetadata);
+    type State = Arc<SolAgent>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(DeployCollection { agent: state.0, options: state.1 })
+        Ok(DeployCollection { agent: state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {

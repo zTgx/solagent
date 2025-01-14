@@ -20,6 +20,7 @@ pub mod get_balance_other;
 pub mod get_tps;
 pub mod get_wallet_address;
 pub mod launch_token_pumpfun;
+pub mod mint_nft;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
 pub mod stake_with_jup;
@@ -32,8 +33,12 @@ use super::{
     request_faucet_funds::RequestFaucetFunds, stake_with_jup::StakeWithJup, transfer::Transfer,
 };
 use crate::SolAgent;
+use deploy_collection::DeployCollection;
+use launch_token_pumpfun::LaunchPumpfunToken;
+use mint_nft::MintNFT;
 use rig::tool::ToolSet;
 use std::sync::Arc;
+use trade::Trade;
 
 /// An enumeration representing a set of tools that can be used with Solana.
 ///
@@ -41,18 +46,23 @@ use std::sync::Arc;
 /// - `GetBalance`: Tool to get the balance of a specified wallet.
 /// - `GetBalanceOther`: Tool to get the balance of another wallet.
 /// - `RequestFaucetFunds`: Tool to request funds from a faucet.
+/// - more
 pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
     let builder = ToolSet::builder()
-        .dynamic_tool(GetBalance::new(agent.clone()))
-        .dynamic_tool(GetBalanceOther::new(agent.clone()))
-        .dynamic_tool(RequestFaucetFunds::new(agent.clone()))
+        .dynamic_tool(DeployCollection::new(agent.clone()))
         .dynamic_tool(DeployToken::new(agent.clone()))
         .dynamic_tool(FetchPrice::new())
-        .dynamic_tool(FetchPricePyTh::new())
+        .dynamic_tool(GetBalance::new(agent.clone()))
+        .dynamic_tool(GetBalanceOther::new(agent.clone()))
         .dynamic_tool(GetTps::new(agent.clone()))
         .dynamic_tool(GetWalletAddress::new(agent.clone()))
-        .dynamic_tool(Transfer::new(agent.clone()))
-        .dynamic_tool(StakeWithJup::new(agent.clone()));
+        .dynamic_tool(LaunchPumpfunToken::new(agent.clone()))
+        .dynamic_tool(MintNFT::new(agent.clone()))
+        .dynamic_tool(FetchPricePyTh::new())
+        .dynamic_tool(RequestFaucetFunds::new(agent.clone()))
+        .dynamic_tool(StakeWithJup::new(agent.clone()))
+        .dynamic_tool(Trade::new(agent.clone()))
+        .dynamic_tool(Transfer::new(agent.clone()));
 
     builder.build()
 }
