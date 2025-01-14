@@ -18,11 +18,11 @@ use crate::{
         get_balance_other, get_tps, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_with_jup,
         trade, transfer,
     },
-    agent::SolAgent,
     primitives::{
         pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse},
-        token::{DeployedData, NftMetadata},
+        token::{DeployedData, NFTMetadata},
     },
+    SolAgent,
 };
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;
@@ -59,14 +59,14 @@ impl SolAgent {
         deploy_token(&self, name, uri, symbol, decimals, initial_supply).await
     }
 
-    pub async fn deploy_collection(&self, metadata: NftMetadata) -> Result<DeployedData, ClientError> {
+    pub async fn deploy_collection(&self, metadata: NFTMetadata) -> Result<DeployedData, ClientError> {
         deploy_collection(&self, &metadata).await
     }
 
     pub async fn mint_nft_to_collection(
         &self,
         collection: Pubkey,
-        metadata: NftMetadata,
+        metadata: NFTMetadata,
     ) -> Result<DeployedData, ClientError> {
         mint_nft_to_collection(&self, collection, metadata).await
     }

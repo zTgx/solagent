@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::parameters_json_schema;
-use crate::{actions::stake_with_jup, agent::SolAgent};
-use rig::tool::ToolEmbedding;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::stake_with_jup, parameters_json_schema, SolAgent};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::sync::Arc;

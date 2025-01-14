@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::parameters_json_schema;
-use crate::{actions::request_faucet_funds, agent::SolAgent};
+use crate::{actions::request_faucet_funds, parameters_json_schema, SolAgent};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

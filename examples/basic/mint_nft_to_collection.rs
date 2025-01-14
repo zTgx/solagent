@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{NftMetadata, SolAgent};
+use solagent::{NFTMetadata, SolAgent};
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
@@ -25,7 +25,7 @@ async fn main() {
     let uri = "uri";
     let royalty_basis_points = Some(500);
     let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
-    let metadata = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
+    let metadata = NFTMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
     let collection = Pubkey::from_str_const("collection Mint");
 

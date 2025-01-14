@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{agent::SolAgent, primitives::constants::JUP_API};
+use crate::{primitives::constants::JUP_API, SolAgent};
 use anyhow::Result;
 use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};
-use solana_sdk::commitment_config::CommitmentConfig;
-use solana_sdk::{program_pack::Pack, pubkey::Pubkey, transaction::VersionedTransaction};
+use solana_sdk::{
+    commitment_config::CommitmentConfig, program_pack::Pack, pubkey::Pubkey, transaction::VersionedTransaction,
+};
 use spl_token::state::Mint;
 use std::str::FromStr;
 

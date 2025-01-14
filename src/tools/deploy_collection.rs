@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::agent::SolAgent;
-use crate::primitives::token::NftMetadata;
-use crate::{actions::deploy_collection, parameters_json_schema};
+use crate::{actions::deploy_collection, parameters_json_schema, primitives::token::NFTMetadata, SolAgent};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -25,7 +23,7 @@ use std::sync::Arc;
 
 #[derive(Deserialize)]
 pub struct DeployCollectionArgs {
-    metadata: NftMetadata,
+    metadata: NFTMetadata,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -101,7 +99,7 @@ impl Tool for DeployCollection {
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                metadata: NftMetadata
+                metadata: NFTMetadata
             ),
         }
     }

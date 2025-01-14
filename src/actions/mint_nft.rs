@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::{
-    primitives::token::{DeployedData, NftMetadata},
+    primitives::token::{DeployedData, NFTMetadata},
     SolAgent,
 };
 use mpl_token_metadata::{
@@ -45,7 +45,7 @@ use solana_sdk::{
 pub async fn mint_nft_to_collection(
     agent: &SolAgent,
     collection: Pubkey,
-    metadata: NftMetadata,
+    metadata: NFTMetadata,
 ) -> Result<DeployedData, ClientError> {
     // Create a new keypair for the mint
     let mint_keypair = Keypair::new();

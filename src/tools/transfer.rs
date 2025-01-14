@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::actions::transfer;
-use crate::agent::SolAgent;
-use crate::parameters_json_schema;
+use crate::{actions::transfer, parameters_json_schema, SolAgent};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

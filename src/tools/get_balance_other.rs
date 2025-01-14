@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::parameters_json_schema;
-use crate::{actions::get_balance_other, agent::SolAgent};
-use rig::tool::ToolEmbedding;
-use rig::{completion::ToolDefinition, tool::Tool};
+use crate::{actions::get_balance_other, parameters_json_schema, SolAgent};
+use rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use solana_sdk::pubkey::Pubkey;

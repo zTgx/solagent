@@ -13,8 +13,8 @@
 // limitations under the License.
 
 use crate::{
-    agent::SolAgent,
-    primitives::token::NftMetadata,
+    primitives::token::NFTMetadata,
+    SolAgent,
     {actions::mint_nft_to_collection, parameters_json_schema},
 };
 use rig::{
@@ -29,7 +29,7 @@ use std::sync::Arc;
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct MintNFTArgs {
     collection: Pubkey,
-    metadata: NftMetadata,
+    metadata: NFTMetadata,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -123,7 +123,7 @@ impl Tool for MintNFT {
             .to_string(),
             parameters: parameters_json_schema!(
                 collection: Pubkey,
-                metadata: NftMetadata,
+                metadata: NFTMetadata,
             ),
         }
     }

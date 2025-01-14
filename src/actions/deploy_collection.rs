@@ -12,18 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::agent::SolAgent;
-use crate::primitives::token::{DeployedData, NftMetadata};
-use mpl_token_metadata::instructions::{
-    CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs,
+use crate::{
+    primitives::token::{DeployedData, NFTMetadata},
+    SolAgent,
 };
-use mpl_token_metadata::types::DataV2;
+use mpl_token_metadata::{
+    instructions::{CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs},
+    types::DataV2,
+};
 use solana_client::client_error::ClientError;
-use solana_sdk::program_pack::Pack;
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signature::{Keypair, Signer};
-use solana_sdk::transaction::Transaction;
-use solana_sdk::{system_instruction, sysvar};
+use solana_sdk::{
+    program_pack::Pack,
+    pubkey::Pubkey,
+    signature::{Keypair, Signer},
+    system_instruction, sysvar,
+    transaction::Transaction,
+};
 use spl_associated_token_account::instruction::create_associated_token_account;
 
 /// Deploys a new NFT collection.
@@ -36,7 +40,7 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 /// # Returns
 ///
 /// An object containing the collection address and metadata.
-pub async fn deploy_collection(agent: &SolAgent, options: &NftMetadata) -> Result<DeployedData, ClientError> {
+pub async fn deploy_collection(agent: &SolAgent, options: &NFTMetadata) -> Result<DeployedData, ClientError> {
     // Create a new mint for the collection
     let collection_mint = Keypair::new();
     let collection_mint_pubkey = collection_mint.pubkey();

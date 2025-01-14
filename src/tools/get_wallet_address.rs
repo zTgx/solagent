@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::actions::get_wallet_address;
-use crate::agent::SolAgent;
+use crate::{actions::get_wallet_address, SolAgent};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

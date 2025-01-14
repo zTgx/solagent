@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::agent::SolAgent;
-use crate::primitives::token::DeployedData;
-use mpl_token_metadata::accounts::Metadata;
-use mpl_token_metadata::instructions::{CreateV1, CreateV1InstructionArgs};
-use mpl_token_metadata::types::{PrintSupply, TokenStandard};
+use crate::{primitives::token::DeployedData, SolAgent};
+use mpl_token_metadata::{
+    accounts::Metadata,
+    instructions::{CreateV1, CreateV1InstructionArgs},
+    types::{PrintSupply, TokenStandard},
+};
 use solana_client::client_error::ClientError;
-use solana_sdk::program_pack::Pack;
-use solana_sdk::signature::{Keypair, Signer};
-use solana_sdk::{commitment_config::CommitmentConfig, transaction::Transaction};
-use solana_sdk::{system_instruction, system_program};
+use solana_sdk::{
+    program_pack::Pack,
+    signature::{Keypair, Signer},
+    system_instruction, system_program,
+    {commitment_config::CommitmentConfig, transaction::Transaction},
+};
 use spl_associated_token_account::get_associated_token_address;
 use spl_token::instruction as spl_token_instruction;
 

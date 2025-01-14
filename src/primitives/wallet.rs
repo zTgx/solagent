@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solana_sdk::bs58;
-use solana_sdk::signature::Signer;
-use solana_sdk::{pubkey::Pubkey, signature::Keypair};
+use solana_sdk::{
+    bs58,
+    pubkey::Pubkey,
+    signature::{Keypair, Signer},
+};
 
 pub struct Wallet {
     pub wallet: Keypair,

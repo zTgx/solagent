@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use serde::Deserialize;
-
 /// Represents the configuration for the agent.
 ///
 /// This struct contains the necessary settings for the agent, including
@@ -23,7 +21,6 @@ use serde::Deserialize;
 /// Currently supported API keys:
 /// - `openai_api_key`: Key for accessing OpenAI services.
 /// - `gemini_api_key`: Key for accessing Gemini services.
-#[derive(Deserialize, Debug, Clone)]
 pub struct AgentConfig {
     /// Optional API key for OpenAI services.
     /// Must be provided if `gemini_api_key` is not set.

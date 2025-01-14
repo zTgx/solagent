@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::actions::deploy_token;
-use crate::agent::SolAgent;
+use crate::SolAgent;
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

@@ -14,9 +14,9 @@
 
 use crate::{
     actions::launch_token_pumpfun,
-    agent::SolAgent,
     parameters_json_schema,
     primitives::pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse},
+    SolAgent,
 };
 use rig::{
     completion::ToolDefinition,
