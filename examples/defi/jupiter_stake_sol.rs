@@ -17,7 +17,7 @@ use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key", "https://api.devnet.solana.com", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
     //stake 0.01 SOL
     let stake = agent.jupiter_stake_sol(0.01).await.unwrap();
     println!("Signature: {}", stake);

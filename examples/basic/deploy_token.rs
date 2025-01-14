@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{NftMetadata, SolAgent};
-use solana_sdk::pubkey::Pubkey;
+use solagent::SolAgent;
 use std::sync::Arc;
 
+/// Example on devnet
+/// Mint: 3kvSrsPwtYi6RkWymJocQcezwiDpqMfDjWazYAaibDmY
 #[tokio::main]
 async fn main() {
-    let name = "Solagent Collection";
-    let uri = "https://arweave.net/metadata.json";
-    let royalty_basis_points = Some(500);
-    let creators = vec![(Pubkey::from_str_const("HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt"), 100)];
-    let options = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
+    let name = "Solagent".to_string();
+    let uri = "solagent.rs".to_string();
+    let symbol = "SOLA".to_string();
+    let decimals = 1;
+    let initial_supply = 1_000_000_000_u64;
 
-    let agent = Arc::new(SolAgent::new("private_key", "https://api.devnet.solana.com", "openai_api_key"));
-    let tx = agent.deploy_collection(options).await.unwrap();
-    println!("Mint: {:?}", tx.0);
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
+    let tx = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
+    println!("Mint: {}", tx.unwrap().to_string());
 }
