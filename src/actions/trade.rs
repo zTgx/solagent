@@ -61,16 +61,16 @@ struct QuoteResponse {
 /// # Returns
 ///
 /// Transaction signature as a string
-pub async fn swap(
+pub async fn trade(
     agent: &SolAgent,
     output_mint: &str,
     input_amount: f64,
-    input_mint: Option<&str>,
+    input_mint: Option<String>,
     slippage_bps: Option<u32>,
 ) -> Result<String, Box<dyn std::error::Error>> {
     // Convert strings to Pubkeys
     let output_mint = Pubkey::from_str(output_mint)?;
-    let input_mint = input_mint.map(Pubkey::from_str).transpose()?.unwrap_or(spl_token::native_mint::id());
+    let input_mint = input_mint.as_deref().map(Pubkey::from_str).transpose()?.unwrap_or(spl_token::native_mint::id());
 
     // Use defaults if not provided
     let slippage_bps = slippage_bps.unwrap_or(300);

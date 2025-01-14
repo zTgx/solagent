@@ -20,8 +20,8 @@ async fn main() {
     let agent = Arc::new(SolAgent::new("private_key", "https://api.devnet.solana.com", "openai_api_key"));
     //swap 0.01 SOL to USDC
     let swap = agent
-        .jupiter_swap(
-            Some("So11111111111111111111111111111111111111112"),
+        .trade(
+            Some("So11111111111111111111111111111111111111112".to_string()),
             0.01,
             "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
             None,

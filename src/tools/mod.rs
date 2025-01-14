@@ -22,12 +22,13 @@ pub mod get_wallet_address;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
 pub mod stake_with_jup;
+pub mod trade;
 pub mod transfer;
 
 use super::{
     deploy_token::DeployToken, fetch_price::FetchPrice, get_balance::GetBalance, get_balance_other::GetBalanceOther,
     get_tps::GetTps, get_wallet_address::GetWalletAddress, pyth_fetch_price::FetchPricePyTh,
-    request_faucet_funds::RequestFaucetFunds, transfer::Transfer,
+    request_faucet_funds::RequestFaucetFunds, stake_with_jup::StakeWithJup, transfer::Transfer,
 };
 use crate::SolAgent;
 use rig::tool::ToolSet;
@@ -49,7 +50,8 @@ pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
         .dynamic_tool(FetchPricePyTh::new())
         .dynamic_tool(GetTps::new(agent.clone()))
         .dynamic_tool(GetWalletAddress::new(agent.clone()))
-        .dynamic_tool(Transfer::new(agent.clone()));
+        .dynamic_tool(Transfer::new(agent.clone()))
+        .dynamic_tool(StakeWithJup::new(agent.clone()));
 
     builder.build()
 }

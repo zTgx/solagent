@@ -48,8 +48,8 @@ pub use mint_nft::mint_nft_to_collection;
 mod launch_token_pumpfun;
 pub use launch_token_pumpfun::launch_token_pumpfun;
 
-mod jupiter;
-pub use jupiter::swap;
+mod trade;
+pub use trade::trade;
 
 mod stake_with_jup;
 pub use stake_with_jup::stake_with_jup;
