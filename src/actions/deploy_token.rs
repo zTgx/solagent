@@ -13,12 +13,12 @@
 // limitations under the License.
 
 use crate::agent::SolAgent;
+use crate::primitives::token::DeployedData;
 use mpl_token_metadata::accounts::Metadata;
 use mpl_token_metadata::instructions::{CreateV1, CreateV1InstructionArgs};
 use mpl_token_metadata::types::{PrintSupply, TokenStandard};
 use solana_client::client_error::ClientError;
 use solana_sdk::program_pack::Pack;
-use solana_sdk::pubkey::Pubkey;
 use solana_sdk::signature::{Keypair, Signer};
 use solana_sdk::{commitment_config::CommitmentConfig, transaction::Transaction};
 use solana_sdk::{system_instruction, system_program};
@@ -46,7 +46,7 @@ pub async fn deploy_token(
     symbol: String,
     decimals: u8,
     initial_supply: Option<u64>,
-) -> Result<Pubkey, ClientError> {
+) -> Result<DeployedData, ClientError> {
     let mint = Keypair::new();
     let mint_pubkey = mint.pubkey();
 
@@ -139,11 +139,11 @@ pub async fn deploy_token(
         recent_blockhash,
     );
 
-    agent.connection.send_and_confirm_transaction_with_spinner_and_config(
+    let signature = agent.connection.send_and_confirm_transaction_with_spinner_and_config(
         &transaction,
         CommitmentConfig::finalized(),
         solana_client::rpc_config::RpcSendTransactionConfig { skip_preflight: true, ..Default::default() },
     )?;
 
-    Ok(mint_pubkey)
+    Ok(DeployedData::new(mint_pubkey.to_string(), signature.to_string()))
 }

@@ -32,7 +32,8 @@ pub struct DeployTokenArgs {
 
 #[derive(Deserialize, Serialize)]
 pub struct DeployTokenOutput {
-    pub tx: String,
+    pub mint_address: String,
+    pub tx_signature: String,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -74,11 +75,11 @@ impl Tool for DeployToken {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = deploy_token(&self.agent, args.name, args.uri, args.symbol, args.decimals, args.initial_supply)
+        let res = deploy_token(&self.agent, args.name, args.uri, args.symbol, args.decimals, args.initial_supply)
             .await
             .expect("deploy_token");
 
-        Ok(DeployTokenOutput { tx: tx.to_string() })
+        Ok(DeployTokenOutput { mint_address: res.mint, tx_signature: res.signature })
     }
 }
 

@@ -26,6 +26,6 @@ async fn main() {
     let initial_supply = 1_000_000_000_u64;
 
     let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
-    let tx = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
-    println!("Mint: {}", tx.unwrap().to_string());
+    let data = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
+    println!("Mint data: {:?}", data);
 }

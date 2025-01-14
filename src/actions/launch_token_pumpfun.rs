@@ -65,7 +65,6 @@ pub async fn launch_token_pumpfun(
 
     // 0. download image
     let image_data = fetch_image(&reqwest_client, &image_url).await.expect("fetch_image");
-    println!(">>> 0. done");
 
     // 1. fetch token metadata metadataUri
     let token_metadata =
@@ -73,22 +72,16 @@ pub async fn launch_token_pumpfun(
             .await
             .expect("fetch_token_metadata");
 
-    println!(">>> 1. done");
-
     // 2. Create a new keypair for the mint
     let mint_keypair = Keypair::new();
-    println!(">>> 2. done");
 
     // 3. request pumpportal tx
     let mut versioned_tx = request_pumpportal_tx(&agent, &reqwest_client, &token_metadata, &mint_keypair)
         .await
         .expect("request_pumpportal_tx");
 
-    println!(">>> 3. done");
-
     // 4. sign&send transaction
     let signature = sign_and_send_tx(agent, &mut versioned_tx, &mint_keypair).await.expect("sign_and_send_tx");
-    println!(">>> 4. done, tx signature = {}", signature);
 
     let res =
         PumpfunTokenResponse { signature, mint: mint_keypair.pubkey().to_string(), metadata_uri: token_metadata.uri };
@@ -171,8 +164,6 @@ async fn fetch_token_metadata(
     }
 
     let response_json = res.json::<serde_json::Value>().await?;
-    println!("json>>> {:?}", response_json);
-
     let md = TokenMetadata {
         name: name.to_string(),
         symbol: symbol.to_string(),
@@ -220,7 +211,5 @@ async fn request_pumpportal_tx(
 
     let bytes = res.bytes().await.unwrap();
     let tx: VersionedTransaction = bincode::deserialize(&bytes).unwrap();
-    println!("Deserialized VersionedTransaction: {:?}", tx);
-
     Ok(tx)
 }

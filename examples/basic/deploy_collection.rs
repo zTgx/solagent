@@ -27,6 +27,6 @@ async fn main() {
     let options = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
     let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
-    let tx = agent.deploy_collection(options).await.unwrap();
-    println!("Mint: {:?}", tx.0);
+    let data = agent.deploy_collection(options).await.unwrap();
+    println!("Deploy Data: {:?}", data);
 }

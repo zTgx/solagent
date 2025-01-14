@@ -55,11 +55,11 @@ impl SolAgent {
         symbol: String,
         decimals: u8,
         initial_supply: Option<u64>,
-    ) -> Result<Pubkey, ClientError> {
+    ) -> Result<DeployedData, ClientError> {
         deploy_token(&self, name, uri, symbol, decimals, initial_supply).await
     }
 
-    pub async fn deploy_collection(&self, metadata: NftMetadata) -> Result<(String, String), ClientError> {
+    pub async fn deploy_collection(&self, metadata: NftMetadata) -> Result<DeployedData, ClientError> {
         deploy_collection(&self, &metadata).await
     }
 

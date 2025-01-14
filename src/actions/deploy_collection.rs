@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::agent::SolAgent;
-use crate::primitives::token::NftMetadata;
+use crate::primitives::token::{DeployedData, NftMetadata};
 use mpl_token_metadata::instructions::{
     CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs,
 };
@@ -36,7 +36,7 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 /// # Returns
 ///
 /// An object containing the collection address and metadata.
-pub async fn deploy_collection(agent: &SolAgent, options: &NftMetadata) -> Result<(String, String), ClientError> {
+pub async fn deploy_collection(agent: &SolAgent, options: &NftMetadata) -> Result<DeployedData, ClientError> {
     // Create a new mint for the collection
     let collection_mint = Keypair::new();
     let collection_mint_pubkey = collection_mint.pubkey();
@@ -172,5 +172,5 @@ pub async fn deploy_collection(agent: &SolAgent, options: &NftMetadata) -> Resul
 
     let signature = agent.connection.send_and_confirm_transaction(&transaction)?;
 
-    Ok((collection_mint_pubkey.to_string(), signature.to_string()))
+    Ok(DeployedData::new(collection_mint_pubkey.to_string(), signature.to_string()))
 }

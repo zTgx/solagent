@@ -44,8 +44,14 @@ impl NftMetadata {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct DeployedData {
     pub mint: String,      // mint address
     pub signature: String, // Tx hash
+}
+
+impl DeployedData {
+    pub fn new(mint: String, signature: String) -> Self {
+        DeployedData { mint, signature }
+    }
 }

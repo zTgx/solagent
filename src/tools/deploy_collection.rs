@@ -69,10 +69,9 @@ impl Tool for DeployCollection {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let (mint_address, tx_signature) =
-            deploy_collection(&self.agent, &self.options).await.expect("deploy_collection");
+        let res = deploy_collection(&self.agent, &self.options).await.expect("deploy_collection");
 
-        Ok(DeployCollectionOutput { mint_address, tx_signature })
+        Ok(DeployCollectionOutput { mint_address: res.mint, tx_signature: res.signature })
     }
 }
 
