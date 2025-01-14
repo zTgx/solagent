@@ -21,6 +21,7 @@ pub mod get_tps;
 pub mod get_wallet_address;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
+pub mod stake_with_jup;
 pub mod transfer;
 
 use super::{

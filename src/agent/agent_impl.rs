@@ -15,7 +15,7 @@
 use crate::{
     actions::{
         deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id, get_balance,
-        get_balance_other, get_tps, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_sol,
+        get_balance_other, get_tps, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_with_jup,
         swap, transfer,
     },
     agent::SolAgent,
@@ -108,7 +108,7 @@ impl SolAgent {
         swap(&self, to_token, amount, from_token, slippage).await
     }
 
-    pub async fn jupiter_stake_sol(&self, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
-        stake_sol(&self, amount).await
+    pub async fn stake_with_jup(&self, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
+        stake_with_jup(&self, amount).await
     }
 }
