@@ -4,8 +4,11 @@
   [<img alt="crates.io" src="https://img.shields.io/crates/v/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
   [<img alt="docs.rs" src="https://img.shields.io/docsrs/solagent?style=for-the-badge&logo=docs.rs">](https://docs.rs/solagent)
   [<img alt="crates.io" src="https://img.shields.io/crates/d/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
-
+  
+  ## [SendAI](https://www.sendai.fun/) donated to this project.
 </div>
+
+</br>
 An open-source toolkit for connecting AI agents to Solana protocols.
 
 ## WIP
@@ -85,20 +88,6 @@ let tx = agent.deploy_collection(options).await.unwrap();
 println!("Mint: {:?}", tx.0);
 ```
 
-### Mint NFT to Collection
-```rust
-let name = "My First SolAgent NFT";
-let uri = "https://uri.json";
-let royalty_basis_points = Some(500);
-let creators = vec![(Pubkey::from_str_const("8QB5VckaW3CWv4oZWiMLs1GkdrR5pVcjarAS1U6rG6Wh"), 100)];
-let metadata = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
-let collection = Pubkey::from_str_const("HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt");
-
-let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
-let deployed_data = agent.mint_nft_to_collection(collection, metadata).await.unwrap();
-println!("Mint: {}", deployed_data.mint);
-```
-
 ### Fetch Price Data from Pyth
 ```rust
 let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
@@ -114,7 +103,6 @@ println!("Price of SOL/USD: {}", price)
 ## More examples
 More examples can be found in the [examples](examples/).  
 
-## 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -136,3 +124,15 @@ Apache-2 License
 ## Security
 
 This toolkit handles private keys and transactions. Always ensure you're using it in a secure environment and never share your private keys.
+
+## Support Us
+Thank you for your support of solagent.rs! Your donations will help us maintain and develop this project better.  
+Donation Addresses:  
+**Solana: qsvR7V3DtbbxAEs4TkGiQL9N9Z1GccfV6Q6Vm2oHViS**  
+**Ethereum: 0x972b8d20f5847B03Df43d9A595B7e83A7bbCD951**  
+
+## Our Supporters  
+SendAI: [solscan.io](https://solscan.io/tx/nf3B1zaTZcLuCLVTkLFHuTqjVjLUwXHkCnN3Tdm7PHSDunjJD6tZHYHgijJKbCcchHaxVYWM4uEgieQyLjRBCR4)  
+
+</br>
+Thank you to all our generous supporters!  
