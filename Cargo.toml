@@ -1,6 +1,6 @@
 [package]
 name = "solagent"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs.git"
@@ -14,8 +14,6 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 lazy_static = "1.5.0"
 rig-core = "0.6.0"
-# rig-core = { path = "../rig/rig-core" } # main branch
-
 async-trait = "0.1.83"
 solana-client = "2.1.7"
 solana-sdk = "2.1.7"
@@ -29,13 +27,9 @@ bincode = "1.3.3"
 base64 = "0.22.1"
 anyhow = "1.0.80"
 
-[dependencies.borsh]
-version = ">= 0.9, < 1.0"
-
 [dev-dependencies]
 tokio = { version = "1.42.0", features = ["full"] }
 rig-core = "0.6.0"
-# rig-core = { path = "../rig/rig-core" } # main branch
 
 #################################################################
 # # EXAMPLE: BASIC

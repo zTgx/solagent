@@ -3468,13 +3468,12 @@ dependencies = [
 
 [[package]]
 name = "solagent"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "anyhow",
  "async-trait",
  "base64 0.22.1",
  "bincode",
- "borsh 0.10.4",
  "lazy_static",
  "mpl-token-metadata",
  "reqwest 0.12.12",
