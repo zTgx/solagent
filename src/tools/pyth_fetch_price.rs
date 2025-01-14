@@ -54,10 +54,26 @@ impl Tool for FetchPricePyTh {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "fetch_price_by_pyth".to_string(),
-            description: r#"Fetch the current price from a Pyth oracle price feed
-                input: {
-                    token_symbol: "SOL", // SOL/USD price feed
-                },
+            description: r#"
+            
+            Fetch the current price from a Pyth oracle price feed.
+            
+            examples: [
+                [
+                    {
+                        input: {
+                            tokenSymbol: "SOL", // SOL/USD price feed
+                        },
+                        output: {
+                            status: "success",
+                            price: "23.45",
+                            message: "Current price: $23.45",
+                        },
+                        explanation: "Get the current SOL/USD price from Pyth oracle",
+                    },
+                ],
+            ],
+
             "#
             .to_string(),
             parameters: parameters_json_schema!(

@@ -59,15 +59,49 @@ impl Tool for Transfer {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "transfer".to_string(),
-            description:
-            r#"
+            description: r#"
             Transfer tokens or SOL to another address (also called as wallet address).
 
-            Inputs: {
-                to: string, eg "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk" (required)
-                amount: number, eg 1 (required)
-                mint: Option<String>, eg "So11111111111111111111111111111111111111112" or "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)
-            }    
+            examples: [
+                [
+                    {
+                        input: {
+                            to: "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk",
+                            amount: 1,
+                        },
+                        output: {
+                            status: "success",
+                            message: "Transfer completed successfully",
+                            amount: 1,
+                            recipient: "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk",
+                            token: "SOL",
+                            transaction:
+                                "5UfgJ5vVZxUxefDGqzqkVLHzHxVTyYH9StYyHKgvHYmXJgqJKxEqy9k4Rz9LpXrHF9kUZB7",
+                        },
+                        explanation: "Transfer 1 SOL to the recipient address",
+                    },
+                ],
+                [
+                    {
+                        input: {
+                            to: "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk",
+                            amount: 100,
+                            mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                        },
+                        output: {
+                            status: "success",
+                            message: "Transfer completed successfully",
+                            amount: 100,
+                            recipient: "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk",
+                            token: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                            transaction:
+                                "4VfgJ5vVZxUxefDGqzqkVLHzHxVTyYH9StYyHKgvHYmXJgqJKxEqy9k4Rz9LpXrHF9kUZB7",
+                        },
+                        explanation: "Transfer 100 USDC tokens to the recipient address",
+                    },
+                ],
+            ],
+ 
             "#
             .to_string(),
             parameters: parameters_json_schema!(

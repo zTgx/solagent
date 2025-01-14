@@ -55,10 +55,24 @@ impl Tool for StakeWithJup {
         ToolDefinition {
             name: "stake_with_jup".to_string(),
             description: r#"
-                Stake SOL tokens with Jupiter's liquid staking protocol to receive jupSOL
-                input: {
-                    amount: 1.5,
-                },    
+            Stake SOL tokens with Jupiter's liquid staking protocol to receive jupSOL
+               
+            examples: [
+                [
+                    {
+                        input: {
+                            amount: 1.5,
+                        },
+                        output: {
+                            status: "success",
+                            signature: "5KtPn3...",
+                            message: "Successfully staked 1.5 SOL for jupSOL",
+                        },
+                        explanation: "Stake 1.5 SOL to receive jupSOL tokens",
+                    },
+                ],
+            ],
+                
             "#
             .to_string(),
             parameters: parameters_json_schema!(

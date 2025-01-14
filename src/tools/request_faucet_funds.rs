@@ -53,7 +53,24 @@ impl Tool for RequestFaucetFunds {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "request_faucet_funds".to_string(),
-            description: "Request SOL from Solana faucet (devnet/testnet only)".to_string(),
+            description: r#"
+            Request SOL from Solana faucet (devnet/testnet only)
+            
+            examples: [
+                [
+                {
+                    input: {},
+                    output: {
+                        status: "success",
+                        message: "Successfully requested faucet funds",
+                        network: "devnet.solana.com",
+                    },
+                    explanation: "Request SOL from the devnet faucet",
+                },
+                ],
+            ],
+            "#
+            .to_string(),
             parameters: parameters_json_schema!(
                 token_address: string,
             ),
