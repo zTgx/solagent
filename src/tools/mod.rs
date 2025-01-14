@@ -15,17 +15,17 @@
 pub mod deploy_collection;
 pub mod deploy_token;
 pub mod fetch_price;
-pub mod fetch_price_by_pyth;
 pub mod get_balance;
 pub mod get_balance_other;
 pub mod get_tps;
 pub mod get_wallet_address;
+pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
 pub mod transfer;
 
 use super::{
-    deploy_token::DeployToken, fetch_price::FetchPrice, fetch_price_by_pyth::FetchPricePyTh, get_balance::GetBalance,
-    get_balance_other::GetBalanceOther, get_tps::GetTps, get_wallet_address::GetWalletAddress,
+    deploy_token::DeployToken, fetch_price::FetchPrice, get_balance::GetBalance, get_balance_other::GetBalanceOther,
+    get_tps::GetTps, get_wallet_address::GetWalletAddress, pyth_fetch_price::FetchPricePyTh,
     request_faucet_funds::RequestFaucetFunds, transfer::Transfer,
 };
 use crate::SolAgent;

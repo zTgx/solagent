@@ -59,7 +59,7 @@ impl Tool for GetTps {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tps = get_tps(&self.agent).await.expect("tps");
+        let tps = get_tps(&self.agent).await.expect("get_tps");
 
         Ok(GetTpsOutput { tps })
     }
@@ -79,7 +79,7 @@ impl ToolEmbedding for GetTps {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get wallet address of the agent".into()]
+        vec!["Get the current transactions per second (TPS) of the Solana network".into()]
     }
 
     fn context(&self) -> Self::Context {}

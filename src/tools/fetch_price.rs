@@ -22,7 +22,7 @@ use serde_json::json;
 
 #[derive(Debug, Deserialize)]
 pub struct FetchPriceArgs {
-    token_id: String,
+    token_address: String,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -51,10 +51,11 @@ impl Tool for FetchPrice {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "fetch_price".to_string(),
-            description: r#"Fetch the current price of a Solana token in USDC using Jupiter API
-                input: {
-                    token_id: "",
-                },
+            description: r#"
+            Fetch the current price of a Solana token in USDC using Jupiter API.
+            input: {
+                token_address: "",
+            },
             "#
             .to_string(),
             parameters: parameters_json_schema!(
@@ -64,8 +65,8 @@ impl Tool for FetchPrice {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let token_id = args.token_id;
-        let price = fetch_price(&token_id).await.expect("fetch_price");
+        let token_address = args.token_address;
+        let price = fetch_price(&token_address).await.expect("fetch_price");
 
         Ok(FetchPriceOutput { price })
     }
@@ -85,7 +86,7 @@ impl ToolEmbedding for FetchPrice {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Fetch the current price of a Solana token in USDC using Jupiter API".into()]
+        vec!["Fetch the current price of a Solana token in USDC using Jupiter API.".into()]
     }
 
     fn context(&self) -> Self::Context {}

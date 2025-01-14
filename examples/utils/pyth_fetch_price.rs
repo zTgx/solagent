@@ -16,7 +16,7 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_FLASH},
 };
-use solagent::fetch_price_by_pyth::FetchPricePyTh;
+use solagent::pyth_fetch_price::FetchPricePyTh;
 
 #[tokio::main]
 async fn main() {

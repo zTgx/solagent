@@ -60,7 +60,8 @@ impl Tool for DeployToken {
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
             name: "deploy_token".to_string(),
-            description: r#"Deploy a new SPL token on the Solana blockchain with specified parameters:
+            description: r#"
+            Deploy a new SPL token on the Solana blockchain with specified parameters:
             input: {
                 name: "My Token",
                 uri: "https://example.com/token.json",
@@ -97,7 +98,7 @@ impl ToolEmbedding for DeployToken {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get the balance of a Solana wallet or token account.".into()]
+        vec!["Deploy a new SPL token on the Solana blockchain with specified parameters.".into()]
     }
 
     fn context(&self) -> Self::Context {}

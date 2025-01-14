@@ -60,14 +60,16 @@ impl Tool for Transfer {
         ToolDefinition {
             name: "transfer".to_string(),
             description:
-                r#"
-                Transfer tokens or SOL to another address ( also called as wallet address ).
+            r#"
+            Transfer tokens or SOL to another address (also called as wallet address).
 
-                Inputs:
+            Inputs: {
                 to: string, eg "8x2dR8Mpzuz2YqyZyZjUbYWKSWesBo5jMx2Q9Y86udVk" (required)
                 amount: number, eg 1 (required)
-                mint: Option<String>, eg "So11111111111111111111111111111111111111112" or "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)"#
-                .to_string(),
+                mint: Option<String>, eg "So11111111111111111111111111111111111111112" or "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa" (optional)
+            }    
+            "#
+            .to_string(),
             parameters: parameters_json_schema!(
                 to: String,
                 amount: f64,
@@ -77,7 +79,7 @@ impl Tool for Transfer {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = transfer(&self.agent, &args.to, args.amount, args.mint).await.expect("deploy_token");
+        let tx = transfer(&self.agent, &args.to, args.amount, args.mint).await.expect("transfer");
 
         Ok(TransferOutput { tx })
     }
@@ -97,7 +99,7 @@ impl ToolEmbedding for Transfer {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Transfer tokens or SOL to another address ( also called as wallet address ).".into()]
+        vec!["Transfer tokens or SOL to another address (also called as wallet address).".into()]
     }
 
     fn context(&self) -> Self::Context {}

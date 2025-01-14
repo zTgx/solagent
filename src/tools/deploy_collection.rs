@@ -47,7 +47,7 @@ impl DeployCollection {
 }
 
 impl Tool for DeployCollection {
-    const NAME: &'static str = "deploy_token";
+    const NAME: &'static str = "deploy_collection";
 
     type Error = DeployCollectionError;
     type Args = DeployCollectionArgs;
@@ -55,8 +55,9 @@ impl Tool for DeployCollection {
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "deploy_token".to_string(),
-            description: r#"Deploy a new NFT collection on Solana blockchain.:
+            name: "deploy_collection".to_string(),
+            description: r#"
+            Deploy a new NFT collection on Solana blockchain.:
             input: {
                 name: "My Collection",
                 uri: "https://example.com/collection.json",
@@ -89,7 +90,7 @@ impl ToolEmbedding for DeployCollection {
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get the balance of a Solana wallet or token account.".into()]
+        vec!["Deploy a new NFT collection on Solana blockchain.".into()]
     }
 
     fn context(&self) -> Self::Context {}
