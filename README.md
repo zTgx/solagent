@@ -80,7 +80,7 @@ println!("Token Mint Address: {:?}", mint_pubkey);
 let name = "solagent Collection";
 let uri = "https://uri";
 let royalty_basis_points = Some(500);
-let creators = vec![(Pubkey::from_str_const("HHV3DX4UT4u3vBek2XCaZeAyox88zuhWfcLRJbFx1oYt"), 100)];
+let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
 let options = NftMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
 let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
