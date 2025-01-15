@@ -66,6 +66,9 @@ impl Tool for LaunchPumpfunToken {
             name: "launch_token_pumpfun".to_string(),
             description: r#"
             Launch a new token on Pump.fun with customizable metadata and initial liquidity.
+            do not use this tool for any other purpose, or for creating SPL tokens.
+            If the user asks you to chose the parameters, you should generate valid values.
+            For generating the image, you can use the solana_create_image tool.
 
             examples: [
                 [
