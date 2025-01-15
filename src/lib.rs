@@ -13,6 +13,8 @@
 // limitations under the License.
 #![allow(dead_code)]
 
+#![allow(dead_code)]
+
 mod actions;
 mod agent;
 mod primitives;
@@ -60,7 +62,6 @@ impl Wallet {
 }
 
 /// Represents a Solana agent that interacts with the blockchain.
-/// Main class for interacting with Solana blockchain
 /// Provides a unified interface for token operations, NFT management, trading and more
 pub struct SolAgent {
     wallet: Wallet,

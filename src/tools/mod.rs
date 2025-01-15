@@ -29,42 +29,45 @@ pub mod stake_with_jup;
 pub mod trade;
 pub mod transfer;
 
-use super::{
-    deploy_token::DeployToken, fetch_price::FetchPrice, get_balance::GetBalance, get_balance_other::GetBalanceOther,
-    get_tps::GetTps, get_wallet_address::GetWalletAddress, pyth_fetch_price::FetchPricePyTh,
-    request_faucet_funds::RequestFaucetFunds, stake_with_jup::StakeWithJup, transfer::Transfer,
-};
 use crate::SolAgent;
-use deploy_collection::DeployCollection;
-use launch_token_pumpfun::LaunchPumpfunToken;
-use mint_nft::MintNFT;
 use rig::tool::ToolSet;
 use std::sync::Arc;
-use trade::Trade;
 
-/// An enumeration representing a set of tools that can be used with Solana.
+/// An function to build a set of tools that can be used with Solana.
 ///
-/// This enum encapsulates different tool types, including:
+/// - `DeployCollection`: Tool to deploy a new NFT collection on Solana blockchain.
+/// - `DeployToken`: Tool to deploy a new token on Solana blockchain.
+/// - `FetchPrice`: Tool to fetch the price of a given token in USDC.
 /// - `GetBalance`: Tool to get the balance of a specified wallet.
 /// - `GetBalanceOther`: Tool to get the balance of another wallet.
+/// - `GetTps`: Tool to get the current TPS of the Solana network.
+/// - `GetWalletAddress`: Tool to the wallet address of the agent.
+/// - `LaunchPumpfunToken`: Tool to launch a token on Pump.fun.
+/// - `MintNFT`: Tool to mint a new NFT in a collection on Solana blockchain.
+/// - `FetchPricePyTh`: Tool to fetch the price of a given price feed from Pyth's Hermes service.
 /// - `RequestFaucetFunds`: Tool to request funds from a faucet.
-/// - more
+/// - `StakeWithJup`: Tool to stake your SOL (Solana), also called as SOL staking or liquid staking.
+/// - `Trade`: Tool to swap tokens to another token ( It uses Jupiter Exchange ).
+/// - `Transfer`: Tool to transfer tokens or SOL to another address ( also called as wallet address ).
+/// - `FetchTokenReportSummary`: Tool to fetch a summary report for a specific token from RugCheck.
+/// - `FetchTokenReportDetailed`: Tool to fetch a detailed report for a specific token from RugCheck.
+/// - `CreateGibworkTask`: Tool to create a task on Gibwork.
 pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
     let builder = ToolSet::builder()
-        .dynamic_tool(DeployCollection::new(agent.clone()))
-        .dynamic_tool(DeployToken::new(agent.clone()))
-        .dynamic_tool(FetchPrice::new())
-        .dynamic_tool(GetBalance::new(agent.clone()))
-        .dynamic_tool(GetBalanceOther::new(agent.clone()))
-        .dynamic_tool(GetTps::new(agent.clone()))
-        .dynamic_tool(GetWalletAddress::new(agent.clone()))
-        .dynamic_tool(LaunchPumpfunToken::new(agent.clone()))
-        .dynamic_tool(MintNFT::new(agent.clone()))
-        .dynamic_tool(FetchPricePyTh::new())
-        .dynamic_tool(RequestFaucetFunds::new(agent.clone()))
-        .dynamic_tool(StakeWithJup::new(agent.clone()))
-        .dynamic_tool(Trade::new(agent.clone()))
-        .dynamic_tool(Transfer::new(agent.clone()))
+        .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
+        .dynamic_tool(deploy_token::DeployToken::new(agent.clone()))
+        .dynamic_tool(fetch_price::FetchPrice::new())
+        .dynamic_tool(get_balance::GetBalance::new(agent.clone()))
+        .dynamic_tool(get_balance_other::GetBalanceOther::new(agent.clone()))
+        .dynamic_tool(get_tps::GetTps::new(agent.clone()))
+        .dynamic_tool(get_wallet_address::GetWalletAddress::new(agent.clone()))
+        .dynamic_tool(launch_token_pumpfun::LaunchPumpfunToken::new(agent.clone()))
+        .dynamic_tool(mint_nft::MintNFT::new(agent.clone()))
+        .dynamic_tool(pyth_fetch_price::FetchPricePyTh::new())
+        .dynamic_tool(request_faucet_funds::RequestFaucetFunds::new(agent.clone()))
+        .dynamic_tool(stake_with_jup::StakeWithJup::new(agent.clone()))
+        .dynamic_tool(trade::Trade::new(agent.clone()))
+        .dynamic_tool(transfer::Transfer::new(agent.clone()))
         .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
         .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new())
         .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()));
