@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod config;
 pub(crate) mod constants;
 pub(crate) mod pumpfun;
 pub(crate) mod rugcheck;
 pub(crate) mod token;
-pub(crate) mod wallet;
