@@ -23,6 +23,7 @@ pub mod launch_token_pumpfun;
 pub mod mint_nft;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
+pub mod rugcheck;
 pub mod stake_with_jup;
 pub mod trade;
 pub mod transfer;
@@ -62,7 +63,9 @@ pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
         .dynamic_tool(RequestFaucetFunds::new(agent.clone()))
         .dynamic_tool(StakeWithJup::new(agent.clone()))
         .dynamic_tool(Trade::new(agent.clone()))
-        .dynamic_tool(Transfer::new(agent.clone()));
+        .dynamic_tool(Transfer::new(agent.clone()))
+        .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
+        .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new());
 
     builder.build()
 }

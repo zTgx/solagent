@@ -12,9 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod config;
-pub(crate) mod constants;
-pub(crate) mod pumpfun;
-pub(crate) mod rugcheck;
-pub(crate) mod token;
-pub(crate) mod wallet;
+use solagent::SolAgent;
+use std::sync::Arc;
+
+#[tokio::main]
+async fn main() {
+    let mint = "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1".into();
+
+    let agent = Arc::new(SolAgent::new("", "", "openai_api_key"));
+    let check = agent.fetch_summary_report(mint).await.unwrap();
+    println!("Token check: {:?}", check);
+}

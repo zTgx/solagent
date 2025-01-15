@@ -51,3 +51,6 @@ pub const JUP_PRICE_V2: &str = "https://api.jup.ag/price/v2?ids=";
 
 /// Pyth API URL
 pub const PYTH_API: &str = "https://hermes.pyth.network/v2";
+
+/// Rugcheck API URL
+pub const RUGCHECK_URL: &str = "https://api.rugcheck.xyz/v1";
