@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::SolAgent;
+use solagent::{AgentProvider, SolAgent};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     //stake 0.01 SOL
     let stake = agent.stake_with_jup(0.01).await.unwrap();
     println!("Signature: {}", stake);

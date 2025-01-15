@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::SolAgent;
+use solagent::{AgentProvider, SolAgent};
 use std::sync::Arc;
 
 /// Example on devnet
@@ -25,7 +25,7 @@ async fn main() {
     let decimals = 1;
     let initial_supply = 1_000_000_000_u64;
 
-    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let data = agent.deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
     println!("Mint data: {:?}", data);
 }

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::SolAgent;
+use solagent::{AgentProvider, SolAgent};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key", "PRC_URL", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let balance = agent.get_balance(None).await.unwrap();
     println!("My balance: {}", balance);
 }
