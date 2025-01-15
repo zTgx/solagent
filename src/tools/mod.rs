@@ -19,6 +19,7 @@ pub mod get_balance;
 pub mod get_balance_other;
 pub mod get_tps;
 pub mod get_wallet_address;
+pub mod gibwork;
 pub mod launch_token_pumpfun;
 pub mod mint_nft;
 pub mod pyth_fetch_price;
@@ -65,7 +66,8 @@ pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
         .dynamic_tool(Trade::new(agent.clone()))
         .dynamic_tool(Transfer::new(agent.clone()))
         .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
-        .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new());
+        .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new())
+        .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()));
 
     builder.build()
 }
