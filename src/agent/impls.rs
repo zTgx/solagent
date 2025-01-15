@@ -14,9 +14,9 @@
 
 use crate::{
     actions::{
-        create_gibwork_task, deploy_collection, deploy_token, fetch_price, fetch_price_by_pyth,
-        fetch_pyth_price_feed_id, get_balance, get_balance_other, get_tps, launch_token_pumpfun,
-        mint_nft_to_collection, request_faucet_funds, stake_with_jup, trade, transfer, GibworkCreateTaskResponse, fetch_detailed_report, fetch_summary_report
+        create_gibwork_task, deploy_collection, deploy_token, fetch_detailed_report, fetch_price, fetch_price_by_pyth,
+        fetch_pyth_price_feed_id, fetch_summary_report, get_balance, get_balance_other, get_tps, launch_token_pumpfun,
+        mint_nft_to_collection, request_faucet_funds, stake_with_jup, trade, transfer, GibworkCreateTaskResponse,
     },
     primitives::{
         pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse},
@@ -120,6 +120,7 @@ impl SolAgent {
 
     pub async fn fetch_detailed_report(mint: String) -> Result<Value, Box<dyn std::error::Error>> {
         fetch_detailed_report(mint).await
+    }
 
     pub async fn create_gibwork_task(
         &self,
