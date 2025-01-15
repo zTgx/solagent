@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#![allow(dead_code)]
+
 mod actions;
 mod agent;
 mod primitives;
@@ -25,12 +27,11 @@ use primitives::{config::AgentConfig, wallet::Wallet};
 use solana_client::rpc_client::RpcClient;
 
 /// Represents a Solana agent that interacts with the blockchain.
-/// Main class for interacting with Solana blockchain
 /// Provides a unified interface for token operations, NFT management, trading and more
 pub struct SolAgent {
-    pub wallet: Wallet,
-    pub config: AgentConfig,
-    pub connection: RpcClient,
+    pub(crate) wallet: Wallet,
+    pub(crate) config: AgentConfig,
+    pub(crate) connection: RpcClient,
 }
 
 impl SolAgent {
