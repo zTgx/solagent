@@ -20,8 +20,7 @@
 //! Quick Start
 //! ```
 //! use std::sync::Arc;
-//! use solagent::create_solana_tools;
-
+//! use solagent::{AgentProvider, SolAgent, create_solana_tools};
 //! #[tokio::main]
 //! async fn main() {
 //!     let agent = Arc::new(SolAgent::new("private_key_bs58",
@@ -33,8 +32,8 @@
 //! ```
 //! Get Balance
 //! ```
-//! use solagent::{AgentProvider, SolAgent};
 //! use std::sync::Arc;
+//! use solagent::{AgentProvider, SolAgent};
 //!
 //!  #[tokio::main]
 //! async fn main() {
