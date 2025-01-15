@@ -50,6 +50,10 @@ path = "examples/basic/get_balance.rs"
 name = "mint_nft_to_collection"
 path = "examples/basic/mint_nft_to_collection.rs"
 
+[[example]]
+name = "create_gibwork_task"
+path = "examples/basic/create_gibwork_task.rs"
+
 #################################################################
 # # EXAMPLE: DeFi
 #################################################################
