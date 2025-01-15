@@ -55,7 +55,9 @@ use solagent::create_solana_tools;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key_bs58", 
+                                        "rpc_url", 
+                         AgentProvider::OpenAI("key".into())));
     let toolset = create_solana_tools(agent);
 }
 ```
@@ -69,7 +71,9 @@ let symbol = "SOLA".to_string();
 let decimals = 9;
 let initial_supply = 1_000_000_000_u64;
 
-let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
+let agent = Arc::new(SolAgent::new("private_key_bs58", 
+                                    "rpc_url", 
+                        AgentProvider::OpenAI("key".into())));
 let mint_pubkey = agent
     .deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
 println!("Token Mint Address: {:?}", mint_pubkey);
@@ -83,14 +87,18 @@ let royalty_basis_points = Some(500);
 let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
 let options = NFTMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
-let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
+let agent = Arc::new(SolAgent::new("private_key_bs58", 
+                                    "rpc_url", 
+                        AgentProvider::OpenAI("key".into())));
 let tx = agent.deploy_collection(options).await.unwrap();
 println!("Mint: {:?}", tx.0);
 ```
 
 ### Fetch Price Data from Pyth
 ```rust
-let agent = Arc::new(SolAgent::new("private_key_bs58", "rpc_url", "openai_api_key"));
+let agent = Arc::new(SolAgent::new("private_key_bs58", 
+                                    "rpc_url", 
+                        AgentProvider::OpenAI("key".into())));
 let price_feed_id = agent.fetch_pyth_price_feed_id("SOL")
     .await
     .expect("fetch_pyth_price_feed_id");

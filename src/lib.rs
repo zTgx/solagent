@@ -14,6 +14,38 @@
 #![allow(dead_code)]
 #![allow(dead_code)]
 
+//! `solagent.rs`(Solana Agent) is an open-source Rust library that simplifies connecting any AI agent to Solana protocols.
+//! Built on the rig framework, which empowers developers to create portable, modular, and lightweight full-stack AI agents.
+//!
+//! Quick Start
+//! ```
+//! use std::sync::Arc;
+//! use solagent::create_solana_tools;
+
+//! #[tokio::main]
+//! async fn main() {
+//!     let agent = Arc::new(SolAgent::new("private_key_bs58",
+//!                                         "rpc_url",
+//!                          AgentProvider::OpenAI("key".into())));
+//!     let toolset = create_solana_tools(agent);
+//! }
+//!
+//! ```
+//! Get Balance
+//! ```
+//! use solagent::{AgentProvider, SolAgent};
+//! use std::sync::Arc;
+//!
+//!  #[tokio::main]
+//! async fn main() {
+//!     let agent = Arc::new(SolAgent::new("private_key_bs58",
+//!                                         "rpc_url",
+//!                          AgentProvider::OpenAI("key".into())));
+//!    let balance = agent.get_balance(None).await.unwrap();
+//!    println!("My balance: {}", balance);
+//!}
+//! ```
+//!
 mod actions;
 mod agent;
 mod primitives;
