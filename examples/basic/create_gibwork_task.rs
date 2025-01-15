@@ -17,28 +17,20 @@ use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("2BXbo648j6fMBtgBfjQGDvbAF41Gd3p4CnPZVzJBkN7J2eE4ACP1GjyAc5DX3CPEe7BHM2KGnUMogeDiG8rFCPRK", "https://api.mainnet-beta.solana.com", "openai_api_key"));
-
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", "openai_api_key"));
     // Task details
     let title = "Implement New Feature";
     let content = "We need to implement a new authentication system using JWT tokens";
-    let requirements = "- Experience with Rust and JWT\n- Understanding of authentication flows\n- Test coverage required";
+    let requirements =
+        "- Experience with Rust and JWT\n- Understanding of authentication flows\n- Test coverage required";
     let tags = vec!["rust".to_string(), "authentication".to_string(), "jwt".to_string()];
     let token_mint_address = "So11111111111111111111111111111111111111112";
-    let token_amount = 1_000_000_000;  // 1 SOL = 1 billion lamports
-    
+    let token_amount = 1_000_000_000; // 1 SOL = 1 billion lamports
+
     let payer = None;
 
     let response = agent
-        .create_gibwork_task(
-            title,
-            content,
-            requirements,
-            tags,
-            token_mint_address,
-            token_amount,
-            payer,
-        )
+        .create_gibwork_task(title, content, requirements, tags, token_mint_address, token_amount, payer)
         .await
         .unwrap();
 

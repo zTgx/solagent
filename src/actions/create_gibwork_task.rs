@@ -1,11 +1,7 @@
 use crate::SolAgent;
-use serde::{Deserialize, Serialize};
-use solana_sdk::{
-    commitment_config::CommitmentConfig,
-    pubkey::Pubkey,
-    transaction::VersionedTransaction,
-};
 use base64::{engine::general_purpose, Engine};
+use serde::{Deserialize, Serialize};
+use solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, transaction::VersionedTransaction};
 
 #[derive(Serialize)]
 struct TaskRequest {
@@ -71,26 +67,19 @@ pub async fn create_gibwork_task(
         requirements: requirements.to_string(),
         tags,
         payer: payer.unwrap_or(agent.wallet.address).to_string(),
-        token: TokenInfo {
-            mint_address: token_mint_address.to_string(),
-            amount: token_amount,
-        },
+        token: TokenInfo { mint_address: token_mint_address.to_string(), amount: token_amount },
     };
 
     // Send request to Gibwork API
     let client = reqwest::Client::new();
-    let response = client
-        .post("https://api2.gib.work/tasks/public/transaction")
-        .json(&request)
-        .send()
-        .await?;
+    let response = client.post("https://api2.gib.work/tasks/public/transaction").json(&request).send().await?;
 
     if !response.status().is_success() {
         return Err(format!("API request failed: {}", response.status()).into());
     }
 
     let task_response: TaskResponse = response.json().await?;
-    
+
     // Deserialize and sign transaction
     let transaction_data = general_purpose::STANDARD.decode(task_response.serialized_transaction.as_str())?;
 
@@ -99,21 +88,15 @@ pub async fn create_gibwork_task(
     // Get latest blockhash and sign transaction
     let blockhash = agent.connection.get_latest_blockhash()?;
     versioned_transaction.message.set_recent_blockhash(blockhash);
-    let signed_transaction = VersionedTransaction::try_new(
-        versioned_transaction.message,
-        &[&agent.wallet.wallet]
-    )?;
+    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+
     // Send and confirm transaction
     let signature = agent.connection.send_transaction(&signed_transaction)?;
-    agent.connection.confirm_transaction_with_spinner(
-        &signature,
-        &blockhash,
-        CommitmentConfig::confirmed(),
-    )?;
+    agent.connection.confirm_transaction_with_spinner(&signature, &blockhash, CommitmentConfig::confirmed())?;
 
     Ok(GibworkCreateTaskResponse {
         status: "success".to_string(),
         task_id: task_response.task_id,
         signature: signature.to_string(),
     })
-} 
+}
