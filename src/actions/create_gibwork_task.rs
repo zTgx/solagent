@@ -99,15 +99,12 @@ pub async fn create_gibwork_task(
     // Get latest blockhash and sign transaction
     let blockhash = agent.connection.get_latest_blockhash()?;
     versioned_transaction.message.set_recent_blockhash(blockhash);
-    
     let signed_transaction = VersionedTransaction::try_new(
         versioned_transaction.message,
         &[&agent.wallet.wallet]
     )?;
-
     // Send and confirm transaction
     let signature = agent.connection.send_transaction(&signed_transaction)?;
-    
     agent.connection.confirm_transaction_with_spinner(
         &signature,
         &blockhash,
