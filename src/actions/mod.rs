@@ -53,3 +53,6 @@ pub use trade::trade;
 
 mod stake_with_jup;
 pub use stake_with_jup::stake_with_jup;
+
+mod create_gibwork_task;
+pub use create_gibwork_task::{create_gibwork_task, GibworkCreateTaskResponse};
