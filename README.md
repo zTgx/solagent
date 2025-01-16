@@ -44,7 +44,7 @@ This powerful toolkit simplifies agent-to-blockchain communication, offering a c
 
 ```bash
 [dependencies]
-solagent = "0.1.6"
+solagent = "0.1.7"
 ```
 
 ## Quick Start
