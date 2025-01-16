@@ -43,7 +43,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ```bash
 [dependencies]
-solagent = "0.1.5"
+solagent = "0.1.6"
 ```
 
 ## Quick Start
