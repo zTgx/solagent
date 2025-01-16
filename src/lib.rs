@@ -62,16 +62,17 @@ use solana_sdk::{
 pub use tools::*;
 
 /// Represents the provider for the agent.
-///
-/// Currently supported API keys:
-/// - `openai_api_key`: Key for accessing OpenAI services.
-/// - `gemini_api_key`: Key for accessing Gemini services.
-
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 pub enum AgentProvider {
+    Local,
+    ANTHROPIC(String),
     OpenAI(String),
     Gemini(String),
+    XAI(String),
+    COHERE(String),
+    ETERNALAI(String),
+    PERPLEXITY(String),
 }
 
 /// Wallet
