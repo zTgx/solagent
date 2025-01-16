@@ -20,7 +20,6 @@
 //! Quick Start
 //!
 //! ```rust
-//! #[cfg(not(test))]
 //! use std::sync::Arc;
 //! use solagent::{AgentProvider, SolAgent, create_solana_tools};
 //! #[tokio::main]
@@ -38,7 +37,6 @@
 //! use std::sync::Arc;
 //! use solagent::{AgentProvider, SolAgent};
 //!
-//! #[cfg(not(test))]
 //! #[tokio::main]
 //! async fn main() {
 //!     let agent = Arc::new(SolAgent::new("private_key_bs58",
