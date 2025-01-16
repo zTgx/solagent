@@ -59,3 +59,6 @@ pub use rugcheck::{fetch_detailed_report, fetch_summary_report};
 
 mod create_gibwork_task;
 pub use create_gibwork_task::{create_gibwork_task, GibworkCreateTaskResponse};
+
+mod solana;
+pub use solana::close_empty_token_accounts;
