@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #![allow(dead_code)]
-#![allow(dead_code)]
 
 //! `solagent.rs`(Solana Agent) is an open-source Rust library that simplifies connecting any AI agent to Solana protocols.
 //! Built on the rig framework, which empowers developers to create portable, modular, and lightweight full-stack AI agents.

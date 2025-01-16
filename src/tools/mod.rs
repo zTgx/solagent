@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+pub mod create_solana_tools;
 pub mod deploy_collection;
 pub mod deploy_token;
 pub mod fetch_price;
@@ -28,49 +29,4 @@ pub mod rugcheck;
 pub mod stake_with_jup;
 pub mod trade;
 pub mod transfer;
-
-use crate::SolAgent;
-use rig::tool::ToolSet;
-use std::sync::Arc;
-
-/// An function to build a set of tools that can be used with Solana.
-///
-/// - `DeployCollection`: Tool to deploy a new NFT collection on Solana blockchain.
-/// - `DeployToken`: Tool to deploy a new token on Solana blockchain.
-/// - `FetchPrice`: Tool to fetch the price of a given token in USDC.
-/// - `GetBalance`: Tool to get the balance of a specified wallet.
-/// - `GetBalanceOther`: Tool to get the balance of another wallet.
-/// - `GetTps`: Tool to get the current TPS of the Solana network.
-/// - `GetWalletAddress`: Tool to the wallet address of the agent.
-/// - `LaunchPumpfunToken`: Tool to launch a token on Pump.fun.
-/// - `MintNFT`: Tool to mint a new NFT in a collection on Solana blockchain.
-/// - `FetchPricePyTh`: Tool to fetch the price of a given price feed from Pyth's Hermes service.
-/// - `RequestFaucetFunds`: Tool to request funds from a faucet.
-/// - `StakeWithJup`: Tool to stake your SOL (Solana), also called as SOL staking or liquid staking.
-/// - `Trade`: Tool to swap tokens to another token ( It uses Jupiter Exchange ).
-/// - `Transfer`: Tool to transfer tokens or SOL to another address ( also called as wallet address ).
-/// - `FetchTokenReportSummary`: Tool to fetch a summary report for a specific token from RugCheck.
-/// - `FetchTokenReportDetailed`: Tool to fetch a detailed report for a specific token from RugCheck.
-/// - `CreateGibworkTask`: Tool to create a task on Gibwork.
-pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
-    let builder = ToolSet::builder()
-        .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
-        .dynamic_tool(deploy_token::DeployToken::new(agent.clone()))
-        .dynamic_tool(fetch_price::FetchPrice::new())
-        .dynamic_tool(get_balance::GetBalance::new(agent.clone()))
-        .dynamic_tool(get_balance_other::GetBalanceOther::new(agent.clone()))
-        .dynamic_tool(get_tps::GetTps::new(agent.clone()))
-        .dynamic_tool(get_wallet_address::GetWalletAddress::new(agent.clone()))
-        .dynamic_tool(launch_token_pumpfun::LaunchPumpfunToken::new(agent.clone()))
-        .dynamic_tool(mint_nft::MintNFT::new(agent.clone()))
-        .dynamic_tool(pyth_fetch_price::FetchPricePyTh::new())
-        .dynamic_tool(request_faucet_funds::RequestFaucetFunds::new(agent.clone()))
-        .dynamic_tool(stake_with_jup::StakeWithJup::new(agent.clone()))
-        .dynamic_tool(trade::Trade::new(agent.clone()))
-        .dynamic_tool(transfer::Transfer::new(agent.clone()))
-        .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
-        .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new())
-        .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()));
-
-    builder.build()
-}
+pub use create_solana_tools::create_solana_tools; // export to top
