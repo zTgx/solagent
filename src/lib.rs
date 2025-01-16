@@ -18,7 +18,9 @@
 //! Built on the rig framework, which empowers developers to create portable, modular, and lightweight full-stack AI agents.
 //!
 //! Quick Start
-//! ```
+//!
+//! ```rust
+//! #[cfg(not(test))]
 //! use std::sync::Arc;
 //! use solagent::{AgentProvider, SolAgent, create_solana_tools};
 //! #[tokio::main]
@@ -28,14 +30,16 @@
 //!                          AgentProvider::OpenAI("key".into())));
 //!     let toolset = create_solana_tools(agent);
 //! }
+//! ```
 //!
-//! ```
 //! Get Balance
-//! ```
+//!
+//! ```rust
 //! use std::sync::Arc;
 //! use solagent::{AgentProvider, SolAgent};
 //!
-//!  #[tokio::main]
+//! #[cfg(not(test))]
+//! #[tokio::main]
 //! async fn main() {
 //!     let agent = Arc::new(SolAgent::new("private_key_bs58",
 //!                                         "rpc_url",
