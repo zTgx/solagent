@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::get_tps, SolAgent};
+use crate::{actions::get_tps, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -33,11 +33,11 @@ pub struct GetTpsOutput {
 pub struct GetTpsError;
 
 pub struct GetTps {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl GetTps {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         GetTps { agent }
     }
 }
@@ -90,7 +90,7 @@ pub struct InitError;
 impl ToolEmbedding for GetTps {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(GetTps { agent: _state })

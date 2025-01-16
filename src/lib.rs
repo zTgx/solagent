@@ -20,10 +20,10 @@
 //!
 //! ```rust
 //! use std::sync::Arc;
-//! use solagent::{AgentProvider, SolAgent, create_solana_tools};
+//! use solagent::{AgentProvider, SolanaAgentKit, create_solana_tools};
 //! #[tokio::main]
 //! async fn main() {
-//!     let agent = Arc::new(SolAgent::new("private_key_bs58",
+//!     let agent = Arc::new(SolanaAgentKit::new("private_key_bs58",
 //!                                         "rpc_url",
 //!                          AgentProvider::OpenAI("key".into())));
 //!     let toolset = create_solana_tools(agent);
@@ -34,11 +34,11 @@
 //!
 //! ```rust
 //! use std::sync::Arc;
-//! use solagent::{AgentProvider, SolAgent};
+//! use solagent::{AgentProvider, SolanaAgentKit};
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!     let agent = Arc::new(SolAgent::new("private_key_bs58",
+//!     let agent = Arc::new(SolanaAgentKit::new("private_key_bs58",
 //!                                         "rpc_url",
 //!                          AgentProvider::OpenAI("key".into())));
 //!    let balance = agent.get_balance(None).await.unwrap();
@@ -95,14 +95,14 @@ impl Wallet {
 
 /// Represents a Solana agent that interacts with the blockchain.
 /// Provides a unified interface for token operations, NFT management, trading and more
-pub struct SolAgent {
+pub struct SolanaAgentKit {
     wallet: Wallet,
     provider: AgentProvider,
     connection: RpcClient,
 }
 
-impl SolAgent {
+impl SolanaAgentKit {
     pub fn new(private_key: &str, rpc_url: &str, provider: AgentProvider) -> Self {
-        SolAgent { wallet: Wallet::load(private_key), provider, connection: RpcClient::new(rpc_url) }
+        SolanaAgentKit { wallet: Wallet::load(private_key), provider, connection: RpcClient::new(rpc_url) }
     }
 }

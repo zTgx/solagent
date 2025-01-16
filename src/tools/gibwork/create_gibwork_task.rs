@@ -14,7 +14,7 @@
 
 use crate::{
     actions::{create_gibwork_task, GibworkCreateTaskResponse},
-    parameters_json_schema, SolAgent,
+    parameters_json_schema, SolanaAgentKit,
 };
 use rig::{
     completion::ToolDefinition,
@@ -46,11 +46,11 @@ pub struct CreateGibworkTaskOutput {
 pub struct CreateGibworkTaskError;
 
 pub struct CreateGibworkTask {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl CreateGibworkTask {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         CreateGibworkTask { agent }
     }
 }
@@ -122,7 +122,7 @@ pub struct InitError;
 impl ToolEmbedding for CreateGibworkTask {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(CreateGibworkTask { agent: state })

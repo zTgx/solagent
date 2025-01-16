@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::stake_with_jup, parameters_json_schema, SolAgent};
+use crate::{actions::stake_with_jup, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -36,11 +36,11 @@ pub struct StakeWithJupOutput {
 pub struct StakeWithJupError;
 
 pub struct StakeWithJup {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl StakeWithJup {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         StakeWithJup { agent }
     }
 }
@@ -97,7 +97,7 @@ pub struct InitError;
 impl ToolEmbedding for StakeWithJup {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(StakeWithJup { agent: state })

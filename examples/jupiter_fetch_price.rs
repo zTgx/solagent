@@ -16,7 +16,7 @@ use rig::{
     completion::Prompt,
     providers::gemini::{self, completion::GEMINI_1_5_PRO},
 };
-use solagent::{fetch_price::FetchPrice, SolAgent};
+use solagent::{fetch_price::FetchPrice, SolanaAgentKit};
 
 #[tokio::main]
 async fn main() {
@@ -24,7 +24,7 @@ async fn main() {
     let token_id = "So11111111111111111111111111111111111111112";
 
     // let token_id = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
-    let price = SolAgent::fetch_price(token_id).await.unwrap();
+    let price = SolanaAgentKit::fetch_price(token_id).await.unwrap();
     println!("Price: {}", price);
 
     let fetch_price_tool = FetchPrice;

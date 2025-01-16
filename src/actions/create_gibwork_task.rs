@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use base64::{engine::general_purpose, Engine};
 use serde::{Deserialize, Serialize};
 use solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, transaction::VersionedTransaction};
@@ -53,7 +53,7 @@ pub struct GibworkCreateTaskResponse {
 ///
 /// # Arguments
 ///
-/// * `agent` - SolAgent instance
+/// * `agent` - SolanaAgentKit instance
 /// * `title` - Title of the task
 /// * `content` - Description of the task
 /// * `requirements` - Requirements to complete the task
@@ -66,7 +66,7 @@ pub struct GibworkCreateTaskResponse {
 ///
 /// Object containing task creation transaction and generated taskId
 pub async fn create_gibwork_task(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     title: &str,
     content: &str,
     requirements: &str,

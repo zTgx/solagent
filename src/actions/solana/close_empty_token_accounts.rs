@@ -17,7 +17,7 @@ use crate::{
         close_empty_token_accounts::{CloseEmptyTokenAccountsData, Parsed},
         constants::USDC,
     },
-    SolAgent,
+    SolanaAgentKit,
 };
 use solana_client::rpc_request::TokenAccountsFilter;
 use solana_sdk::{instruction::Instruction, pubkey::Pubkey, transaction::Transaction};
@@ -27,13 +27,13 @@ use spl_token::instruction::close_account;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolAgent`.
+/// - `agent`: An instance of `SolanaAgentKit`.
 ///
 /// # Returns
 ///
 /// Transaction signature and total number of accounts closed or an error if the account doesn't exist.
 pub async fn close_empty_token_accounts(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
 ) -> Result<CloseEmptyTokenAccountsData, Box<dyn std::error::Error>> {
     let max_instructions = 40_u32;
     let mut transaction: Vec<Instruction> = vec![];

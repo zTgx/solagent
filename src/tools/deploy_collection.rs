@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::deploy_collection, parameters_json_schema, primitives::token::NFTMetadata, SolAgent};
+use crate::{actions::deploy_collection, parameters_json_schema, primitives::token::NFTMetadata, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -37,11 +37,11 @@ pub struct DeployCollectionOutput {
 pub struct DeployCollectionError;
 
 pub struct DeployCollection {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl DeployCollection {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         DeployCollection { agent }
     }
 }
@@ -118,7 +118,7 @@ pub struct InitError;
 impl ToolEmbedding for DeployCollection {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(DeployCollection { agent: state })

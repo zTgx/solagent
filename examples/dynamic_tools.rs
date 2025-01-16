@@ -18,12 +18,12 @@ use rig::{
     providers::gemini::{self, completion::GEMINI_1_5_FLASH, embedding::EMBEDDING_001},
     vector_store::in_memory_store::InMemoryVectorStore,
 };
-use solagent::{create_solana_tools, AgentProvider, SolAgent};
+use solagent::{create_solana_tools, AgentProvider, SolanaAgentKit};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
+    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let toolset = create_solana_tools(agent);
 
     let client = gemini::Client::from_env();

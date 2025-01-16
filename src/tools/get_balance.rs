@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::get_balance, parameters_json_schema, SolAgent};
+use crate::{actions::get_balance, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -36,11 +36,11 @@ pub struct GetBalanceOutput {
 pub struct GetBalanceError;
 
 pub struct GetBalance {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl GetBalance {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         GetBalance { agent }
     }
 }
@@ -109,7 +109,7 @@ pub struct InitError;
 impl ToolEmbedding for GetBalance {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(GetBalance { agent: state })

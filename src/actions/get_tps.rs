@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use solana_client::client_error::ClientError;
 
 /// Gets the transactions per second (TPS) from the Solana network.
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolAgent` that connects to the Solana cluster.
+/// - `agent`: An instance of `SolanaAgentKit` that connects to the Solana cluster.
 ///
 /// # Returns
 ///
 /// A `Result` containing the TPS as a `f64`, or an error if fetching performance samples fails.
-pub async fn get_tps(agent: &SolAgent) -> Result<f64, ClientError> {
+pub async fn get_tps(agent: &SolanaAgentKit) -> Result<f64, ClientError> {
     // Fetch recent performance samples
     let limit = 1;
     let perf_samples = agent.connection.get_recent_performance_samples(Some(limit))?;

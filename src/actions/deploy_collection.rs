@@ -14,7 +14,7 @@
 
 use crate::{
     primitives::token::{DeployedData, NFTMetadata},
-    SolAgent,
+    SolanaAgentKit,
 };
 use mpl_token_metadata::{
     instructions::{CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs},
@@ -34,13 +34,13 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolAgent`.
+/// - `agent`: An instance of `SolanaAgentKit`.
 /// - `options`: Collection options including name, URI, royalties, and creators.
 ///
 /// # Returns
 ///
 /// An object containing the collection address and metadata.
-pub async fn deploy_collection(agent: &SolAgent, options: &NFTMetadata) -> Result<DeployedData, ClientError> {
+pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) -> Result<DeployedData, ClientError> {
     // Create a new mint for the collection
     let collection_mint = Keypair::new();
     let collection_mint_pubkey = collection_mint.pubkey();

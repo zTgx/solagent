@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::actions::deploy_token;
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -41,11 +41,11 @@ pub struct DeployTokenOutput {
 pub struct DeployTokenError;
 
 pub struct DeployToken {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl DeployToken {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         DeployToken { agent }
     }
 }
@@ -120,7 +120,7 @@ pub struct InitError;
 impl ToolEmbedding for DeployToken {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(DeployToken { agent: _state })

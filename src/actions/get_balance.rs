@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use solana_client::client_error::ClientError;
 use solana_sdk::{native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
 use std::str::FromStr;
@@ -21,13 +21,13 @@ use std::str::FromStr;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolAgent`.
+/// - `agent`: An instance of `SolanaAgentKit`.
 /// - `token_address`: An optional SPL token mint address. If not provided, returns the SOL balance.
 ///
 /// # Returns
 ///
 /// A `Result` that resolves to the balance as a number (in UI units) or an error if the account doesn't exist.
-pub async fn get_balance(agent: &SolAgent, token_address: Option<String>) -> Result<f64, ClientError> {
+pub async fn get_balance(agent: &SolanaAgentKit, token_address: Option<String>) -> Result<f64, ClientError> {
     if token_address.is_none() {
         // Get SOL balance
         let balance = agent.connection.get_balance(&agent.wallet.address)?;

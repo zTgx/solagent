@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use rig::tool::ToolSet;
 use std::sync::Arc;
 
@@ -42,7 +42,7 @@ use super::{
 /// - `FetchTokenReportDetailed`: Tool to fetch a detailed report for a specific token from RugCheck.
 /// - `CreateGibworkTask`: Tool to create a task on Gibwork.
 /// - `CloseEmptyTokenAccounts`: Tool to close empty SPL Token accounts associated with your wallet to reclaim rent.
-pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
+pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
     let builder = ToolSet::builder()
         .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
         .dynamic_tool(deploy_token::DeployToken::new(agent.clone()))

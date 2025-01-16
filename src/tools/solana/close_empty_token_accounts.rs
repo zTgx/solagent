@@ -13,7 +13,8 @@
 // limitations under the License.
 
 use crate::{
-    actions::close_empty_token_accounts, primitives::close_empty_token_accounts::CloseEmptyTokenAccountsData, SolAgent,
+    actions::close_empty_token_accounts, primitives::close_empty_token_accounts::CloseEmptyTokenAccountsData,
+    SolanaAgentKit,
 };
 use rig::{
     completion::ToolDefinition,
@@ -35,11 +36,11 @@ pub struct CloseEmptyTokenAccountsOutput {
 pub struct CloseEmptyTokenAccountsError;
 
 pub struct CloseEmptyTokenAccounts {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl CloseEmptyTokenAccounts {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         CloseEmptyTokenAccounts { agent }
     }
 }
@@ -103,7 +104,7 @@ pub struct InitError;
 impl ToolEmbedding for CloseEmptyTokenAccounts {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(CloseEmptyTokenAccounts { agent: state })

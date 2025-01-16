@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::trade, parameters_json_schema, SolAgent};
+use crate::{actions::trade, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -39,11 +39,11 @@ pub struct TradeOutput {
 pub struct TradeError;
 
 pub struct Trade {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl Trade {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         Trade { agent }
     }
 }
@@ -109,7 +109,7 @@ pub struct InitError;
 impl ToolEmbedding for Trade {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(Trade { agent: _state })

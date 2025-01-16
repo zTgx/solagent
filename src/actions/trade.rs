@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{primitives::constants::JUP_API, SolAgent};
+use crate::{primitives::constants::JUP_API, SolanaAgentKit};
 use anyhow::Result;
 use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};
@@ -53,7 +53,7 @@ struct QuoteResponse {
 ///
 /// # Arguments
 ///
-/// * `agent` - SolAgent instance
+/// * `agent` - SolanaAgentKit instance
 /// * `output_mint` - Target token mint address
 /// * `input_amount` - Amount to swap (in token decimals)
 /// * `input_mint` - Source token mint address (defaults to SOL)
@@ -63,7 +63,7 @@ struct QuoteResponse {
 ///
 /// Transaction signature as a string
 pub async fn trade(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     output_mint: &str,
     input_amount: f64,
     input_mint: Option<String>,

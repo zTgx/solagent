@@ -1,7 +1,7 @@
-# How to Add a Tool to SolAgent
+# How to Add a Tool to SolanaAgentKit
 
 ## Introduction
-This guide provides step-by-step instructions for new builders on how to add a new tool workflow to the SolAgent project. By following these steps, you can easily integrate new functionalities into the toolset.
+This guide provides step-by-step instructions for new builders on how to add a new tool workflow to the SolanaAgentKit project. By following these steps, you can easily integrate new functionalities into the toolset.
 
 ## Directory Structure
 The tools are organized in the `src/tools` directory. Each tool is defined in its own Rust file, and the main entry point for the tools is located in `mod.rs`.
@@ -104,4 +104,4 @@ The tools are organized in the `src/tools` directory. Each tool is defined in it
 7. **Add examples**: 
 
 ## Conclusion
-By following these steps, you have successfully added a new tool to the SolAgent project. You can now use the tool in your workflows and enhance the capabilities of the SolAgent project.
+By following these steps, you have successfully added a new tool to the SolanaAgentKit project. You can now use the tool in your workflows and enhance the capabilities of the SolanaAgentKit project.

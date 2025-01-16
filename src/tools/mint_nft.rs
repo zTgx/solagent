@@ -14,7 +14,7 @@
 
 use crate::{
     primitives::token::NFTMetadata,
-    SolAgent,
+    SolanaAgentKit,
     {actions::mint_nft_to_collection, parameters_json_schema},
 };
 use rig::{
@@ -43,11 +43,11 @@ pub struct MintNFTOutput {
 pub struct MintNFTError;
 
 pub struct MintNFT {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl MintNFT {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         MintNFT { agent }
     }
 }
@@ -142,7 +142,7 @@ pub struct InitError;
 impl ToolEmbedding for MintNFT {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(MintNFT { agent: state })

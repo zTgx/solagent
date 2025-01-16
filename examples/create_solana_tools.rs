@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{create_solana_tools, AgentProvider, SolAgent};
+use solagent::{create_solana_tools, AgentProvider, SolanaAgentKit};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
+    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let _tools = create_solana_tools(agent);
 }

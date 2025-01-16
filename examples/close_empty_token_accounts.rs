@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{AgentProvider, SolAgent};
+use solagent::{AgentProvider, SolanaAgentKit};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
-    let agent = Arc::new(SolAgent::new("", "", AgentProvider::OpenAI("api_key".into())));
+    let agent = Arc::new(SolanaAgentKit::new("", "", AgentProvider::OpenAI("api_key".into())));
     let data = agent.close_empty_token_accounts().await.unwrap();
     println!("Close data: {:?}", data);
 }

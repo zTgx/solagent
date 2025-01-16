@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{primitives::token::DeployedData, SolAgent};
+use crate::{primitives::token::DeployedData, SolanaAgentKit};
 use mpl_token_metadata::{
     accounts::Metadata,
     instructions::{CreateV1, CreateV1InstructionArgs},
@@ -32,7 +32,7 @@ use spl_token::instruction as spl_token_instruction;
 ///
 /// # Parameters
 ///
-/// - `agent`: An instance of `SolAgent`.
+/// - `agent`: An instance of `SolanaAgentKit`.
 /// - `name`: Name of the token.
 /// - `uri`: URI for the token metadata.
 /// - `symbol`: Symbol of the token.
@@ -43,7 +43,7 @@ use spl_token::instruction as spl_token_instruction;
 ///
 /// An object containing the token mint address.
 pub async fn deploy_token(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     name: String,
     uri: String,
     symbol: String,

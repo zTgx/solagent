@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use base64::{engine::general_purpose, Engine};
 use solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTransaction};
 
@@ -20,13 +20,13 @@ use solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTran
 ///
 /// # Arguments
 ///
-/// * `agent` - SolAgent instance
+/// * `agent` - SolanaAgentKit instance
 /// * `amount` - Amount of SOL to stake (in SOL)
 ///
 /// # Returns
 ///
 /// Transaction signature as a string
-pub async fn stake_with_jup(agent: &SolAgent, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
+pub async fn stake_with_jup(agent: &SolanaAgentKit, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
     // Convert SOL amount to lamports
     let amount_lamports = (amount * 1e9) as u64;
 

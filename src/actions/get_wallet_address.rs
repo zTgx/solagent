@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 
 /// Get the agent's wallet address.
 ///
 /// # Parameters
-/// - `agent`: A `SolAgent` instance.
+/// - `agent`: A `SolanaAgentKit` instance.
 ///
 /// # Returns
 /// A string representing the wallet address in base58 format.
-pub fn get_wallet_address(agent: &SolAgent) -> String {
+pub fn get_wallet_address(agent: &SolanaAgentKit) -> String {
     agent.wallet.address.to_string()
 }

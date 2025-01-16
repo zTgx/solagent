@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolAgent;
+use crate::SolanaAgentKit;
 use solana_client::client_error::ClientError;
 use solana_sdk::{program_pack::Pack, pubkey::Pubkey, system_instruction, transaction::Transaction};
 use spl_associated_token_account::get_associated_token_address;
@@ -20,13 +20,18 @@ use spl_token::{instruction::transfer as transfer_instruct, state::Mint};
 
 /// Transfer SOL or SPL tokens to a recipient
 ///
-/// `agent` - SolAgent instance
+/// `agent` - SolanaAgentKit instance
 /// `to` - Recipient's public key
 /// `amount` - Amount to transfer
 /// `mint` - Optional mint address for SPL tokens
 ///
 /// Returns the transaction signature.
-pub async fn transfer(agent: &SolAgent, to: &str, amount: u64, mint: Option<String>) -> Result<String, ClientError> {
+pub async fn transfer(
+    agent: &SolanaAgentKit,
+    to: &str,
+    amount: u64,
+    mint: Option<String>,
+) -> Result<String, ClientError> {
     match mint {
         Some(mint) => {
             // Transfer SPL Token

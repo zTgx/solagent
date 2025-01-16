@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::request_faucet_funds, parameters_json_schema, SolAgent};
+use crate::{actions::request_faucet_funds, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -34,10 +34,10 @@ pub struct RequestFaucetFundsOutput {
 pub struct RequestFaucetFundsError;
 
 pub struct RequestFaucetFunds {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 impl RequestFaucetFunds {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         RequestFaucetFunds { agent }
     }
 }
@@ -90,7 +90,7 @@ pub struct InitError;
 impl ToolEmbedding for RequestFaucetFunds {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(RequestFaucetFunds { agent: _state })

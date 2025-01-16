@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::transfer, parameters_json_schema, SolAgent};
+use crate::{actions::transfer, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -38,11 +38,11 @@ pub struct TransferOutput {
 pub struct TransferError;
 
 pub struct Transfer {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl Transfer {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         Transfer { agent }
     }
 }
@@ -124,7 +124,7 @@ pub struct InitError;
 impl ToolEmbedding for Transfer {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(Transfer { agent: _state })

@@ -14,7 +14,7 @@
 
 use crate::{
     primitives::token::{DeployedData, NFTMetadata},
-    SolAgent,
+    SolanaAgentKit,
 };
 use mpl_token_metadata::{
     instructions::{CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs},
@@ -32,7 +32,7 @@ use solana_sdk::{
 /// Mints a new NFT
 ///
 /// # Arguments
-/// - `agent`: An instance of `SolAgent`.
+/// - `agent`: An instance of `SolanaAgentKit`.
 /// - `collection`: The public key of the collection to which the NFT belongs. This is used to associate the NFT with a specific collection if applicable.
 /// - `metadata`: A struct containing the NFT's metadata:
 ///     * `name`: The name of the NFT as a string.
@@ -43,7 +43,7 @@ use solana_sdk::{
 /// # Returns
 /// The transaction signature.
 pub async fn mint_nft_to_collection(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     collection: Pubkey,
     metadata: NFTMetadata,
 ) -> Result<DeployedData, ClientError> {

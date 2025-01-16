@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{AgentProvider, NFTMetadata, SolAgent};
+use solagent::{AgentProvider, NFTMetadata, SolanaAgentKit};
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
@@ -21,7 +21,7 @@ use std::sync::Arc;
 /// https://explorer.solana.com/address/5jcsea3EA3kX7mXpy7YvHVFYTDEJeSEXjyicgThnvWUm?cluster=devnet
 #[tokio::main]
 async fn main() {
-    let name = "My First SolAgent NFT";
+    let name = "My First SolanaAgentKit NFT";
     let uri = "uri";
     let royalty_basis_points = Some(500);
     let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
@@ -29,7 +29,7 @@ async fn main() {
 
     let collection = Pubkey::from_str_const("collection Mint");
 
-    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
+    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let deployed_data = agent.mint_nft_to_collection(collection, metadata).await.unwrap();
     println!("Mint: {}", deployed_data.mint);
 }

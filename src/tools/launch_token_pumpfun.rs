@@ -16,7 +16,7 @@ use crate::{
     actions::launch_token_pumpfun,
     parameters_json_schema,
     primitives::pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse},
-    SolAgent,
+    SolanaAgentKit,
 };
 use rig::{
     completion::ToolDefinition,
@@ -45,11 +45,11 @@ pub struct LaunchPumpfunTokenOutput {
 pub struct LaunchPumpfunTokenError;
 
 pub struct LaunchPumpfunToken {
-    agent: Arc<SolAgent>,
+    agent: Arc<SolanaAgentKit>,
 }
 
 impl LaunchPumpfunToken {
-    pub fn new(agent: Arc<SolAgent>) -> Self {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         LaunchPumpfunToken { agent }
     }
 }
@@ -130,7 +130,7 @@ pub struct InitError;
 impl ToolEmbedding for LaunchPumpfunToken {
     type InitError = InitError;
     type Context = ();
-    type State = Arc<SolAgent>;
+    type State = Arc<SolanaAgentKit>;
 
     fn init(state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
         Ok(LaunchPumpfunToken { agent: state })

@@ -14,7 +14,7 @@
 
 use crate::{
     primitives::pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse, TokenMetadata},
-    SolAgent,
+    SolanaAgentKit,
 };
 use reqwest::{multipart::Part, Client as ReqwestClient};
 use solana_sdk::{
@@ -25,7 +25,7 @@ use solana_sdk::{
 ///
 /// # Arguments
 ///
-/// - `agent` - An instance of `SolAgent`.
+/// - `agent` - An instance of `SolanaAgentKit`.
 /// - `tokenName` - The name of the token.
 /// - `tokenTicker` - The ticker of the token.
 /// - `description` - The description of the token.
@@ -54,7 +54,7 @@ use solana_sdk::{
 /// https://pumpportal.fun/creation
 ///
 pub async fn launch_token_pumpfun(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     token_name: &str,
     token_symbol: &str,
     description: &str,
@@ -91,7 +91,7 @@ pub async fn launch_token_pumpfun(
 
 // try signed vtx: NotEnoughSigners -> mint_keypair is needed
 async fn sign_and_send_tx(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     vtx: &mut VersionedTransaction,
     mint_keypair: &Keypair,
 ) -> Result<String, Box<std::io::Error>> {
@@ -174,7 +174,7 @@ async fn fetch_token_metadata(
 }
 
 async fn request_pumpportal_tx(
-    agent: &SolAgent,
+    agent: &SolanaAgentKit,
     client: &ReqwestClient,
     token_matedata: &TokenMetadata,
     mint_keypair: &Keypair,

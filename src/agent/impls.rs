@@ -25,12 +25,12 @@ use crate::{
         rugcheck::TokenCheck,
         token::{DeployedData, NFTMetadata},
     },
-    SolAgent,
+    SolanaAgentKit,
 };
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;
 
-impl SolAgent {
+impl SolanaAgentKit {
     pub async fn get_balance(&self, token_address: Option<String>) -> Result<f64, ClientError> {
         get_balance(&self, token_address).await
     }
