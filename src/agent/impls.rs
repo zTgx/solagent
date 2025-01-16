@@ -25,7 +25,6 @@ use crate::{
     },
     SolAgent,
 };
-use serde_json::Value;
 use solana_client::client_error::ClientError;
 use solana_sdk::pubkey::Pubkey;
 
@@ -118,7 +117,7 @@ impl SolAgent {
         fetch_summary_report(mint).await
     }
 
-    pub async fn fetch_detailed_report(mint: String) -> Result<Value, Box<dyn std::error::Error>> {
+    pub async fn fetch_detailed_report(mint: String) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
         fetch_detailed_report(mint).await
     }
 
