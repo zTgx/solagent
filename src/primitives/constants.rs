@@ -18,11 +18,14 @@ use lazy_static::lazy_static;
 use solana_sdk::pubkey::Pubkey;
 use std::collections::HashMap;
 
+/// USDC
+pub const USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+
 lazy_static! {
     /// Common token addresses used across the toolkit
     pub static ref TOKENS: HashMap<&'static str, Pubkey> = {
         let mut m = HashMap::new();
-        m.insert("USDC", Pubkey::from_str_const("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"));
+        m.insert("USDC", Pubkey::from_str_const(USDC));
         m.insert("USDT", Pubkey::from_str_const("Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"));
         m.insert("USDS", Pubkey::from_str_const("USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA"));
         m.insert("SOL", Pubkey::from_str_const("So11111111111111111111111111111111111111112"));

@@ -25,6 +25,7 @@ pub mod mint_nft;
 pub mod pyth_fetch_price;
 pub mod request_faucet_funds;
 pub mod rugcheck;
+pub mod solana;
 pub mod stake_with_jup;
 pub mod trade;
 pub mod transfer;
