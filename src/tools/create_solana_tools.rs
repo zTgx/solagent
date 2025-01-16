@@ -18,7 +18,8 @@ use std::sync::Arc;
 
 use super::{
     deploy_collection, deploy_token, fetch_price, get_balance, get_balance_other, get_tps, get_wallet_address, gibwork,
-    launch_token_pumpfun, mint_nft, pyth_fetch_price, request_faucet_funds, rugcheck, stake_with_jup, trade, transfer,
+    launch_token_pumpfun, mint_nft, pyth_fetch_price, request_faucet_funds, rugcheck,
+    solana::close_empty_token_accounts, stake_with_jup, trade, transfer,
 };
 
 /// An function to build a set of tools that can be used with Solana.
@@ -40,6 +41,7 @@ use super::{
 /// - `FetchTokenReportSummary`: Tool to fetch a summary report for a specific token from RugCheck.
 /// - `FetchTokenReportDetailed`: Tool to fetch a detailed report for a specific token from RugCheck.
 /// - `CreateGibworkTask`: Tool to create a task on Gibwork.
+/// - `CloseEmptyTokenAccounts`: Tool to close empty SPL Token accounts associated with your wallet to reclaim rent.
 pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
     let builder = ToolSet::builder()
         .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
@@ -58,7 +60,8 @@ pub fn create_solana_tools(agent: Arc<SolAgent>) -> ToolSet {
         .dynamic_tool(transfer::Transfer::new(agent.clone()))
         .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
         .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new())
-        .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()));
+        .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()))
+        .dynamic_tool(close_empty_token_accounts::CloseEmptyTokenAccounts::new(agent.clone()));
 
     builder.build()
 }
