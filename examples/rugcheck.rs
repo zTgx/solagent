@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::SolAgent;
+use solagent::{AgentProvider, SolAgent};
 use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
     let mint = "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1".into();
 
-    let agent = Arc::new(SolAgent::new("", "", "openai_api_key"));
+    let agent = Arc::new(SolAgent::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
     let check = agent.fetch_summary_report(mint).await.unwrap();
     println!("Token check: {:?}", check);
 }
