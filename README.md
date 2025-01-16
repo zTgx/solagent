@@ -7,11 +7,12 @@
 </div>
 
 </br>
-An open-source toolkit for connecting AI agents to Solana protocols.
 
-## WIP
-Solagent.rs is still in the early stage of development, and its interfaces may change in the future.  
-Contributions are welcome! Please feel free to submit a Pull Request.
+### solagent.rs: Bridging the Gap Between AI and Solana protocols
+
+`solagent.rs` is an open-source Rust library designed to streamline the integration of AI agents with Solana protocols. Built upon the rig framework, solagent.rs empowers developers to construct portable, modular, and lightweight full-stack AI agents capable of interacting with the Solana blockchain.
+
+This powerful toolkit simplifies agent-to-blockchain communication, offering a comprehensive suite of functions for tasks such as token operations, trading, and more. By leveraging solagent.rs, developers can seamlessly connect their AI agents to the Solana ecosystem, unlocking a world of possibilities for on-chain automation and intelligent decision-making.
 
 ## ✍️  Features
 - **Basic Operations**  
@@ -49,7 +50,7 @@ solagent = "0.1.6"
 ## Quick Start
 ```rust
 use std::sync::Arc;
-use solagent::create_solana_tools;
+use solagent::{create_solana_tools, AgentProvider, SolanaAgentKit};
 
 #[tokio::main]
 async fn main() {
