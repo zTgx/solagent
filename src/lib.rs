@@ -64,10 +64,11 @@ use solana_sdk::{
 pub use tools::*;
 
 /// Represents the provider for the agent.
+/// ref: https://github.com/0xPlaygrounds/rig/tree/main/rig-core/src/providers
 #[non_exhaustive]
 #[derive(Debug, Clone)]
 pub enum AgentProvider {
-    Local,
+    LOCAL,
     ANTHROPIC(String),
     OpenAI(String),
     Gemini(String),
