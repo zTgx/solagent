@@ -62,3 +62,6 @@ pub use create_gibwork_task::{create_gibwork_task, GibworkCreateTaskResponse};
 
 mod solana;
 pub use solana::close_empty_token_accounts;
+
+mod solayer;
+pub use solayer::stake_with_solayer;

@@ -12,23 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod create_solana_tools;
-pub mod deploy_collection;
-pub mod deploy_token;
-pub mod fetch_price;
-pub mod get_balance;
-pub mod get_balance_other;
-pub mod get_tps;
-pub mod get_wallet_address;
-pub mod gibwork;
-pub mod launch_token_pumpfun;
-pub mod mint_nft;
-pub mod pyth_fetch_price;
-pub mod request_faucet_funds;
-pub mod rugcheck;
-pub mod solana;
-pub mod solayer;
-pub mod stake_with_jup;
-pub mod trade;
-pub mod transfer;
-pub use create_solana_tools::create_solana_tools; // export to top
+pub mod stake_with_solayer;
+pub use stake_with_solayer::stake_with_solayer;

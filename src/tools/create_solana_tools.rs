@@ -19,7 +19,7 @@ use std::sync::Arc;
 use super::{
     deploy_collection, deploy_token, fetch_price, get_balance, get_balance_other, get_tps, get_wallet_address, gibwork,
     launch_token_pumpfun, mint_nft, pyth_fetch_price, request_faucet_funds, rugcheck,
-    solana::close_empty_token_accounts, stake_with_jup, trade, transfer,
+    solana::close_empty_token_accounts, solayer::stake_with_solayer, stake_with_jup, trade, transfer,
 };
 
 /// An function to build a set of tools that can be used with Solana.
@@ -61,7 +61,8 @@ pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
         .dynamic_tool(rugcheck::token_report_summary::FetchTokenReportSummary::new())
         .dynamic_tool(rugcheck::token_report_detailed::FetchTokenReportDetailed::new())
         .dynamic_tool(gibwork::create_gibwork_task::CreateGibworkTask::new(agent.clone()))
-        .dynamic_tool(close_empty_token_accounts::CloseEmptyTokenAccounts::new(agent.clone()));
+        .dynamic_tool(close_empty_token_accounts::CloseEmptyTokenAccounts::new(agent.clone()))
+        .dynamic_tool(stake_with_solayer::StakeWithSolayer::new(agent.clone()));
 
     builder.build()
 }

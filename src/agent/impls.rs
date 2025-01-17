@@ -17,7 +17,7 @@ use crate::{
         close_empty_token_accounts, create_gibwork_task, deploy_collection, deploy_token, fetch_detailed_report,
         fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id, fetch_summary_report, get_balance,
         get_balance_other, get_tps, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_with_jup,
-        trade, transfer, GibworkCreateTaskResponse,
+        stake_with_solayer, trade, transfer, GibworkCreateTaskResponse,
     },
     primitives::{
         close_empty_token_accounts::CloseEmptyTokenAccountsData,
@@ -138,5 +138,9 @@ impl SolanaAgentKit {
 
     pub async fn close_empty_token_accounts(&self) -> Result<CloseEmptyTokenAccountsData, Box<dyn std::error::Error>> {
         close_empty_token_accounts(&self).await
+    }
+
+    pub async fn stake_with_solayer(&self, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
+        stake_with_solayer(&self, amount).await
     }
 }
