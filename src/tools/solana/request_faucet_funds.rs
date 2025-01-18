@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::request_faucet_funds, parameters_json_schema, SolanaAgentKit};
+use crate::{actions::request_faucet_funds, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
 };
 use serde::{Deserialize, Serialize};
-use serde_json::json;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
@@ -70,9 +69,7 @@ impl Tool for RequestFaucetFunds {
             ],
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
-                token_address: string,
-            ),
+            parameters: serde_json::Value::Null,
         }
     }
 
