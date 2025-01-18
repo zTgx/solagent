@@ -54,7 +54,7 @@ impl Tool for GetTps {
             name: "get_tps".to_string(),
             description: r#"
             
-            Get the current transactions per second (TPS) of the Solana network"
+            Get the current transactions per second (TPS) of the Solana network
             
             examples: [
                 [

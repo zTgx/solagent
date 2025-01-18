@@ -13,3 +13,7 @@
 // limitations under the License.
 
 pub mod close_empty_token_accounts;
+pub mod get_balance;
+pub mod get_tps;
+pub mod request_faucet_funds;
+pub mod transfer;

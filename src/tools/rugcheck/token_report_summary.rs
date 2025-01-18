@@ -53,7 +53,8 @@ impl Tool for FetchTokenReportSummary {
         ToolDefinition {
             name: "fetch_summary_report".to_string(),
             description: r#"
-                Fetches a detailed report for a specific token from RugCheck.
+                Fetches a summary report for a specific token from RugCheck.
+                
                 Inputs:
                     - mint: string, the mint address of the token, e.g., "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1" (required).
                 "#.to_string(),
