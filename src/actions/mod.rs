@@ -53,3 +53,6 @@ pub use solana::{close_empty_token_accounts, get_balance, get_tps, request_fauce
 
 mod solayer;
 pub use solayer::stake_with_solayer;
+
+mod jupiter;
+pub use jupiter::get_token_data_by_address;
