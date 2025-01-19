@@ -56,23 +56,18 @@ impl Tool for GetTokenData {
 
             examples: [
                 [
-                {
-                    input: {
-                        mint: "So11111111111111111111111111111111111111112",
+                    {
+                        input: {
+                            mint: "So11111111111111111111111111111111111111112",
+                        },
+                        explanation: "Get the current price of SOL token in USDC",
                     },
-                    output: {
-                        status: "success",
-                        price: "23.45",
-                        message: "Current price: $23.45 USDC",
-                    },
-                    explanation: "Get the current price of SOL token in USDC",
-                },
                 ],
             ]
               "#
             .to_string(),
             parameters: parameters_json_schema!(
-                token_id: String,
+                mint: String,
             ),
         }
     }
