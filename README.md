@@ -113,7 +113,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Contributors
 
 <a href="https://github.com/zTgx/solagent.rs/graphs/contributors">
-  <img src="https://contrib.rocks/image?annon=1&repo=zTgx/solagent.rs" />
+  <img src="https://contrib.rocks/image?repo=zTgx/solagent.rs" />
 </a>
 
 ## Star History
