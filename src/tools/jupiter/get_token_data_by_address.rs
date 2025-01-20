@@ -34,6 +34,7 @@ pub struct GetTokenDataOutput {
 #[error("GetTokenData error")]
 pub struct GetTokenDataError;
 
+#[derive(Default)]
 pub struct GetTokenData;
 impl GetTokenData {
     pub fn new() -> Self {

@@ -96,7 +96,7 @@ impl Wallet {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Config {
     pub openai_api_key: Option<String>,
     pub jupiter_referral_account: Option<String>,
@@ -104,19 +104,6 @@ pub struct Config {
     pub flash_privilege: Option<String>,
     pub flexlend_api_key: Option<String>,
     pub helius_api_key: Option<String>,
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self {
-            openai_api_key: None,
-            jupiter_referral_account: None,
-            jupiter_fee_bps: None,
-            flash_privilege: None,
-            flexlend_api_key: None,
-            helius_api_key: None,
-        }
-    }
 }
 
 /// Represents a Solana agent that interacts with the blockchain.
