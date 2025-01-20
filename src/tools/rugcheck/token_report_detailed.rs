@@ -34,6 +34,7 @@ pub struct FetchTokenReportDetailedOutput {
 #[error("FetchTokenReportDetailed error")]
 pub struct FetchTokenReportDetailedError;
 
+#[derive(Default)]
 pub struct FetchTokenReportDetailed {}
 
 impl FetchTokenReportDetailed {

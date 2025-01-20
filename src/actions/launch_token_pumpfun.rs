@@ -64,7 +64,7 @@ pub async fn launch_token_pumpfun(
     let reqwest_client = ReqwestClient::new();
 
     // 0. download image
-    let image_data = fetch_image(&reqwest_client, &image_url).await.expect("fetch_image");
+    let image_data = fetch_image(&reqwest_client, image_url).await.expect("fetch_image");
 
     // 1. fetch token metadata metadataUri
     let token_metadata =
@@ -76,7 +76,7 @@ pub async fn launch_token_pumpfun(
     let mint_keypair = Keypair::new();
 
     // 3. request pumpportal tx
-    let mut versioned_tx = request_pumpportal_tx(&agent, &reqwest_client, &token_metadata, &mint_keypair)
+    let mut versioned_tx = request_pumpportal_tx(agent, &reqwest_client, &token_metadata, &mint_keypair)
         .await
         .expect("request_pumpportal_tx");
 
@@ -97,7 +97,7 @@ async fn sign_and_send_tx(
 ) -> Result<String, Box<std::io::Error>> {
     let recent_blockhash = agent.connection.get_latest_blockhash().expect("get_latest_blockhash");
     vtx.message.set_recent_blockhash(recent_blockhash);
-    let signed_vtx = VersionedTransaction::try_new(vtx.message.clone(), &[&mint_keypair, &agent.wallet.wallet])
+    let signed_vtx = VersionedTransaction::try_new(vtx.message.clone(), &[mint_keypair, &agent.wallet.wallet])
         .expect("try signed vtx");
 
     let signature = agent
@@ -128,7 +128,7 @@ async fn fetch_token_metadata(
     symbol: &str,
     description: &str,
     options: Option<PumpFunTokenOptions>,
-    image_data: &Vec<u8>,
+    image_data: &[u8],
 ) -> Result<TokenMetadata, Box<dyn std::error::Error>> {
     let part = Part::bytes(image_data.to_vec()).file_name("image_name").mime_str("image/png")?; // Important: set the correct MIME type
 
