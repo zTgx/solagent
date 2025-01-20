@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{AgentProvider, NFTMetadata, SolanaAgentKit};
+use solagent::{Config, NFTMetadata, SolanaAgentKit};
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
@@ -26,7 +26,8 @@ async fn main() {
     let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
     let options = NFTMetadata::new(name, uri, royalty_basis_points, Some(creators));
 
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
+    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
     let data = agent.deploy_collection(options).await.unwrap();
     println!("Deploy Data: {:?}", data);
 }
