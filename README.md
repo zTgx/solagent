@@ -40,7 +40,7 @@
 
 ```bash
 [dependencies]
-solagent = "0.1.7"
+solagent = "0.1.8"
 ```
 
 ## Quick Start
