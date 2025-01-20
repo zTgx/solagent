@@ -12,52 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::fetch_detailed_report, parameters_json_schema};
+use crate::{actions::get_token_data_by_address, parameters_json_schema};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
 };
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::json;
 
-#[derive(Deserialize)]
-pub struct FetchTokenReportDetailedArgs {
+#[derive(Debug, Deserialize)]
+pub struct GetTokenDataArgs {
     mint: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct FetchTokenReportDetailedOutput {
-    pub token_check: Value,
+pub struct GetTokenDataOutput {
+    pub data: serde_json::Value,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("FetchTokenReportDetailed error")]
-pub struct FetchTokenReportDetailedError;
+#[error("GetTokenData error")]
+pub struct GetTokenDataError;
 
-#[derive(Default)]
-pub struct FetchTokenReportDetailed {}
-
-impl FetchTokenReportDetailed {
+pub struct GetTokenData;
+impl GetTokenData {
     pub fn new() -> Self {
-        FetchTokenReportDetailed {}
+        GetTokenData {}
     }
 }
 
-impl Tool for FetchTokenReportDetailed {
-    const NAME: &'static str = "fetch_detailed_report";
+impl Tool for GetTokenData {
+    const NAME: &'static str = "get_token_data_by_address";
 
-    type Error = FetchTokenReportDetailedError;
-    type Args = FetchTokenReportDetailedArgs;
-    type Output = FetchTokenReportDetailedOutput;
+    type Error = GetTokenDataError;
+    type Args = GetTokenDataArgs;
+    type Output = GetTokenDataOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "fetch_detailed_report".to_string(),
+            name: "get_token_data_by_address".to_string(),
             description: r#"
-                Fetches a detailed report for a specific token from RugCheck.
-                Inputs:
-                - mint: string, the mint address of the token, e.g., "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1" (required).
-            "#.to_string(),
+            Get the token data for a given token mint address.
+
+            examples: [
+                [
+                    {
+                        input: {
+                            mint: "So11111111111111111111111111111111111111112",
+                        },
+                        explanation: "Get the current price of SOL token in USDC",
+                    },
+                ],
+            ]
+              "#
+            .to_string(),
             parameters: parameters_json_schema!(
                 mint: String,
             ),
@@ -65,8 +73,9 @@ impl Tool for FetchTokenReportDetailed {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let token_check = fetch_detailed_report(args.mint).await.expect("fetch_detailed_report");
-        Ok(FetchTokenReportDetailedOutput { token_check })
+        let data = get_token_data_by_address(&args.mint).await.expect("get_token_data_by_address");
+
+        Ok(GetTokenDataOutput { data })
     }
 }
 
@@ -74,17 +83,17 @@ impl Tool for FetchTokenReportDetailed {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for FetchTokenReportDetailed {
+impl ToolEmbedding for GetTokenData {
     type InitError = InitError;
     type Context = ();
     type State = ();
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(FetchTokenReportDetailed {})
+        Ok(GetTokenData {})
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Fetches a summary report for a specific token from FetchTokenReportDetailed.".into()]
+        vec!["Get the token data for a given token mint address.".into()]
     }
 
     fn context(&self) -> Self::Context {}

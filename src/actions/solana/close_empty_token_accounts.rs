@@ -85,7 +85,7 @@ pub async fn close_empty_token_accounts(
     let recent_blockhash = agent.connection.get_latest_blockhash()?;
     let transaction = Transaction::new_signed_with_payer(
         &transaction,
-        Some(&&agent.wallet.address),
+        Some(&agent.wallet.address),
         &[&agent.wallet.wallet],
         recent_blockhash,
     );

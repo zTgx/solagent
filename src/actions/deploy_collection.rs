@@ -152,8 +152,8 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
     let init_mint_ix = spl_token::instruction::initialize_mint(
         &spl_token::id(),
         &collection_mint.pubkey(),
-        &&agent.wallet.address,
-        Some(&&agent.wallet.address),
+        &agent.wallet.address,
+        Some(&agent.wallet.address),
         0,
     )
     .unwrap();
@@ -169,7 +169,7 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
             create_metadata_ix,
             create_master_edition_ix,
         ],
-        Some(&&agent.wallet.address),
+        Some(&agent.wallet.address),
         &[&agent.wallet.wallet, &collection_mint],
         recent_blockhash,
     );

@@ -36,7 +36,7 @@ pub async fn transfer(
         Some(mint) => {
             // Transfer SPL Token
             let mint = Pubkey::from_str_const(&mint);
-            let to = Pubkey::from_str_const(&to);
+            let to = Pubkey::from_str_const(to);
 
             let from_ata = get_associated_token_address(&mint, &agent.wallet.address);
             let to_ata = get_associated_token_address(&mint, &to);
@@ -64,7 +64,7 @@ pub async fn transfer(
             );
 
             let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
-            return Ok(signature.to_string());
+            Ok(signature.to_string())
         }
         None => {
             let transfer_instruction =
@@ -77,7 +77,7 @@ pub async fn transfer(
             );
 
             let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
-            return Ok(signature.to_string());
+            Ok(signature.to_string())
         }
     }
 }

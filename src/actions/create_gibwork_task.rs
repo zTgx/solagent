@@ -65,6 +65,7 @@ pub struct GibworkCreateTaskResponse {
 /// # Returns
 ///
 /// Object containing task creation transaction and generated taskId
+#[allow(clippy::too_many_arguments)]
 pub async fn create_gibwork_task(
     agent: &SolanaAgentKit,
     title: &str,
