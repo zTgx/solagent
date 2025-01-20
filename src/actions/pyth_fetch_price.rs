@@ -64,7 +64,7 @@ struct Response {
 /// get Hermes service URL from https://docs.pyth.network/price-feeds/api-instances-and-providers/hermes
 pub async fn fetch_price_by_pyth(price_feed_id: &str) -> Result<f64, Box<dyn std::error::Error>> {
     let url = format!("{}{}", PYTH_API, "/updates/price/latest");
-    let ids = vec![price_feed_id];
+    let ids = [price_feed_id];
     let response =
         reqwest::Client::new().get(&url).query(&ids.iter().map(|id| ("ids[]", *id)).collect::<Vec<_>>()).send().await?;
     if !response.status().is_success() {
@@ -129,5 +129,5 @@ pub async fn fetch_pyth_price_feed_id(token_symbol: &str) -> Result<String, Box<
         return Err(format!("No price feed found for {}", token_symbol).into());
     }
 
-    return Ok(filter_data[0].id.clone());
+    Ok(filter_data[0].id.clone())
 }

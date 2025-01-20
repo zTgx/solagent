@@ -46,10 +46,10 @@ pub async fn get_balance_other(
 
         // Get the first token account's parsed account info
         let lamports = token_accounts[0].account.lamports;
-        return Ok(lamports as f64 / LAMPORTS_PER_SOL as f64);
+        Ok(lamports as f64 / LAMPORTS_PER_SOL as f64)
     } else {
         // Get SOL balance if no token address is provided
         let balance = agent.get_balance(Some(wallet_address.to_string())).await?;
-        return Ok(balance);
+        Ok(balance)
     }
 }
