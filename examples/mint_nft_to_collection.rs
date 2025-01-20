@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{AgentProvider, NFTMetadata, SolanaAgentKit};
+use solagent::{Config, NFTMetadata, SolanaAgentKit};
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
@@ -29,7 +29,8 @@ async fn main() {
 
     let collection = Pubkey::from_str_const("collection Mint");
 
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", AgentProvider::OpenAI("api_key".into())));
+    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
     let deployed_data = agent.mint_nft_to_collection(collection, metadata).await.unwrap();
     println!("Mint: {}", deployed_data.mint);
 }
