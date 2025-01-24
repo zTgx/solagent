@@ -15,19 +15,19 @@
 
 //! **solagent.rs: Bridging the Gap Between AI and Solana protocols**  
 //! solagent.rs is an open-source Rust library designed to streamline the integration of AI agents with Solana protocols. Built upon the rig framework, solagent.rs empowers developers to construct portable, modular, and lightweight full-stack AI agents capable of interacting with the Solana blockchain.
-//! </br>
+//!
 //! This powerful toolkit simplifies agent-to-blockchain communication, offering a comprehensive suite of functions for tasks such as token operations, trading, and more. By leveraging solagent.rs, developers can seamlessly connect their AI agents to the Solana ecosystem, unlocking a world of possibilities for on-chain automation and intelligent decision-making.
 //!
 //! Quick Start
 //!
 //! ```rust
 //! use std::sync::Arc;
-//! use solagent::{AgentProvider, SolanaAgentKit, create_solana_tools};
+//! use solagent::{Config, SolanaAgentKit, create_solana_tools};
 //! #[tokio::main]
 //! async fn main() {
-//!     let agent = Arc::new(SolanaAgentKit::new("private_key_bs58",
-//!                                         "rpc_url",
-//!                          AgentProvider::OpenAI("key".into())));
+//!     let config = Config { openai_api_key: Some("your_api_key".to_string()),
+//!             ..Default::default() };
+//!     let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
 //!     let toolset = create_solana_tools(agent);
 //! }
 //! ```
@@ -36,13 +36,13 @@
 //!
 //! ```rust
 //! use std::sync::Arc;
-//! use solagent::{AgentProvider, SolanaAgentKit};
+//! use solagent::{Config, SolanaAgentKit};
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!     let agent = Arc::new(SolanaAgentKit::new("private_key_bs58",
-//!                                         "rpc_url",
-//!                          AgentProvider::OpenAI("key".into())));
+//!    let config = Config { openai_api_key: Some("your_api_key".to_string()),
+//!             ..Default::default() };
+//!    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
 //!    let balance = agent.get_balance(None).await.unwrap();
 //!    println!("My balance: {}", balance);
 //!}
@@ -65,18 +65,18 @@ pub use tools::*;
 
 /// Represents the provider for the agent.
 /// ref: https://github.com/0xPlaygrounds/rig/tree/main/rig-core/src/providers
-#[non_exhaustive]
-#[derive(Debug, Clone)]
-pub enum AgentProvider {
-    LOCAL,
-    ANTHROPIC(String),
-    OpenAI(String),
-    Gemini(String),
-    XAI(String),
-    COHERE(String),
-    ETERNALAI(String),
-    PERPLEXITY(String),
-}
+// #[non_exhaustive]
+// #[derive(Debug, Clone)]
+// enum AgentProvider {
+//     LOCAL,
+//     ANTHROPIC(String),
+//     OpenAI(String),
+//     Gemini(String),
+//     XAI(String),
+//     COHERE(String),
+//     ETERNALAI(String),
+//     PERPLEXITY(String),
+// }
 
 /// Wallet
 /// - wallet : Wallet keypair for signing transactions
@@ -96,16 +96,26 @@ impl Wallet {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct Config {
+    pub openai_api_key: Option<String>,
+    pub jupiter_referral_account: Option<String>,
+    pub jupiter_fee_bps: Option<u16>, // Assuming fee is represented as a percentage (0-10000)
+    pub flash_privilege: Option<String>,
+    pub flexlend_api_key: Option<String>,
+    pub helius_api_key: Option<String>,
+}
+
 /// Represents a Solana agent that interacts with the blockchain.
 /// Provides a unified interface for token operations, NFT management, trading and more
 pub struct SolanaAgentKit {
     wallet: Wallet,
-    provider: AgentProvider,
+    config: Config,
     connection: RpcClient,
 }
 
 impl SolanaAgentKit {
-    pub fn new(private_key: &str, rpc_url: &str, provider: AgentProvider) -> Self {
-        SolanaAgentKit { wallet: Wallet::load(private_key), provider, connection: RpcClient::new(rpc_url) }
+    pub fn new(private_key: &str, rpc_url: &str, config: Config) -> Self {
+        SolanaAgentKit { wallet: Wallet::load(private_key), config, connection: RpcClient::new(rpc_url) }
     }
 }

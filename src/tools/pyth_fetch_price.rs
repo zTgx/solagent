@@ -37,6 +37,7 @@ pub struct FetchPricePyThOutput {
 #[error("FetchPricePyTh error")]
 pub struct FetchPricePyThError;
 
+#[derive(Default)]
 pub struct FetchPricePyTh;
 impl FetchPricePyTh {
     pub fn new() -> Self {

@@ -34,6 +34,7 @@ pub struct FetchPriceOutput {
 #[error("FetchPrice error")]
 pub struct FetchPriceError;
 
+#[derive(Default)]
 pub struct FetchPrice;
 impl FetchPrice {
     pub fn new() -> Self {

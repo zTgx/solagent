@@ -56,3 +56,6 @@ pub use solayer::stake_with_solayer;
 
 mod helius;
 pub use helius::*;
+
+mod jupiter;
+pub use jupiter::get_token_data_by_address;
