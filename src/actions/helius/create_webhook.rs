@@ -13,19 +13,25 @@
 // limitations under the License.
 
 use crate::SolanaAgentKit;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
-struct HeliusWebhookResponse {
-    webhook_url: String,
-    webhook_id: String,
+#[derive(Deserialize, Serialize)]
+pub struct HeliusWebhookResponse {
+    pub webhook_url: String,
+    pub webhook_id: String,
 }
 
 pub async fn create_webhook(
     agent: &SolanaAgentKit,
     account_addresses: Vec<String>,
     webhook_url: String,
-) -> Result<HeliusWebhookResponse, reqwest::Error> {
-    let url = format!("https://api.helius.xyz/v0/webhooks?api-key={}", agent.config.HELIUS_API_KEY);
+) -> Result<HeliusWebhookResponse, Box<dyn std::error::Error>> {
+    if agent.config.helius_api_key.is_none() {
+        return Err("helius api key is none.".into());
+    }
+
+    let api_key = &agent.config.helius_api_key.clone().unwrap();
+    let url = format!("https://api.helius.xyz/v0/webhooks?api-key={}", api_key);
 
     let body = serde_json::json!({
         "webhookURL": webhook_url,
@@ -38,7 +44,9 @@ pub async fn create_webhook(
     let client = reqwest::Client::new();
     let response = client.post(url).header("Content-Type", "application/json").json(&body).send().await?;
 
-    let data = response.json().await?;
+    let data = response.json::<serde_json::Value>().await?;
+    let webhook_url = data.get("webhookURL").expect("webhookURL field").as_str().expect("webhookURL text");
+    let webhook_id = data.get("webhookID").expect("webhookID field").as_str().expect("webhookID text");
 
-    Ok(HeliusWebhookResponse { webhook_url: data["webhookURL"].to_string(), webhook_id: data["webhookID"].to_string() })
+    Ok(HeliusWebhookResponse { webhook_url: webhook_url.to_string(), webhook_id: webhook_id.to_string() })
 }

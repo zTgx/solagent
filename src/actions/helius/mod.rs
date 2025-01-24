@@ -13,4 +13,4 @@
 // limitations under the License.
 
 mod create_webhook;
-pub use create_webhook::create_webhook;
+pub use create_webhook::{create_webhook, HeliusWebhookResponse};

@@ -55,7 +55,7 @@ mod solayer;
 pub use solayer::stake_with_solayer;
 
 mod helius;
-pub use helius::*;
+pub use helius::{create_webhook, HeliusWebhookResponse};
 
 mod jupiter;
 pub use jupiter::get_token_data_by_address;
