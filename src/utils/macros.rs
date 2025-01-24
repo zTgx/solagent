@@ -57,7 +57,7 @@ macro_rules! parameters_json_schema {
     ($($name:ident: $type:ty),* $(,)?) => {{
         let mut properties = serde_json::Map::new();
         $(
-            let property = crate::utils::macros::get_json_type(&syn::parse_quote!(<$type>));
+            let property = $crate::utils::macros::get_json_type(&syn::parse_quote!(<$type>));
             properties.insert(stringify!($name).to_string(), property);
         )*
         json!({
