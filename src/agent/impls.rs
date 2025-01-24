@@ -14,10 +14,11 @@
 
 use crate::{
     actions::{
-        close_empty_token_accounts, create_gibwork_task, deploy_collection, deploy_token, fetch_detailed_report,
-        fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id, fetch_summary_report, get_balance,
-        get_balance_other, get_token_data_by_address, get_tps, launch_token_pumpfun, mint_nft_to_collection,
-        request_faucet_funds, stake_with_jup, stake_with_solayer, trade, transfer, GibworkCreateTaskResponse,
+        close_empty_token_accounts, create_gibwork_task, create_webhook, deploy_collection, deploy_token,
+        fetch_detailed_report, fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id, fetch_summary_report,
+        get_balance, get_balance_other, get_token_data_by_address, get_tps, launch_token_pumpfun,
+        mint_nft_to_collection, request_faucet_funds, stake_with_jup, stake_with_solayer, trade, transfer,
+        GibworkCreateTaskResponse, HeliusWebhookResponse,
     },
     primitives::{
         close_empty_token_accounts::CloseEmptyTokenAccountsData,
@@ -147,5 +148,13 @@ impl SolanaAgentKit {
 
     pub async fn get_token_data_by_address(&self, mint: &str) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
         get_token_data_by_address(mint).await
+    }
+
+    pub async fn create_webhook(
+        &self,
+        account_addresses: Vec<String>,
+        webhook_url: String,
+    ) -> Result<HeliusWebhookResponse, Box<dyn std::error::Error>> {
+        create_webhook(self, account_addresses, webhook_url).await
     }
 }
