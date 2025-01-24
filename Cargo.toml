@@ -29,6 +29,9 @@ base64 = "0.22.1"
 anyhow = "1.0.80"
 solana-account-decoder = "2.1.9"
 helius = "0.2.4"
+proc-macro2 = "1"
+quote = "1"
+syn = "2"
 
 [dev-dependencies]
 tokio = { version = "1.42.0", features = ["full"] }
