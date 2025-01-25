@@ -14,3 +14,6 @@
 
 mod create_webhook;
 pub use create_webhook::{create_webhook, HeliusWebhookResponse};
+
+mod delete_webhook;
+pub use delete_webhook::delete_webhook;
