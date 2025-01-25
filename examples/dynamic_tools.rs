@@ -19,12 +19,11 @@ use rig::{
     vector_store::in_memory_store::InMemoryVectorStore,
 };
 use solagent::{create_solana_tools, Config, SolanaAgentKit};
-use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
     let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
     let toolset = create_solana_tools(agent);
 
     let client = gemini::Client::from_env();

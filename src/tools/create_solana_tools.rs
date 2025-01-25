@@ -47,7 +47,8 @@ use super::{
 /// - `CloseEmptyTokenAccounts`: Tool to close empty SPL Token accounts associated with your wallet to reclaim rent.
 /// - `StakeWithSolayer`: Tool to stake native SOL with Solayer's restaking protocol to receive Solayer SOL (sSOL).
 /// - `GetTokenData`: Tool to get the token data for a given token mint address.
-pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
+pub fn create_solana_tools(agent: SolanaAgentKit) -> ToolSet {
+    let agent = Arc::new(agent);
     let builder = ToolSet::builder()
         .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
         .dynamic_tool(deploy_token::DeployToken::new(agent.clone()))
