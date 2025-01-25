@@ -36,13 +36,6 @@
 
 - **More...**
 
-## 📦 Installation
-
-```bash
-[dependencies]
-solagent = "0.1.8"
-```
-
 ## Quick Start
 ```rust
 use std::sync::Arc;
