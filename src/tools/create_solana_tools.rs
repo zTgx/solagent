@@ -51,6 +51,8 @@ use std::sync::Arc;
 /// - `GetTokenData`: Tool to get the token data for a given token mint address.
 /// - `CreateWebHook`: Tool to creates a new webhook in the Helius system to monitor transactions for specified account addresses.
 /// - `DeleteWebhook`: Tool to deletes a Helius webhook by its unique ID.
+/// - `GetWebHook`: Tool to retrieves details of a Helius webhook by its unique ID.
+/// - `TransactionParse`: Tool to parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API.
 pub fn create_solana_tools(agent: SolanaAgentKit) -> ToolSet {
     let agent = Arc::new(agent);
     let builder = ToolSet::builder()
