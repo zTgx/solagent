@@ -13,3 +13,4 @@
 // limitations under the License.
 
 mod create_webhook;
+pub mod delete_webhook;
