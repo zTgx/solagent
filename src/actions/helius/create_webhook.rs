@@ -26,11 +26,12 @@ pub async fn create_webhook(
     account_addresses: Vec<String>,
     webhook_url: String,
 ) -> Result<HeliusWebhookResponse, Box<dyn std::error::Error>> {
-    if agent.config.helius_api_key.is_none() {
-        return Err("helius api key is none.".into());
-    }
+    // Get the Helius API key from the agent's configuration
+    let api_key = match agent.config.helius_api_key.as_ref() {
+        Some(key) => key,
+        None => return Err("Missing Helius API key in agent.config.HELIUS_API_KEY".into()),
+    };
 
-    let api_key = &agent.config.helius_api_key.clone().unwrap();
     let url = format!("https://api.helius.xyz/v0/webhooks?api-key={}", api_key);
 
     let body = serde_json::json!({
