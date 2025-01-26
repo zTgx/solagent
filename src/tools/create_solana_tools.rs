@@ -18,7 +18,7 @@ use std::sync::Arc;
 
 use super::{
     deploy_collection, deploy_token, fetch_price, get_balance_other, get_wallet_address, gibwork,
-    helius::delete_webhook,
+    helius::{create_webhook, delete_webhook},
     jupiter::get_token_data_by_address,
     launch_token_pumpfun, mint_nft, pyth_fetch_price, rugcheck,
     solana::{close_empty_token_accounts, get_balance, get_tps, request_faucet_funds, transfer},
@@ -48,6 +48,7 @@ use super::{
 /// - `CloseEmptyTokenAccounts`: Tool to close empty SPL Token accounts associated with your wallet to reclaim rent.
 /// - `StakeWithSolayer`: Tool to stake native SOL with Solayer's restaking protocol to receive Solayer SOL (sSOL).
 /// - `GetTokenData`: Tool to get the token data for a given token mint address.
+/// - `CreateWebHook`: Tool to creates a new webhook in the Helius system to monitor transactions for specified account addresses.
 /// - `DeleteWebhook`: Tool to deletes a Helius webhook by its unique ID.
 pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
     let builder = ToolSet::builder()
@@ -71,6 +72,7 @@ pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
         .dynamic_tool(close_empty_token_accounts::CloseEmptyTokenAccounts::new(agent.clone()))
         .dynamic_tool(stake_with_solayer::StakeWithSolayer::new(agent.clone()))
         .dynamic_tool(get_token_data_by_address::GetTokenData::new())
+        .dynamic_tool(create_webhook::CreateWebHook::new(agent.clone()))
         .dynamic_tool(delete_webhook::DeleteWebHook::new(agent.clone()));
 
     builder.build()
