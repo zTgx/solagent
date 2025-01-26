@@ -21,13 +21,13 @@
 //! Quick Start
 //!
 //! ```rust
-//! use std::sync::Arc;
 //! use solagent::{Config, SolanaAgentKit, create_solana_tools};
+//!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = Config { openai_api_key: Some("your_api_key".to_string()),
 //!             ..Default::default() };
-//!     let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+//!     let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 //!     let toolset = create_solana_tools(agent);
 //! }
 //! ```
@@ -35,14 +35,13 @@
 //! Get Balance
 //!
 //! ```rust
-//! use std::sync::Arc;
 //! use solagent::{Config, SolanaAgentKit};
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!    let config = Config { openai_api_key: Some("your_api_key".to_string()),
 //!             ..Default::default() };
-//!    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+//!     let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 //!    let balance = agent.get_balance(None).await.unwrap();
 //!    println!("My balance: {}", balance);
 //!}
@@ -82,21 +81,6 @@ pub use spl_associated_token_account;
 pub use spl_token;
 pub use spl_token_2022;
 pub use thiserror;
-
-/// Represents the provider for the agent.
-/// ref: https://github.com/0xPlaygrounds/rig/tree/main/rig-core/src/providers
-// #[non_exhaustive]
-// #[derive(Debug, Clone)]
-// enum AgentProvider {
-//     LOCAL,
-//     ANTHROPIC(String),
-//     OpenAI(String),
-//     Gemini(String),
-//     XAI(String),
-//     COHERE(String),
-//     ETERNALAI(String),
-//     PERPLEXITY(String),
-// }
 
 /// Wallet
 /// - wallet : Wallet keypair for signing transactions

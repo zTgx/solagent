@@ -38,7 +38,6 @@
 
 ## Quick Start
 ```rust
-use std::sync::Arc;
 use solagent::{create_solana_tools, Config, SolanaAgentKit};
 
 #[tokio::main]
@@ -47,7 +46,7 @@ async fn main() {
         openai_api_key: Some("your_api_key".to_string()),
         ..Default::default()
     };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
     let toolset = create_solana_tools(agent);
 }
 ```
@@ -65,7 +64,7 @@ let config = Config {
     openai_api_key: Some("your_api_key".to_string()),
     ..Default::default()
 };
-let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 let mint_pubkey = agent
     .deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
 println!("Token Mint Address: {:?}", mint_pubkey);
@@ -83,7 +82,7 @@ let config = Config {
     openai_api_key: Some("your_api_key".to_string()),
     ..Default::default()
 };
-let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 let tx = agent.deploy_collection(options).await.unwrap();
 println!("Mint: {:?}", tx.0);
 ```
@@ -94,7 +93,7 @@ let config = Config {
     openai_api_key: Some("your_api_key".to_string()),
     ..Default::default()
 };
-let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 let price_feed_id = agent.fetch_pyth_price_feed_id("SOL")
     .await
     .expect("fetch_pyth_price_feed_id");

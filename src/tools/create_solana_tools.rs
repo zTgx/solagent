@@ -50,7 +50,8 @@ use super::{
 /// - `GetTokenData`: Tool to get the token data for a given token mint address.
 /// - `CreateWebHook`: Tool to creates a new webhook in the Helius system to monitor transactions for specified account addresses.
 /// - `DeleteWebhook`: Tool to deletes a Helius webhook by its unique ID.
-pub fn create_solana_tools(agent: Arc<SolanaAgentKit>) -> ToolSet {
+pub fn create_solana_tools(agent: SolanaAgentKit) -> ToolSet {
+    let agent = Arc::new(agent);
     let builder = ToolSet::builder()
         .dynamic_tool(deploy_collection::DeployCollection::new(agent.clone()))
         .dynamic_tool(deploy_token::DeployToken::new(agent.clone()))
