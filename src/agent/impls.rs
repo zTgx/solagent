@@ -16,9 +16,9 @@ use crate::{
     actions::{
         close_empty_token_accounts, create_gibwork_task, create_webhook, delete_webhook, deploy_collection,
         deploy_token, fetch_detailed_report, fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id,
-        fetch_summary_report, get_balance, get_balance_other, get_token_data_by_address, get_tps, launch_token_pumpfun,
-        mint_nft_to_collection, request_faucet_funds, stake_with_jup, stake_with_solayer, trade, transfer,
-        GibworkCreateTaskResponse, HeliusWebhookResponse,
+        fetch_summary_report, get_balance, get_balance_other, get_token_data_by_address, get_tps, get_webhook,
+        launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_with_jup, stake_with_solayer, trade,
+        transaction_parse, transfer, GibworkCreateTaskResponse, HeliusWebhookIdResponse, HeliusWebhookResponse,
     },
     primitives::{
         close_empty_token_accounts::CloseEmptyTokenAccountsData,
@@ -160,5 +160,16 @@ impl SolanaAgentKit {
 
     pub async fn delete_webhook(&self, webhook_id: &str) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
         delete_webhook(self, webhook_id).await
+    }
+
+    pub async fn get_webhook(&self, webhook_id: &str) -> Result<HeliusWebhookIdResponse, Box<dyn std::error::Error>> {
+        get_webhook(self, webhook_id).await
+    }
+
+    pub async fn transaction_parse(
+        &self,
+        transaction_id: &str,
+    ) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
+        transaction_parse(self, transaction_id).await
     }
 }

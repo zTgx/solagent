@@ -12,10 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    actions::{create_webhook, HeliusWebhookResponse},
-    parameters_json_schema, SolanaAgentKit,
-};
+use crate::{actions::transaction_parse, parameters_json_schema, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},
@@ -25,67 +22,59 @@ use serde_json::json;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
-pub struct CreateWebHookArgs {
-    account_addresses: Vec<String>,
-    webhook_url: String,
+pub struct TransactionParseArgs {
+    transaction_id: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct CreateWebHookOutput {
-    pub data: HeliusWebhookResponse,
+pub struct TransactionParseOutput {
+    pub data: serde_json::Value,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("CreateWebHook error")]
-pub struct CreateWebHookError;
+#[error("TransactionParse error")]
+pub struct TransactionParseError;
 
-pub struct CreateWebHook {
+pub struct TransactionParse {
     agent: Arc<SolanaAgentKit>,
 }
 
-impl CreateWebHook {
+impl TransactionParse {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        CreateWebHook { agent }
+        TransactionParse { agent }
     }
 }
 
-impl Tool for CreateWebHook {
-    const NAME: &'static str = "create_webhook";
+impl Tool for TransactionParse {
+    const NAME: &'static str = "transaction_parse";
 
-    type Error = CreateWebHookError;
-    type Args = CreateWebHookArgs;
-    type Output = CreateWebHookOutput;
+    type Error = TransactionParseError;
+    type Args = TransactionParseArgs;
+    type Output = TransactionParseOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "create_webhook".to_string(),
+            name: "transaction_parse".to_string(),
             description: r#"
             
-            Creates a new webhook in the Helius system to monitor transactions for specified account addresses
+            Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API
 
             input: {
-                account_addresses: [
-                    "BVdNLvyG2DNiWAXBE9qAmc4MTQXymd5Bzfo9xrQSUzVP",
-                    "Eo2ciguhMLmcTWXELuEQPdu7DWZt67LHXb2rdHZUbot7",
-                ],
-                webhook_url: "https://yourdomain.com/webhook",
+                transaction_id: "tx123",
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                account_addresses: Vec<String>,
-                webhook_url: String,
+                transaction_id: String,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let account_addresses = args.account_addresses;
-        let webhook_url = args.webhook_url;
-        let data = create_webhook(&self.agent, account_addresses, webhook_url).await.expect("create_webhook");
+        let data = transaction_parse(&self.agent, &args.transaction_id).await.expect("transaction_parse");
 
-        Ok(CreateWebHookOutput { data })
+        Ok(TransactionParseOutput { data })
     }
 }
 
@@ -93,17 +82,18 @@ impl Tool for CreateWebHook {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for CreateWebHook {
+impl ToolEmbedding for TransactionParse {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(CreateWebHook { agent: _state })
+        Ok(TransactionParse { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Creates a new webhook in the Helius system to monitor transactions for specified account addresses".into()]
+        vec!["Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API"
+            .into()]
     }
 
     fn context(&self) -> Self::Context {}

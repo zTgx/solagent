@@ -60,14 +60,13 @@ impl Tool for DeleteWebHook {
             Deletes a Helius webhook by its unique ID
 
             input: {
-              webhookID: "webhook_123",
+              webhook_id: "webhook_123",
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                account_addresses: Vec<String>,
-                webhook_url: String,
+                webhook_id: String,
             ),
         }
     }

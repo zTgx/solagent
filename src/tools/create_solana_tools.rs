@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolanaAgentKit;
+use crate::{
+    tools::{
+        deploy_collection, deploy_token, fetch_price, get_balance_other, get_wallet_address, gibwork,
+        helius::{create_webhook, delete_webhook, get_webhook, transaction_parsing},
+        jupiter::get_token_data_by_address,
+        launch_token_pumpfun, mint_nft, pyth_fetch_price, rugcheck,
+        solana::{close_empty_token_accounts, get_balance, get_tps, request_faucet_funds, transfer},
+        solayer::stake_with_solayer,
+        stake_with_jup, trade,
+    },
+    SolanaAgentKit,
+};
 use rig::tool::ToolSet;
 use std::sync::Arc;
-
-use super::{
-    deploy_collection, deploy_token, fetch_price, get_balance_other, get_wallet_address, gibwork,
-    helius::{create_webhook, delete_webhook},
-    jupiter::get_token_data_by_address,
-    launch_token_pumpfun, mint_nft, pyth_fetch_price, rugcheck,
-    solana::{close_empty_token_accounts, get_balance, get_tps, request_faucet_funds, transfer},
-    solayer::stake_with_solayer,
-    stake_with_jup, trade,
-};
 
 /// An function to build a set of tools that can be used with Solana.
 ///
@@ -74,7 +75,9 @@ pub fn create_solana_tools(agent: SolanaAgentKit) -> ToolSet {
         .dynamic_tool(stake_with_solayer::StakeWithSolayer::new(agent.clone()))
         .dynamic_tool(get_token_data_by_address::GetTokenData::new())
         .dynamic_tool(create_webhook::CreateWebHook::new(agent.clone()))
-        .dynamic_tool(delete_webhook::DeleteWebHook::new(agent.clone()));
+        .dynamic_tool(delete_webhook::DeleteWebHook::new(agent.clone()))
+        .dynamic_tool(get_webhook::GetWebHook::new(agent.clone()))
+        .dynamic_tool(transaction_parsing::TransactionParse::new(agent.clone()));
 
     builder.build()
 }

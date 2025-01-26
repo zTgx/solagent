@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::{
-    actions::{create_webhook, HeliusWebhookResponse},
+    actions::{get_webhook, HeliusWebhookIdResponse},
     parameters_json_schema, SolanaAgentKit,
 };
 use rig::{
@@ -25,67 +25,59 @@ use serde_json::json;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
-pub struct CreateWebHookArgs {
-    account_addresses: Vec<String>,
-    webhook_url: String,
+pub struct GetWebHookArgs {
+    webhook_id: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct CreateWebHookOutput {
-    pub data: HeliusWebhookResponse,
+pub struct GetWebHookOutput {
+    pub data: HeliusWebhookIdResponse,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("CreateWebHook error")]
-pub struct CreateWebHookError;
+#[error("GetWebHook error")]
+pub struct GetWebHookError;
 
-pub struct CreateWebHook {
+pub struct GetWebHook {
     agent: Arc<SolanaAgentKit>,
 }
 
-impl CreateWebHook {
+impl GetWebHook {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        CreateWebHook { agent }
+        GetWebHook { agent }
     }
 }
 
-impl Tool for CreateWebHook {
-    const NAME: &'static str = "create_webhook";
+impl Tool for GetWebHook {
+    const NAME: &'static str = "get_webhook";
 
-    type Error = CreateWebHookError;
-    type Args = CreateWebHookArgs;
-    type Output = CreateWebHookOutput;
+    type Error = GetWebHookError;
+    type Args = GetWebHookArgs;
+    type Output = GetWebHookOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "create_webhook".to_string(),
+            name: "get_webhook".to_string(),
             description: r#"
             
-            Creates a new webhook in the Helius system to monitor transactions for specified account addresses
+            Retrieves details of a Helius webhook by its unique ID
 
             input: {
-                account_addresses: [
-                    "BVdNLvyG2DNiWAXBE9qAmc4MTQXymd5Bzfo9xrQSUzVP",
-                    "Eo2ciguhMLmcTWXELuEQPdu7DWZt67LHXb2rdHZUbot7",
-                ],
-                webhook_url: "https://yourdomain.com/webhook",
+                webhook_id: "webhook_123",
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                account_addresses: Vec<String>,
-                webhook_url: String,
+                webhook_id: String,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let account_addresses = args.account_addresses;
-        let webhook_url = args.webhook_url;
-        let data = create_webhook(&self.agent, account_addresses, webhook_url).await.expect("create_webhook");
+        let data = get_webhook(&self.agent, &args.webhook_id).await.expect("get_webhook");
 
-        Ok(CreateWebHookOutput { data })
+        Ok(GetWebHookOutput { data })
     }
 }
 
@@ -93,17 +85,17 @@ impl Tool for CreateWebHook {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for CreateWebHook {
+impl ToolEmbedding for GetWebHook {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(CreateWebHook { agent: _state })
+        Ok(GetWebHook { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Creates a new webhook in the Helius system to monitor transactions for specified account addresses".into()]
+        vec!["Retrieves details of a Helius webhook by its unique ID".into()]
     }
 
     fn context(&self) -> Self::Context {}
