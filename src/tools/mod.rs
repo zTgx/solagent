@@ -19,6 +19,7 @@ pub mod fetch_price;
 pub mod get_balance_other;
 pub mod get_wallet_address;
 pub mod gibwork;
+pub mod goplus;
 pub mod helius;
 pub mod jupiter;
 pub mod launch_token_pumpfun;
