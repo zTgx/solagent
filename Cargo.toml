@@ -1,6 +1,6 @@
 [package]
 name = "solagent"
-version = "0.1.9"
+version = "0.1.10"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs.git"
