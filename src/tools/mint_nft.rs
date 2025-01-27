@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::{
-    primitives::token::NFTMetadata,
+    primitives::NFTMetadata,
     SolanaAgentKit,
     {actions::mint_nft_to_collection, parameters_json_schema},
 };

@@ -12,16 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    primitives::{
-        close_empty_token_accounts::{CloseEmptyTokenAccountsData, Parsed},
-        constants::USDC,
-    },
-    SolanaAgentKit,
-};
+use crate::{primitives::USDC, SolanaAgentKit};
 use solana_client::rpc_request::TokenAccountsFilter;
 use solana_sdk::{instruction::Instruction, pubkey::Pubkey, transaction::Transaction};
 use spl_token::instruction::close_account;
+
+use serde::{Deserialize, Serialize};
+
+#[derive(serde::Deserialize)]
+pub struct Parsed {
+    pub info: SplToken,
+}
+
+#[derive(serde::Deserialize)]
+pub struct SplToken {
+    pub mint: String,
+    #[serde(rename(deserialize = "tokenAmount"))]
+    pub token_amount: Amount,
+}
+
+#[allow(dead_code)]
+#[derive(serde::Deserialize)]
+pub struct Amount {
+    pub amount: String,
+    #[serde(rename(deserialize = "uiAmountString"))]
+    ui_amount_string: String,
+    #[serde(rename(deserialize = "uiAmount"))]
+    pub ui_amount: f64,
+    pub decimals: u8,
+}
+
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub struct CloseEmptyTokenAccountsData {
+    pub signature: String,
+    pub closed_size: usize,
+}
+
+impl CloseEmptyTokenAccountsData {
+    pub fn new(signature: String, closed_size: usize) -> Self {
+        CloseEmptyTokenAccountsData { signature, closed_size }
+    }
+}
 
 /// Close Empty SPL Token accounts of the agent.
 ///

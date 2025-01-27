@@ -53,7 +53,7 @@ mod primitives;
 mod tools;
 mod utils;
 
-pub use primitives::token::NFTMetadata;
+pub use primitives::NFTMetadata;
 use solana_client::rpc_client::RpcClient;
 use solana_sdk::{
     bs58,

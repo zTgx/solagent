@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{primitives::constants::JUP_API, SolanaAgentKit};
+use crate::{primitives::JUP_API, SolanaAgentKit};
 use anyhow::Result;
 use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};

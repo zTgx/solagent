@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::fetch_summary_report, parameters_json_schema, primitives::rugcheck::TokenCheck};
+use crate::{
+    actions::{fetch_summary_report, TokenCheck},
+    parameters_json_schema,
+};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

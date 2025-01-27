@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::primitives::constants::RUGCHECK_URL;
+use crate::primitives::RUGCHECK_URL;
 use serde_json::Value;
 
 /// Fetches a detailed report for a specific token.

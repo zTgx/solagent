@@ -34,7 +34,7 @@ mod mint_nft;
 pub use mint_nft::mint_nft_to_collection;
 
 mod launch_token_pumpfun;
-pub use launch_token_pumpfun::launch_token_pumpfun;
+pub use launch_token_pumpfun::{launch_token_pumpfun, PumpFunTokenOptions, PumpfunTokenResponse};
 
 mod trade;
 pub use trade::trade;
@@ -43,13 +43,15 @@ mod stake_with_jup;
 pub use stake_with_jup::stake_with_jup;
 
 mod rugcheck;
-pub use rugcheck::{fetch_detailed_report, fetch_summary_report};
+pub use rugcheck::{fetch_detailed_report, fetch_summary_report, TokenCheck};
 
 mod create_gibwork_task;
 pub use create_gibwork_task::{create_gibwork_task, GibworkCreateTaskResponse};
 
 mod solana;
-pub use solana::{close_empty_token_accounts, get_balance, get_tps, request_faucet_funds, transfer};
+pub use solana::{
+    close_empty_token_accounts, get_balance, get_tps, request_faucet_funds, transfer, CloseEmptyTokenAccountsData,
+};
 
 mod solayer;
 pub use solayer::stake_with_solayer;

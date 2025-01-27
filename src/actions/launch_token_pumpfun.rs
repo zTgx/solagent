@@ -12,14 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    primitives::pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse, TokenMetadata},
-    SolanaAgentKit,
-};
+use crate::SolanaAgentKit;
 use reqwest::{multipart::Part, Client as ReqwestClient};
+use serde::{Deserialize, Serialize};
 use solana_sdk::{
     commitment_config::CommitmentConfig, signature::Signer, signer::keypair::Keypair, transaction::VersionedTransaction,
 };
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct PumpFunTokenOptions {
+    pub twitter: Option<String>,
+    pub telegram: Option<String>,
+    pub website: Option<String>,
+    pub initial_liquidity_sol: f64,
+    pub slippage_bps: u16,
+    pub priority_fee: f64,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct PumpfunTokenResponse {
+    pub signature: String,
+    pub mint: String,
+    pub metadata_uri: String,
+}
+
+pub struct TokenMetadata {
+    pub name: String,
+    pub symbol: String,
+    pub uri: String,
+}
 
 /// Launch a token on Pump.fun.
 ///

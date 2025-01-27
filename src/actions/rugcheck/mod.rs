@@ -13,7 +13,7 @@
 // limitations under the License.
 
 mod token_report_summary;
-pub use token_report_summary::fetch_summary_report;
+pub use token_report_summary::{fetch_summary_report, TokenCheck};
 
 mod token_report_detailed;
 pub use token_report_detailed::fetch_detailed_report;

@@ -14,7 +14,7 @@
 
 #![allow(dead_code)]
 
-use crate::primitives::constants::PYTH_API;
+use crate::primitives::PYTH_API;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]

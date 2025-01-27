@@ -12,10 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::primitives::{
-    constants::RUGCHECK_URL,
-    rugcheck::{Risk, TokenCheck},
-};
+use crate::primitives::RUGCHECK_URL;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct Risk {
+    pub name: String,
+    pub level: String,
+    pub description: String,
+    pub score: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct TokenCheck {
+    pub token_program: String,
+    pub token_type: String,
+    pub risks: Vec<Risk>,
+}
 
 /// Fetches a summary report for a specific token.
 ///

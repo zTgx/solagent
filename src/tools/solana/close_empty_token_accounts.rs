@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::{
-    actions::close_empty_token_accounts, primitives::close_empty_token_accounts::CloseEmptyTokenAccountsData,
+    actions::{close_empty_token_accounts, CloseEmptyTokenAccountsData},
     SolanaAgentKit,
 };
 use rig::{

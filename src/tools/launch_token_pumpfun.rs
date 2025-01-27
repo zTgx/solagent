@@ -13,10 +13,8 @@
 // limitations under the License.
 
 use crate::{
-    actions::launch_token_pumpfun,
-    parameters_json_schema,
-    primitives::pumpfun::{PumpFunTokenOptions, PumpfunTokenResponse},
-    SolanaAgentKit,
+    actions::{launch_token_pumpfun, PumpFunTokenOptions, PumpfunTokenResponse},
+    parameters_json_schema, SolanaAgentKit,
 };
 use rig::{
     completion::ToolDefinition,

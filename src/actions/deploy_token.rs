@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{primitives::token::DeployedData, SolanaAgentKit};
+use crate::{primitives::DeployedData, SolanaAgentKit};
 use mpl_token_metadata::{
     accounts::Metadata,
     instructions::{CreateV1, CreateV1InstructionArgs},

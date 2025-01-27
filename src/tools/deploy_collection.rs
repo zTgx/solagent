@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::deploy_collection, parameters_json_schema, primitives::token::NFTMetadata, SolanaAgentKit};
+use crate::{actions::deploy_collection, parameters_json_schema, primitives::NFTMetadata, SolanaAgentKit};
 use rig::{
     completion::ToolDefinition,
     tool::{Tool, ToolEmbedding},

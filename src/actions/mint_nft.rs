@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use crate::{
-    primitives::token::{DeployedData, NFTMetadata},
+    primitives::{DeployedData, NFTMetadata},
     SolanaAgentKit,
 };
 use mpl_token_metadata::{
