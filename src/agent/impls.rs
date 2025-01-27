@@ -16,7 +16,7 @@ use crate::{
     actions::{
         close_empty_token_accounts, create_gibwork_task, create_webhook, delete_webhook, deploy_collection,
         deploy_token, fetch_detailed_report, fetch_price, fetch_price_by_pyth, fetch_pyth_price_feed_id,
-        fetch_summary_report, get_balance, get_balance_other, get_solana_token_security_info,
+        fetch_summary_report, get_assets_by_owner, get_balance, get_balance_other, get_solana_token_security_info,
         get_token_data_by_address, get_token_malicious_info, get_token_phishing_site_info, get_token_security_info,
         get_tps, get_webhook, launch_token_pumpfun, mint_nft_to_collection, request_faucet_funds, stake_with_jup,
         stake_with_solayer, trade, transaction_parse, transfer, GibworkCreateTaskResponse, HeliusWebhookIdResponse,
@@ -193,5 +193,13 @@ impl SolanaAgentKit {
 
     pub async fn get_token_phishing_site_info(url: &str) -> Result<serde_json::Value, reqwest::Error> {
         get_token_phishing_site_info(url).await
+    }
+
+    pub async fn get_assets_by_owner(
+        &self,
+        owner_public_key: &str,
+        limit: u32,
+    ) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
+        get_assets_by_owner(self, owner_public_key, limit).await
     }
 }

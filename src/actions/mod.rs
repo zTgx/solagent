@@ -56,7 +56,8 @@ pub use solayer::stake_with_solayer;
 
 mod helius;
 pub use helius::{
-    create_webhook, delete_webhook, get_webhook, transaction_parse, HeliusWebhookIdResponse, HeliusWebhookResponse,
+    create_webhook, delete_webhook, get_assets_by_owner, get_webhook, transaction_parse, HeliusWebhookIdResponse,
+    HeliusWebhookResponse,
 };
 
 mod jupiter;
