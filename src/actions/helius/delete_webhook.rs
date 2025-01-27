@@ -58,7 +58,7 @@ pub async fn delete_webhook(
 
     // Check if the response body is empty
     let content_length = response.headers().get("Content-Length");
-    if content_length.is_none() || content_length.unwrap().to_str()? == "0" {
+    if content_length.is_none() || content_length.expect("HeaderValue").to_str()? == "0" {
         return Ok(serde_json::json!({"message": "Webhook deleted successfully (empty body)"}));
     }
 

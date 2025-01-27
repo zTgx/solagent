@@ -114,7 +114,8 @@ pub async fn trade(
     let swap_response: SwapResponse =
         client.post(format!("{}/swap", JUP_API)).json(&swap_request).send().await?.json().await?;
 
-    let swap_transaction = general_purpose::STANDARD.decode(&swap_response.swap_transaction).unwrap();
+    let swap_transaction =
+        general_purpose::STANDARD.decode(&swap_response.swap_transaction).expect("decode swap_transaction");
 
     let versioned_transaction: VersionedTransaction = bincode::deserialize(&swap_transaction)?;
 

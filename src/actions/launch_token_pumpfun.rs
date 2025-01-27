@@ -167,7 +167,7 @@ async fn fetch_token_metadata(
     let md = TokenMetadata {
         name: name.to_string(),
         symbol: symbol.to_string(),
-        uri: response_json.get("metadataUri").unwrap().to_string(),
+        uri: response_json.get("metadataUri").expect("metadataUri").to_string(),
     };
 
     Ok(md)
@@ -209,7 +209,11 @@ async fn request_pumpportal_tx(
         return Err(format!("trade-local failed with status: {}", status).into());
     }
 
-    let bytes = res.bytes().await.unwrap();
-    let tx: VersionedTransaction = bincode::deserialize(&bytes).unwrap();
-    Ok(tx)
+    if let Ok(bytes) = res.bytes().await {
+        if let Ok(tx) = bincode::deserialize::<VersionedTransaction>(&bytes) {
+            return Ok(tx);
+        }
+    }
+
+    Err("fetch token metadata error".into())
 }

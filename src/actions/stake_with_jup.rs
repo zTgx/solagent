@@ -45,7 +45,8 @@ pub async fn stake_with_jup(agent: &SolanaAgentKit, amount: f64) -> Result<Strin
     let response = client.post(&stake_url).json(&stake_request).send().await?;
 
     let data: serde_json::Value = response.json().await?;
-    let transaction_data = general_purpose::STANDARD.decode(data["transaction"].as_str().unwrap())?;
+    let transaction_data =
+        general_purpose::STANDARD.decode(data["transaction"].as_str().expect("decode transaction"))?;
 
     let mut versioned_transaction: VersionedTransaction = bincode::deserialize(&transaction_data)?;
 

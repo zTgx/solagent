@@ -76,7 +76,7 @@ pub async fn fetch_price_by_pyth(price_feed_id: &str) -> Result<f64, Box<dyn std
     if !parsed_data.is_empty() {
         let price_data = &parsed_data[0];
         let price_info = &price_data.price;
-        let price = price_info.price.parse::<f64>().unwrap();
+        let price = price_info.price.parse::<f64>().expect("parse price errors");
         let expo = price_info.expo;
 
         let price = price * (10.0_f64.powi(expo));

@@ -99,7 +99,7 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
         &[&agent.wallet.address],
         1,
     )
-    .unwrap();
+    .expect("mint_to");
 
     // Create metadata
     let create_metadata_ix = CreateMetadataAccountV3 {
@@ -156,7 +156,7 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
         Some(&agent.wallet.address),
         0,
     )
-    .unwrap();
+    .expect("initialize_mint");
 
     // Create and send transaction
     let recent_blockhash = agent.connection.get_latest_blockhash()?;

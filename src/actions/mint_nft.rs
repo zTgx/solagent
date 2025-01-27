@@ -75,7 +75,7 @@ pub async fn mint_nft_to_collection(
         Some(&agent.wallet.address),
         0,
     )
-    .unwrap();
+    .expect("initialize_mint");
 
     // Create Associated Token Account
     let associated_token_account =
@@ -96,7 +96,7 @@ pub async fn mint_nft_to_collection(
         &[&agent.wallet.address],
         1,
     )
-    .unwrap();
+    .expect("mint_to");
 
     // Create metadata account
     let create_metadata_ix = CreateMetadataAccountV3 {

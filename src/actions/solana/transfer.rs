@@ -41,8 +41,8 @@ pub async fn transfer(
             let from_ata = get_associated_token_address(&mint, &agent.wallet.address);
             let to_ata = get_associated_token_address(&mint, &to);
 
-            let account_info = &agent.connection.get_account(&mint).unwrap();
-            let mint_info = Mint::unpack_from_slice(&account_info.data).unwrap();
+            let account_info = &agent.connection.get_account(&mint).expect("get_account");
+            let mint_info = Mint::unpack_from_slice(&account_info.data).expect("unpack_from_slice");
 
             let adjusted_amount = amount * 10u64.pow(mint_info.decimals as u32);
 
@@ -54,16 +54,17 @@ pub async fn transfer(
                 &[&agent.wallet.address],
                 adjusted_amount,
             )
-            .unwrap();
+            .expect("transfer_instruct");
 
             let transaction = Transaction::new_signed_with_payer(
                 &[transfer_instruction],
                 Some(&agent.wallet.address),
                 &[&agent.wallet.wallet],
-                agent.connection.get_latest_blockhash().unwrap(),
+                agent.connection.get_latest_blockhash().expect("new_signed_with_payer"),
             );
 
-            let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
+            let signature =
+                agent.connection.send_and_confirm_transaction(&transaction).expect("send_and_confirm_transaction");
             Ok(signature.to_string())
         }
         None => {
@@ -73,10 +74,11 @@ pub async fn transfer(
                 &[transfer_instruction],
                 Some(&agent.wallet.address),
                 &[&agent.wallet.wallet],
-                agent.connection.get_latest_blockhash().unwrap(),
+                agent.connection.get_latest_blockhash().expect("get_latest_blockhash"),
             );
 
-            let signature = agent.connection.send_and_confirm_transaction(&transaction).unwrap();
+            let signature =
+                agent.connection.send_and_confirm_transaction(&transaction).expect("send_and_confirm_transaction");
             Ok(signature.to_string())
         }
     }
