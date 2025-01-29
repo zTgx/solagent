@@ -3628,8 +3628,6 @@ dependencies = [
  "helius",
  "lazy_static",
  "mpl-token-metadata",
- "proc-macro2",
- "quote",
  "reqwest 0.12.12",
  "rig-core",
  "serde",
@@ -3641,7 +3639,6 @@ dependencies = [
  "spl-associated-token-account 6.0.0",
  "spl-token 7.0.0",
  "spl-token-2022 6.0.0",
- "syn 2.0.94",
  "thiserror 2.0.9",
  "tokio",
 ]
