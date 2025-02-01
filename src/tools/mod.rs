@@ -29,6 +29,5 @@ pub mod rugcheck;
 pub mod solana;
 pub mod solayer;
 pub mod stake_with_jup;
-pub mod trade;
 
 pub use create_solana_tools::create_solana_tools; // export to top

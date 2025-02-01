@@ -13,3 +13,4 @@
 // limitations under the License.
 
 pub mod get_token_data_by_address;
+pub mod trade;

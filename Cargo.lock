@@ -3646,8 +3646,14 @@ dependencies = [
 name = "solagent-plugin-jupiter"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "bincode",
  "reqwest 0.12.12",
+ "serde",
  "serde_json",
+ "solagent-core",
+ "spl-token 7.0.0",
 ]
 
 [[package]]
