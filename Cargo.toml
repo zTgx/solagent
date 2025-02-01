@@ -1,12 +1,15 @@
 [workspace]
 resolver = "2"
 members = [
+    "examples/plugin",
     "packages/core",
+    "packages/adapters/topkio",
     "packages/adapters/rig/goplus",
     "packages/adapters/rig/solana",
-    "packages/adapters/topkio",
+    "packages/adapters/rig/helius",
     "packages/plugins/goplus",
-    "packages/plugins/solana", "examples/plugin",
+    "packages/plugins/solana", 
+    "packages/plugins/helius", "packages/packages/adapters/rig/helius",     
 ]
 
 [workspace.package]

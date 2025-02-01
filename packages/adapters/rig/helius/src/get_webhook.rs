@@ -12,69 +12,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::transaction_parse, parameters_json_schema, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_helius::{get_webhook, HeliusWebhookIdResponse};
 
 #[derive(Deserialize)]
-pub struct TransactionParseArgs {
-    transaction_id: String,
+pub struct GetWebHookArgs {
+    webhook_id: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct TransactionParseOutput {
-    pub data: serde_json::Value,
+pub struct GetWebHookOutput {
+    pub data: HeliusWebhookIdResponse,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("TransactionParse error")]
-pub struct TransactionParseError;
+#[error("GetWebHook error")]
+pub struct GetWebHookError;
 
-pub struct TransactionParse {
+pub struct GetWebHook {
     agent: Arc<SolanaAgentKit>,
 }
 
-impl TransactionParse {
+impl GetWebHook {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        TransactionParse { agent }
+        GetWebHook { agent }
     }
 }
 
-impl Tool for TransactionParse {
-    const NAME: &'static str = "transaction_parse";
+impl Tool for GetWebHook {
+    const NAME: &'static str = "get_webhook";
 
-    type Error = TransactionParseError;
-    type Args = TransactionParseArgs;
-    type Output = TransactionParseOutput;
+    type Error = GetWebHookError;
+    type Args = GetWebHookArgs;
+    type Output = GetWebHookOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "transaction_parse".to_string(),
+            name: "get_webhook".to_string(),
             description: r#"
             
-            Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API
+            Retrieves details of a Helius webhook by its unique ID
 
             input: {
-                transaction_id: "tx123",
+                webhook_id: "webhook_123",
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                transaction_id: String,
+                webhook_id: String,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let data = transaction_parse(&self.agent, &args.transaction_id).await.expect("transaction_parse");
+        let data = get_webhook(&self.agent, &args.webhook_id).await.expect("get_webhook");
 
-        Ok(TransactionParseOutput { data })
+        Ok(GetWebHookOutput { data })
     }
 }
 
@@ -82,18 +78,17 @@ impl Tool for TransactionParse {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for TransactionParse {
+impl ToolEmbedding for GetWebHook {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(TransactionParse { agent: _state })
+        Ok(GetWebHook { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API"
-            .into()]
+        vec!["Retrieves details of a Helius webhook by its unique ID".into()]
     }
 
     fn context(&self) -> Self::Context {}

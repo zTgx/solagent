@@ -12,69 +12,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::delete_webhook, parameters_json_schema, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_helius::transaction_parse;
 
 #[derive(Deserialize)]
-pub struct DeleteWebHookArgs {
-    webhook_id: String,
+pub struct TransactionParseArgs {
+    transaction_id: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct DeleteWebHookOutput {
+pub struct TransactionParseOutput {
     pub data: serde_json::Value,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("DeleteWebHook error")]
-pub struct DeleteWebHookError;
+#[error("TransactionParse error")]
+pub struct TransactionParseError;
 
-pub struct DeleteWebHook {
+pub struct TransactionParse {
     agent: Arc<SolanaAgentKit>,
 }
 
-impl DeleteWebHook {
+impl TransactionParse {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        DeleteWebHook { agent }
+        TransactionParse { agent }
     }
 }
 
-impl Tool for DeleteWebHook {
-    const NAME: &'static str = "delete_webhook";
+impl Tool for TransactionParse {
+    const NAME: &'static str = "transaction_parse";
 
-    type Error = DeleteWebHookError;
-    type Args = DeleteWebHookArgs;
-    type Output = DeleteWebHookOutput;
+    type Error = TransactionParseError;
+    type Args = TransactionParseArgs;
+    type Output = TransactionParseOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "delete_webhook".to_string(),
+            name: "transaction_parse".to_string(),
             description: r#"
             
-            Deletes a Helius webhook by its unique ID
+            Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API
 
             input: {
-              webhook_id: "webhook_123",
+                transaction_id: "tx123",
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                webhook_id: String,
+                transaction_id: String,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let data = delete_webhook(&self.agent, &args.webhook_id).await.expect("delete_webhook");
+        let data = transaction_parse(&self.agent, &args.transaction_id).await.expect("transaction_parse");
 
-        Ok(DeleteWebHookOutput { data })
+        Ok(TransactionParseOutput { data })
     }
 }
 
@@ -82,17 +78,18 @@ impl Tool for DeleteWebHook {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for DeleteWebHook {
+impl ToolEmbedding for TransactionParse {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(DeleteWebHook { agent: _state })
+        Ok(TransactionParse { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Deletes a Helius webhook by its unique ID".into()]
+        vec!["Parse a Solana transaction to retrieve detailed information using the Helius Enhanced Transactions API"
+            .into()]
     }
 
     fn context(&self) -> Self::Context {}

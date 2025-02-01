@@ -1,0 +1,11 @@
+[package]
+name = "solagent-plugin-helius"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+solagent-core = { path = "../../core" }
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+reqwest = { version = "0.12", features = ["json"] }
+helius = "0.2.4"

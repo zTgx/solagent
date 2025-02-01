@@ -56,11 +56,7 @@ pub use solana::{
 mod solayer;
 pub use solayer::stake_with_solayer;
 
-mod helius;
-pub use helius::{
-    create_webhook, delete_webhook, get_assets_by_owner, get_webhook, transaction_parse, HeliusWebhookIdResponse,
-    HeliusWebhookResponse,
-};
+
 
 mod jupiter;
 pub use jupiter::get_token_data_by_address;

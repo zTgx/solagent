@@ -12,72 +12,69 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    actions::{get_webhook, HeliusWebhookIdResponse},
-    parameters_json_schema, SolanaAgentKit,
-};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_helius::get_assets_by_owner;
 
 #[derive(Deserialize)]
-pub struct GetWebHookArgs {
-    webhook_id: String,
+pub struct GetAssetsByOwnerArgs {
+    owner_public_key: String,
+    limit: u32,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct GetWebHookOutput {
-    pub data: HeliusWebhookIdResponse,
+pub struct GetAssetsByOwnerOutput {
+    pub data: serde_json::Value,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("GetWebHook error")]
-pub struct GetWebHookError;
+#[error("GetAssetsByOwner error")]
+pub struct GetAssetsByOwnerError;
 
-pub struct GetWebHook {
+pub struct GetAssetsByOwner {
     agent: Arc<SolanaAgentKit>,
 }
 
-impl GetWebHook {
+impl GetAssetsByOwner {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        GetWebHook { agent }
+        GetAssetsByOwner { agent }
     }
 }
 
-impl Tool for GetWebHook {
-    const NAME: &'static str = "get_webhook";
+impl Tool for GetAssetsByOwner {
+    const NAME: &'static str = "get_assets_by_owner";
 
-    type Error = GetWebHookError;
-    type Args = GetWebHookArgs;
-    type Output = GetWebHookOutput;
+    type Error = GetAssetsByOwnerError;
+    type Args = GetAssetsByOwnerArgs;
+    type Output = GetAssetsByOwnerOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "get_webhook".to_string(),
+            name: "get_assets_by_owner".to_string(),
             description: r#"
             
-            Retrieves details of a Helius webhook by its unique ID
+            Fetch assets owned by a specific Solana wallet address using the Helius Digital Asset Standard API
 
             input: {
-                webhook_id: "webhook_123",
+                owner_pubkey: "4Pf8q3mHGLdkoc1M8xWZwW5q32gYmdhwC2gJ8K9EAGDX",
+                limit: 10,
             },
            
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                webhook_id: String,
+                owner_pubkey: String,
+                limit: u32,
             ),
         }
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let data = get_webhook(&self.agent, &args.webhook_id).await.expect("get_webhook");
+        let data =
+            get_assets_by_owner(&self.agent, &args.owner_public_key, args.limit).await.expect("get_assets_by_owner");
 
-        Ok(GetWebHookOutput { data })
+        Ok(GetAssetsByOwnerOutput { data })
     }
 }
 
@@ -85,17 +82,17 @@ impl Tool for GetWebHook {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for GetWebHook {
+impl ToolEmbedding for GetAssetsByOwner {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetWebHook { agent: _state })
+        Ok(GetAssetsByOwner { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Retrieves details of a Helius webhook by its unique ID".into()]
+        vec!["Fetch assets owned by a specific Solana wallet address using the Helius Digital Asset Standard API".into()]
     }
 
     fn context(&self) -> Self::Context {}

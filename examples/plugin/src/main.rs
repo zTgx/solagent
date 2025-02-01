@@ -5,11 +5,11 @@ async fn main() {
     let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
     let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
 
-    let v = solagent_plugin_goplus::get_solana_token_security_info("0x").await;
+    let _v = solagent_plugin_goplus::get_solana_token_security_info("0x").await;
 
-    let v = solagent_plugin_solana::get_tps(&agent).await;
+    let _v = solagent_plugin_solana::get_tps(&agent).await;
 
-    let tool = solagent_rig_goplus::token_malicious_info::TokenMaliciousInfo::new();
+    let tool = solagent_rig_goplus::TokenMaliciousInfo::new();
 
     let token_symbol = "SOL";
 
