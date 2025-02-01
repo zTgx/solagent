@@ -52,7 +52,6 @@ pub struct Options {
 
 
 /// Pyth API URL
-pub const PYTH_API: &str = "https://hermes.pyth.network/v2";
 
 /// Rugcheck API URL
 

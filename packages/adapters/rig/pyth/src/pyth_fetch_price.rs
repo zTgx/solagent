@@ -12,16 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    actions::{fetch_price_by_pyth, fetch_pyth_price_feed_id},
-    parameters_json_schema,
-};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, parameters_json_schema};
 use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_plugin_pyth::{fetch_price_by_pyth, fetch_pyth_price_feed_id};
 
 #[derive(Debug, Deserialize)]
 pub struct FetchPricePyThArgs {

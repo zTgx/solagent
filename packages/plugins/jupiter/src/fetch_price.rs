@@ -14,7 +14,7 @@
 
 #![allow(dead_code)]
 
-use crate::primitives::JUP_PRICE_V2;
+use crate::JUP_PRICE_V2;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]

@@ -14,3 +14,5 @@
 
 pub mod get_token_data_by_address;
 pub mod trade;
+pub mod fetch_price;
+pub mod stake_with_jup;

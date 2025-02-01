@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolanaAgentKit;
-use base64::{engine::general_purpose, Engine};
-use solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTransaction};
+use solagent_core::{SolanaAgentKit, solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTransaction}};
+use anyhow::Result;
+use base64::{engine::general_purpose, Engine as _};
 
 /// Stake SOL with Jupiter validator
 ///

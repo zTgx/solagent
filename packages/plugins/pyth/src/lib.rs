@@ -12,15 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::SolanaAgentKit;
+mod pyth_fetch_price;
+pub use pyth_fetch_price::{fetch_price_by_pyth, fetch_pyth_price_feed_id};
 
-/// Get the agent's wallet address.
-///
-/// # Parameters
-/// - `agent`: A `SolanaAgentKit` instance.
-///
-/// # Returns
-/// A string representing the wallet address in base58 format.
-pub fn get_wallet_address(agent: &SolanaAgentKit) -> String {
-    agent.wallet.address.to_string()
-}
+pub const PYTH_API: &str = "https://hermes.pyth.network/v2";

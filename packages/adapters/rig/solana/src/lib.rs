@@ -20,3 +20,5 @@ pub mod transfer;
 pub mod deploy_collection;
 pub mod deploy_token;
 pub mod get_balance_other;
+pub mod get_wallet_address;
+pub mod mint_nft;

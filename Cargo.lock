@@ -3703,6 +3703,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-pyth"
+version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+]
+
+[[package]]
 name = "solagent-plugin-rugcheck"
 version = "0.1.0"
 dependencies = [
@@ -3778,6 +3786,17 @@ dependencies = [
  "serde_json",
  "solagent-core",
  "solagent-plugin-jupiter",
+ "thiserror 2.0.11",
+]
+
+[[package]]
+name = "solagent-rig-pyth"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core",
+ "solagent-plugin-pyth",
  "thiserror 2.0.11",
 ]
 

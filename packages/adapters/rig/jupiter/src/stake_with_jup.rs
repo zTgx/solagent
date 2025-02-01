@@ -12,13 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::stake_with_jup, parameters_json_schema, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_plugin_jupiter::stake_with_jup;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
