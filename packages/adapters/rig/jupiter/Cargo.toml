@@ -1,0 +1,11 @@
+[package]
+name = "solagent-rig-jupiter"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+solagent-plugin-jupiter = { path = "../../../plugins/jupiter" }
+solagent-core = { path = "../../../core" }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0.9"
+serde_json = "1.0"

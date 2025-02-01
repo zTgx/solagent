@@ -3643,6 +3643,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-jupiter"
+version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde_json",
+]
+
+[[package]]
 name = "solagent-plugin-solana"
 version = "0.1.0"
 dependencies = [
@@ -3674,6 +3682,17 @@ dependencies = [
  "serde_json",
  "solagent-core",
  "solagent-plugin-helius",
+ "thiserror 2.0.11",
+]
+
+[[package]]
+name = "solagent-rig-jupiter"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core",
+ "solagent-plugin-jupiter",
  "thiserror 2.0.11",
 ]
 

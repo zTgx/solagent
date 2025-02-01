@@ -56,11 +56,6 @@ pub use solana::{
 mod solayer;
 pub use solayer::stake_with_solayer;
 
-
-
-mod jupiter;
-pub use jupiter::get_token_data_by_address;
-
 mod goplus;
 pub use goplus::api::{
     get_solana_token_security_info, get_token_malicious_info, get_token_phishing_site_info, get_token_security_info,
