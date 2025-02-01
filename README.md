@@ -61,11 +61,15 @@ async fn main() {
 
 ## How to add a plugin
 ```rust
+/// Try to keep the names of the `tool` and `plugin` consistent.
+
 // create solagent-plugins
-cargo new --lib solagent-plugins/__REPLACE_NEW_PLUGIN_NAME__
+cargo new --lib solagent-plugins/_NAME_
+// Rename package name to `solagent-plugin-_NAME_ 
 
 // create rig-based tool
-cargo new --lib solagent-adapters/rig/__REPLACE_NEW_TOOL_NAME__
+cargo new --lib solagent-adapters/rig/_NAME_
+// Rename package name to `solagent-rig-_NAME_
 
 // ADD examples
 cargo new examples/__REPLACE_NEW_EXAMPLE_NAME__
@@ -77,14 +81,22 @@ cargo new examples/__REPLACE_NEW_EXAMPLE_NAME__
 | --- | --- | --- |
 | Core | [solagent-core](https://crates.io/crates/solagent-core) | ![Version](https://img.shields.io/crates/v/solagent-core) |
 
-### Agent Framework Adapters
-| Adapter | package | 
-| --- | --- |
-| rig | [solagent-adapter-rig](./solagent-adapters/rig/) |
-
+### Tools
+| Tools | Description | Package | Version |
+| --- | --- | --- | --- | 
+| gibwork | Create a task on Gibwork | [solagent-rig-gibwork](https://crates.io/crates/solagent-rig-gibwork) | ![Version](https://img.shields.io/crates/v/solagent-rig-gibwork) |
+| goplus | Token Security API | [solagent-rig-goplus](https://crates.io/crates/solagent-rig-goplus) | ![Version](https://img.shields.io/crates/v/solagent-rig-goplus) |
+| helius | Webhook operates  | [solagent-rig-helius](https://crates.io/crates/solagent-rig-helius) | ![Version](https://img.shields.io/crates/v/solagent-rig-helius) |
+| jupiter | Jupiter Exchange  | [solagent-rig-jupiter](https://crates.io/crates/solagent-rig-jupiter) | ![Version](https://img.shields.io/crates/v/solagent-rig-jupiter) |
+| pumpfun | Launch Token on pumpfun  | [solagent-rig-pumpfun](https://crates.io/crates/solagent-rig-pumpfun) | ![Version](https://img.shields.io/crates/v/solagent-rig-pumpfun) |
+| pyth | Fetch price from Pyth  | [solagent-rig-pyth](https://crates.io/crates/solagent-rig-pyth) | ![Version](https://img.shields.io/crates/v/solagent-rig-pyth) |
+| rugcheck | Rug check | [solagent-rig-rugcheck](https://crates.io/crates/solagent-rig-rugcheck) | ![Version](https://img.shields.io/crates/v/solagent-rig-rugcheck) |
+| solana | Operations on solana | [solagent-rig-solana](https://crates.io/crates/solagent-rig-solana) | ![Version](https://img.shields.io/crates/v/solagent-rig-solana) |
+| solayer | Stake with solayer | [solagent-rig-solayer](https://crates.io/crates/solagent-rig-solayer) | ![Version](https://img.shields.io/crates/v/solagent-rig-solayer) |
+ 
 
 ### Plugins
-| Plugin | Tools | Package | Version |
+| Plugin | Description | Package | Version |
 | --- | --- | --- | --- | 
 | gibwork | Create a task on Gibwork | [solagent-plugin-gibwork](https://crates.io/crates/solagent-plugin-gibwork) | ![Version](https://img.shields.io/crates/v/solagent-plugin-gibwork) |
 | goplus | Token Security API | [solagent-plugin-goplus](https://crates.io/crates/solagent-plugin-goplus) | ![Version](https://img.shields.io/crates/v/solagent-plugin-goplus) |
