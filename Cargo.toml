@@ -1,27 +1,27 @@
 [workspace]
 resolver = "2"
 members = [
-    "packages/core",
+    "solagent-core",
 
-    "packages/adapters/rig/goplus",
-    "packages/adapters/rig/solana",
-    "packages/adapters/rig/helius",
-    "packages/adapters/rig/jupiter", 
-    "packages/adapters/rig/rugcheck",
-    "packages/adapters/rig/solayer", 
-    "packages/adapters/rig/gibwork",
-    "packages/adapters/rig/pyth",
-    "packages/adapters/rig/pumpfun", 
+    "solagent-adapters/rig/goplus",
+    "solagent-adapters/rig/solana",
+    "solagent-adapters/rig/helius",
+    "solagent-adapters/rig/jupiter", 
+    "solagent-adapters/rig/rugcheck",
+    "solagent-adapters/rig/solayer", 
+    "solagent-adapters/rig/gibwork",
+    "solagent-adapters/rig/pyth",
+    "solagent-adapters/rig/pumpfun", 
 
-    "packages/plugins/goplus",
-    "packages/plugins/solana", 
-    "packages/plugins/helius",
-    "packages/plugins/jupiter", 
-    "packages/plugins/rugcheck", 
-    "packages/plugins/solayer", 
-    "packages/plugins/gibwork",  
-    "packages/plugins/pyth",  
-    "packages/plugins/pumpfun", 
+    "solagent-plugins/goplus",
+    "solagent-plugins/solana", 
+    "solagent-plugins/helius",
+    "solagent-plugins/jupiter", 
+    "solagent-plugins/rugcheck", 
+    "solagent-plugins/solayer", 
+    "solagent-plugins/gibwork",  
+    "solagent-plugins/pyth",  
+    "solagent-plugins/pumpfun", 
 ]
 
 exclude = ["examples/plugin"]

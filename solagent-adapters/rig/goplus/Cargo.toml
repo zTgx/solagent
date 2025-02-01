@@ -1,0 +1,17 @@
+[package]
+name = "solagent-rig-goplus"
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+readme = "README.md"
+keywords = ["solagent", "rig", "goplus"]
+license = "Apache 2.0"
+description = "solagent.rs rig goplus"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+solagent-core = { path = "../../solagent-core" }
+solagent-plugin-goplus = { path = "../../solagent-plugins/goplus" }
+thiserror = "2.0.9"
