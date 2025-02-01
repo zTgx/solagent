@@ -3673,6 +3673,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-solayer"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core",
+]
+
+[[package]]
 name = "solagent-rig-goplus"
 version = "0.1.0"
 dependencies = [
@@ -3724,6 +3736,17 @@ dependencies = [
  "serde_json",
  "solagent-core",
  "solagent-plugin-solana",
+ "thiserror 2.0.11",
+]
+
+[[package]]
+name = "solagent-rig-solayer"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core",
+ "solagent-plugin-solayer",
  "thiserror 2.0.11",
 ]
 
