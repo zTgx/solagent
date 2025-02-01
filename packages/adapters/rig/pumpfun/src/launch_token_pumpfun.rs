@@ -12,16 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    actions::{launch_token_pumpfun, PumpFunTokenOptions, PumpfunTokenResponse},
-    parameters_json_schema, SolanaAgentKit,
-};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_plugin_pumpfun::{launch_token_pumpfun, PumpFunTokenOptions, PumpfunTokenResponse};
 use std::sync::Arc;
 
 #[derive(Deserialize)]
@@ -100,7 +93,11 @@ impl Tool for LaunchPumpfunToken {
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                token_address: String,
+                token_name: String,
+                token_symbol: String,
+                description: String,
+                image_url: String,
+                options: Option<PumpFunTokenOptions>,
             ),
         }
     }

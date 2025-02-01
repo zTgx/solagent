@@ -19,10 +19,6 @@ use serde::{Deserialize, Serialize};
 use solana_sdk::pubkey::Pubkey;
 use std::collections::HashMap;
 
-
-
-/// USDC
-
 lazy_static! {
     /// Common token addresses used across the toolkit
     pub static ref TOKENS: HashMap<&'static str, Pubkey> = {
@@ -48,10 +44,3 @@ pub struct Options {
     pub token_decimals: u32, // Default number of decimals for new tokens
     pub referral_fee: u32,   // Referral fee
 }
-
-
-
-/// Pyth API URL
-
-/// Rugcheck API URL
-

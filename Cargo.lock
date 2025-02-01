@@ -3087,6 +3087,7 @@ dependencies = [
  "js-sys",
  "log",
  "mime",
+ "mime_guess",
  "native-tls",
  "once_cell",
  "percent-encoding",
@@ -3703,6 +3704,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-pumpfun"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core",
+]
+
+[[package]]
 name = "solagent-plugin-pyth"
 version = "0.1.0"
 dependencies = [
@@ -3786,6 +3799,17 @@ dependencies = [
  "serde_json",
  "solagent-core",
  "solagent-plugin-jupiter",
+ "thiserror 2.0.11",
+]
+
+[[package]]
+name = "solagent-rig-pumpfun"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core",
+ "solagent-plugin-pumpfun",
  "thiserror 2.0.11",
 ]
 
