@@ -10,7 +10,7 @@ license = "Apache-2.0"
 description = "solagent.rs rig rugcheck"
 
 [dependencies]
-solagent-core = { path = "../../../solagent-core" }
+solagent-core = "0.1.0"
 solagent-plugin-rugcheck = { path = "../../../solagent-plugins/rugcheck" }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"

@@ -10,7 +10,7 @@ license = "Apache-2.0"
 description = "solagent.rs plugin jupiter"
 
 [dependencies]
-solagent-core = { path = "../../solagent-core" }
+solagent-core = "0.1.0"
 serde_json = "1.0"
 reqwest = { version = "0.12", features = ["json"] }
 anyhow = "1.0.80"

@@ -10,7 +10,7 @@ license = "Apache-2.0"
 description = "solagent.rs rig pumpfun"
 
 [dependencies]
-solagent-core = { path = "../../../solagent-core" }
+solagent-core = "0.1.0"
 solagent-plugin-pumpfun = { path = "../../../solagent-plugins/pumpfun" }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"
