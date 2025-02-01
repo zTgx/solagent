@@ -27,7 +27,7 @@ jobs:
           components: rustfmt
 
       - name: Run cargo fmt
-        run: cargo fmt -- --check
+        run: cargo fmt --all -- --check  # Adjusted to check all packages
 
   clippy:
     name: stable / clippy
@@ -67,5 +67,4 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: nextest
-          args: run --tests
-
+          args: run --tests --all  # Adjusted to run tests for all packages
