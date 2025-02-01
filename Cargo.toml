@@ -3,14 +3,20 @@ resolver = "2"
 members = [
     "examples/plugin",
     "packages/core",
+
     "packages/adapters/topkio",
+
     "packages/adapters/rig/goplus",
     "packages/adapters/rig/solana",
     "packages/adapters/rig/helius",
+    "packages/adapters/rig/jupiter", 
+    "packages/adapters/rig/rugcheck",
+
     "packages/plugins/goplus",
     "packages/plugins/solana", 
     "packages/plugins/helius",
-    "packages/plugins/jupiter", "packages/adapters/rig/jupiter",
+    "packages/plugins/jupiter", 
+    "packages/plugins/rugcheck", 
 ]
 
 [workspace.package]

@@ -1,0 +1,11 @@
+[package]
+name = "solagent-rig-rugcheck"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+solagent-core = { path = "../../../core" }
+solagent-plugin-rugcheck = { path = "../../../plugins/rugcheck" }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0.9"
+serde_json = "1.0"
