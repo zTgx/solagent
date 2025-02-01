@@ -10,42 +10,23 @@
 
 `solagent.rs` - An open-source Rust library for connecting AI agents to Solana protocols. 
 
-## Quick Start
-```rust
-use solagent::{create_solana_tools, Config, SolanaAgentKit};
-
-#[tokio::main]
-async fn main() {
-    let config = Config {
-        openai_api_key: Some("your_api_key".to_string()),
-        ..Default::default()
-    };
-    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
-    let toolset = create_solana_tools(agent);
-}
-```
-
 ## Packages
 ### Core
 |  | crates.io package |
 | --- | --- |
-| Core | [solagent-core](https://crates.io/crates/solagent-core) |
+| Core | [solagent-core](https://crates.io/crates/solagent-core) | x |
 
 ### Agent Framework Adapters
-| Adapter | crates.io package |
+| Adapter | package |
 | --- | --- |
-| rig | [solagent-adapter-rig]() | 
-| rig | [solagent-adapter-rig]() | 
+| rig | [solagent-adapter-rig](./solagent-adapters/rig/) | 
+
 
 ### Plugins
 | Plugin | Tools | crates.io package |
 | --- | --- | --- |
 | gibwork | Create a task on Gibwork | [solagent-plugin-gibwork](https://crates.io/crates/solagent-plugin-gibwork) |
  
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Contributors
 
