@@ -1,14 +1,10 @@
 <div align="center">
 
 # solagent.rs   
-  [<img alt="crates.io" src="https://img.shields.io/crates/v/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
-  [<img alt="docs.rs" src="https://img.shields.io/docsrs/solagent?style=for-the-badge&logo=docs.rs">](https://docs.rs/solagent)
-  [<img alt="crates.io" src="https://img.shields.io/crates/d/solagent?style=for-the-badge&logo=rust">](https://crates.io/crates/solagent)
+`solagent.rs` - An open-source Rust library for connecting AI agents to Solana protocols. 
 </div>
 
 </br>
-
-`solagent.rs` - An open-source Rust library for connecting AI agents to Solana protocols. 
 
 ## Usage
 ```toml
@@ -63,30 +59,42 @@ async fn main() {
 }
 ```
 
+## How to add a plugin
+```rust
+// create solagent-plugins
+cargo new --lib solagent-plugins/__REPLACE_NEW_PLUGIN_NAME__
+
+// create rig-based tool
+cargo new --lib solagent-adapters/rig/__REPLACE_NEW_TOOL_NAME__
+
+// ADD examples
+cargo new examples/__REPLACE_NEW_EXAMPLE_NAME__
+```
+
 ## Packages
 ### Core
-|  | crates.io package |
-| --- | --- |
-| Core | [solagent-core](https://crates.io/crates/solagent-core) |
+| Crate | Package | Version | 
+| --- | --- | --- |
+| Core | [solagent-core](https://crates.io/crates/solagent-core) | ![Version](https://img.shields.io/crates/v/solagent-core) |
 
 ### Agent Framework Adapters
-| Adapter | package |
+| Adapter | package | 
 | --- | --- |
-| rig | [solagent-adapter-rig](./solagent-adapters/rig/) | 
+| rig | [solagent-adapter-rig](./solagent-adapters/rig/) |
 
 
 ### Plugins
-| Plugin | Tools | crates.io package |
-| --- | --- | --- |
-| gibwork | Create a task on Gibwork | [solagent-plugin-gibwork](https://crates.io/crates/solagent-plugin-gibwork) |
-| goplus | Token Security API | [solagent-plugin-goplus](https://crates.io/crates/solagent-plugin-goplus) |
-| helius | Webhook operates  | [solagent-plugin-helius](https://crates.io/crates/solagent-plugin-helius) |
-| jupiter | Jupiter Exchange  | [solagent-plugin-jupiter](https://crates.io/crates/solagent-plugin-jupiter) |
-| pumpfun | Launch Token on pumpfun  | [solagent-plugin-pumpfun](https://crates.io/crates/solagent-plugin-pumpfun) |
-| pyth | Fetch price from Pyth  | [solagent-plugin-pyth](https://crates.io/crates/solagent-plugin-pyth) |
-| rugcheck | Rug check | [solagent-plugin-rugcheck](https://crates.io/crates/solagent-plugin-rugcheck) |
-| solana | Operations on solana | [solagent-plugin-solana](https://crates.io/crates/solagent-plugin-solana) |
-| solayer | Stake with solayer | [solagent-plugin-solayer](https://crates.io/crates/solagent-plugin-solayer) |
+| Plugin | Tools | Package | Version |
+| --- | --- | --- | --- | 
+| gibwork | Create a task on Gibwork | [solagent-plugin-gibwork](https://crates.io/crates/solagent-plugin-gibwork) | ![Version](https://img.shields.io/crates/v/solagent-plugin-gibwork) |
+| goplus | Token Security API | [solagent-plugin-goplus](https://crates.io/crates/solagent-plugin-goplus) | ![Version](https://img.shields.io/crates/v/solagent-plugin-goplus) |
+| helius | Webhook operates  | [solagent-plugin-helius](https://crates.io/crates/solagent-plugin-helius) | ![Version](https://img.shields.io/crates/v/solagent-plugin-helius) |
+| jupiter | Jupiter Exchange  | [solagent-plugin-jupiter](https://crates.io/crates/solagent-plugin-jupiter) | ![Version](https://img.shields.io/crates/v/solagent-plugin-jupiter) |
+| pumpfun | Launch Token on pumpfun  | [solagent-plugin-pumpfun](https://crates.io/crates/solagent-plugin-pumpfun) | ![Version](https://img.shields.io/crates/v/solagent-plugin-pumpfun) |
+| pyth | Fetch price from Pyth  | [solagent-plugin-pyth](https://crates.io/crates/solagent-plugin-pyth) | ![Version](https://img.shields.io/crates/v/solagent-plugin-pyth) |
+| rugcheck | Rug check | [solagent-plugin-rugcheck](https://crates.io/crates/solagent-plugin-rugcheck) | ![Version](https://img.shields.io/crates/v/solagent-plugin-rugcheck) |
+| solana | Operations on solana | [solagent-plugin-solana](https://crates.io/crates/solagent-plugin-solana) | ![Version](https://img.shields.io/crates/v/solagent-plugin-solana) |
+| solayer | Stake with solayer | [solagent-plugin-solayer](https://crates.io/crates/solagent-plugin-solayer) | ![Version](https://img.shields.io/crates/v/solagent-plugin-solayer) |
  
 
 ## Contributors
