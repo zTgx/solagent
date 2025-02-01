@@ -64,7 +64,6 @@ impl DeployedData {
 }
 
 /// USDC
-pub const USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 
 lazy_static! {
     /// Common token addresses used across the toolkit

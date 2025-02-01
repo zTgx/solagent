@@ -12,64 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::get_tps, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_solana::request_faucet_funds;
 
 #[derive(Deserialize)]
-pub struct GetTpsArgs {}
+pub struct RequestFaucetFundsArgs;
 
 #[derive(Deserialize, Serialize)]
-pub struct GetTpsOutput {
-    pub tps: f64,
+pub struct RequestFaucetFundsOutput {
+    pub tx: String,
 }
 
 #[derive(Debug, thiserror::Error)]
-#[error("GetTps error")]
-pub struct GetTpsError;
+#[error("RequestFaucetFunds error")]
+pub struct RequestFaucetFundsError;
 
-pub struct GetTps {
+pub struct RequestFaucetFunds {
     agent: Arc<SolanaAgentKit>,
 }
-
-impl GetTps {
+impl RequestFaucetFunds {
     pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
-        GetTps { agent }
+        RequestFaucetFunds { agent }
     }
 }
 
-impl Tool for GetTps {
-    const NAME: &'static str = "get_tps";
+impl Tool for RequestFaucetFunds {
+    const NAME: &'static str = "request_faucet_funds";
 
-    type Error = GetTpsError;
-    type Args = GetTpsArgs;
-    type Output = GetTpsOutput;
+    type Error = RequestFaucetFundsError;
+    type Args = RequestFaucetFundsArgs;
+    type Output = RequestFaucetFundsOutput;
 
     async fn definition(&self, _prompt: String) -> ToolDefinition {
         ToolDefinition {
-            name: "get_tps".to_string(),
+            name: "request_faucet_funds".to_string(),
             description: r#"
-            
-            Get the current transactions per second (TPS) of the Solana network
+            Request SOL from Solana faucet (devnet/testnet only)
             
             examples: [
                 [
-                    {
-                        input: {},
-                        output: {
-                            status: "success",
-                            tps: 3500,
-                            message: "Current network TPS: 3500",
-                        },
-                        explanation: "Get the current TPS of the Solana network",
+                {
+                    input: {},
+                    output: {
+                        status: "success",
+                        message: "Successfully requested faucet funds",
+                        network: "devnet.solana.com",
                     },
+                    explanation: "Request SOL from the devnet faucet",
+                },
                 ],
-            ]
-            
+            ],
             "#
             .to_string(),
             parameters: serde_json::Value::Null,
@@ -77,9 +71,9 @@ impl Tool for GetTps {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tps = get_tps(&self.agent).await.expect("get_tps");
+        let tx = request_faucet_funds(&self.agent).await.expect("request_faucet_funds");
 
-        Ok(GetTpsOutput { tps })
+        Ok(RequestFaucetFundsOutput { tx })
     }
 }
 
@@ -87,17 +81,17 @@ impl Tool for GetTps {
 #[error("Init error")]
 pub struct InitError;
 
-impl ToolEmbedding for GetTps {
+impl ToolEmbedding for RequestFaucetFunds {
     type InitError = InitError;
     type Context = ();
     type State = Arc<SolanaAgentKit>;
 
     fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetTps { agent: _state })
+        Ok(RequestFaucetFunds { agent: _state })
     }
 
     fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get the current transactions per second (TPS) of the Solana network".into()]
+        vec!["Request SOL from Solana faucet (devnet/testnet only)".into()]
     }
 
     fn context(&self) -> Self::Context {}

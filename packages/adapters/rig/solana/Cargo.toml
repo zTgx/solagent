@@ -1,0 +1,12 @@
+[package]
+name = "solagent-rig-solana"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+solagent-core = { path = "../../../core" }
+solagent-plugin-solana = { path = "../../../plugins/solana" }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0.9"
+serde_json = "1.0"
+
