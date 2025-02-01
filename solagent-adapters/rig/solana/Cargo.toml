@@ -11,7 +11,7 @@ description = "solagent.rs rig solana"
 
 [dependencies]
 solagent-core = "0.1.0"
-solagent-plugin-solana = { path = "../../../solagent-plugins/solana" }
+solagent-plugin-solana = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"
 serde_json = "1.0"

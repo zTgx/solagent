@@ -11,7 +11,7 @@ description = "solagent.rs rig gibwork"
 
 [dependencies]
 solagent-core = "0.1.0"
-solagent-plugin-gibwork = { path = "../../../solagent-plugins/gibwork" }
+solagent-plugin-gibwork = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"
 serde_json = "1.0"

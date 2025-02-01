@@ -10,32 +10,6 @@
 
 `solagent.rs` - An open-source Rust library for connecting AI agents to Solana protocols. 
 
-## ✍️  Features
-- **Basic Operations**  
-    - [x] Get the balance of a Solana wallet or token account
-    - [x] Transfer tokens or SOL 
-    - [x] Deploy SPL tokens
-    - [x] Deploy NFT Collection
-    - [x] Mint NFT 
-    - [x] Request SOL from Solana faucet
-
-- **DeFi Operations**
-    - [x] Jupiter Exchange swaps
-    - [x] Jupiter Exchange stake
-    - [x] Launch Token on pump.fun
-
-- **AI Operations**
-    - [x] Integrate Rig-core tools
-
-- **Utils Operations**
-    - [x] Fetch price
-        - [x] By Jupiter API
-        - [x] By Pyth API
-    - [x] Get wallet address of the agent
-    - [x] Get the current transactions per second (TPS)
-
-- **More...**
-
 ## Quick Start
 ```rust
 use solagent::{create_solana_tools, Config, SolanaAgentKit};
@@ -51,60 +25,23 @@ async fn main() {
 }
 ```
 
-## Usage Examples
-### Deploy a New Token
-```rust
-let name = "my ai token".to_string();
-let uri = "uri".to_string();
-let symbol = "SOLA".to_string();
-let decimals = 9;
-let initial_supply = 1_000_000_000_u64;
+## Packages
+### Core
+|  | crates.io package |
+| --- | --- |
+| Core | [solagent-core](https://crates.io/crates/solagent-core) |
 
-let config = Config {
-    openai_api_key: Some("your_api_key".to_string()),
-    ..Default::default()
-};
-let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
-let mint_pubkey = agent
-    .deploy_token(name, uri, symbol, decimals, Some(initial_supply)).await;
-println!("Token Mint Address: {:?}", mint_pubkey);
-```
+### Agent Framework Adapters
+| Adapter | crates.io package |
+| --- | --- |
+| rig | [solagent-adapter-rig]() | 
+| rig | [solagent-adapter-rig]() | 
 
-### Create NFT Collection
-```rust
-let name = "solagent Collection";
-let uri = "https://uri";
-let royalty_basis_points = Some(500);
-let creators = vec![(Pubkey::from_str_const("pubkey"), 100)];
-let options = NFTMetadata::new(name, uri, royalty_basis_points, Some(creators));
-
-let config = Config {
-    openai_api_key: Some("your_api_key".to_string()),
-    ..Default::default()
-};
-let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
-let tx = agent.deploy_collection(options).await.unwrap();
-println!("Mint: {:?}", tx.0);
-```
-
-### Fetch Price Data from Pyth
-```rust
-let config = Config {
-    openai_api_key: Some("your_api_key".to_string()),
-    ..Default::default()
-};
-let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
-let price_feed_id = agent.fetch_pyth_price_feed_id("SOL")
-    .await
-    .expect("fetch_pyth_price_feed_id");
-let price = agent.fetch_price_by_pyth(&price_feed_id)
-    .await
-    .expect("fetch_price_by_pyth");
-println!("Price of SOL/USD: {}", price)
-```
-
-## More examples
-More examples can be found in the [examples](examples/).  
+### Plugins
+| Plugin | Tools | crates.io package |
+| --- | --- | --- |
+| gibwork | Create a task on Gibwork | [solagent-plugin-gibwork](https://crates.io/crates/solagent-plugin-gibwork) |
+ 
 
 ## Contributing
 

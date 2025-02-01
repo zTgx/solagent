@@ -3671,8 +3671,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-gibwork"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2fa308e345ef87b692a9c62fe1ea220582e9b79c1cd907df6950958de1406d8"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "solagent-plugin-goplus"
 version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde_json",
+]
+
+[[package]]
+name = "solagent-plugin-goplus"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "44c843a76f476ea487992f83b67b2c5364a7f7bd2eb94cc505084f6ab66a67d9"
 dependencies = [
  "reqwest 0.12.12",
  "serde_json",
@@ -3690,8 +3713,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-helius"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "60be4fde4325d2758b809c5950528f558903cbd2a2918ddceeac0e382584341a"
+dependencies = [
+ "helius",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "solagent-plugin-jupiter"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-token 7.0.0",
+]
+
+[[package]]
+name = "solagent-plugin-jupiter"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c228cc7818f872d7bb74cf224126aff512688dc6d6119bd6f3d42fa570eaaa01"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -3716,8 +3768,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-pumpfun"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0be2671d3580546172ca1f694ac7e5e745faa6e9ac2354c0ba516a2ad5512c2c"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "solagent-plugin-pyth"
 version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+]
+
+[[package]]
+name = "solagent-plugin-pyth"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5eeee817a019471cf883c825b15a6f8fb70cfdd3b0e7f9e41ca2aceb0ab22ee7"
 dependencies = [
  "reqwest 0.12.12",
  "serde",
@@ -3733,8 +3809,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-rugcheck"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aa4addaacec9d5c0a47b62af7c112b34cd98e27356de44bbdd9c76a0ebd17055"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "solagent-plugin-solana"
 version = "0.1.0"
+dependencies = [
+ "mpl-token-metadata",
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solana-account-decoder",
+ "spl-associated-token-account 6.0.0",
+ "spl-token 7.0.0",
+ "spl-token-2022 6.0.0",
+]
+
+[[package]]
+name = "solagent-plugin-solana"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2313c60c959ce9a6be58c0981cb70c97c6a77b0a41570be762d3cca00e31dad2"
 dependencies = [
  "mpl-token-metadata",
  "serde",
@@ -3759,13 +3862,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-solayer"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4b2465c2b2c6538f4c42ed7dcc12409008ad9e44c38fac9235fc91a382da4099"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "solagent-rig-gibwork"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-gibwork",
+ "solagent-plugin-gibwork 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3776,7 +3893,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-goplus",
+ "solagent-plugin-goplus 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3787,7 +3904,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-helius",
+ "solagent-plugin-helius 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3798,7 +3915,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-jupiter",
+ "solagent-plugin-jupiter 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3809,7 +3926,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-pumpfun",
+ "solagent-plugin-pumpfun 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3820,7 +3937,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-pyth",
+ "solagent-plugin-pyth 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3831,7 +3948,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-rugcheck",
+ "solagent-plugin-rugcheck 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3842,7 +3959,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-solana",
+ "solagent-plugin-solana 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
@@ -3853,7 +3970,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "solagent-plugin-solayer",
+ "solagent-plugin-solayer 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 
