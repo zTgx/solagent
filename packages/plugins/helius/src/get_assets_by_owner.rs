@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::SolanaAgentKit;
 use serde_json::json;
+use solagent_core::SolanaAgentKit;
 
 pub async fn get_assets_by_owner(
     agent: &SolanaAgentKit,

@@ -13,10 +13,15 @@
 // limitations under the License.
 
 use crate::JUP_API;
-use solagent_core::{SolanaAgentKit, solana_sdk::{commitment_config::CommitmentConfig, program_pack::Pack, pubkey::Pubkey, transaction::VersionedTransaction}};
 use anyhow::Result;
 use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};
+use solagent_core::{
+    solana_sdk::{
+        commitment_config::CommitmentConfig, program_pack::Pack, pubkey::Pubkey, transaction::VersionedTransaction,
+    },
+    SolanaAgentKit,
+};
 use spl_token::state::Mint;
 use std::str::FromStr;
 

@@ -3,7 +3,6 @@ resolver = "2"
 members = [
     "examples/plugin",
     "packages/core",
-
     "packages/adapters/topkio",
 
     "packages/adapters/rig/goplus",
@@ -11,12 +10,20 @@ members = [
     "packages/adapters/rig/helius",
     "packages/adapters/rig/jupiter", 
     "packages/adapters/rig/rugcheck",
+    "packages/adapters/rig/solayer", 
+    "packages/adapters/rig/gibwork",
+    "packages/adapters/rig/pyth",
+    "packages/adapters/rig/pumpfun", 
 
     "packages/plugins/goplus",
     "packages/plugins/solana", 
     "packages/plugins/helius",
     "packages/plugins/jupiter", 
-    "packages/plugins/rugcheck", "packages/plugins/solayer", "packages/adapters/rig/solayer", "packages/plugins/gibwork", "packages/adapters/rig/gibwork", "packages/plugins/pyth", "packages/adapters/rig/pyth", "packages/plugins/pumpfun", "packages/adapters/rig/pumpfun", 
+    "packages/plugins/rugcheck", 
+    "packages/plugins/solayer", 
+    "packages/plugins/gibwork",  
+    "packages/plugins/pyth",  
+    "packages/plugins/pumpfun", 
 ]
 
 [workspace.package]

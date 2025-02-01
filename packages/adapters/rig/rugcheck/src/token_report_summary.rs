@@ -12,8 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, parameters_json_schema};
 use serde::{Deserialize, Serialize};
+use solagent_core::{
+    parameters_json_schema,
+    rig::{
+        completion::ToolDefinition,
+        tool::{Tool, ToolEmbedding},
+    },
+};
 use solagent_plugin_rugcheck::{fetch_summary_report, TokenCheck};
 
 #[derive(Deserialize)]

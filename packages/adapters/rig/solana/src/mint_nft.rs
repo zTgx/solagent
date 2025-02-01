@@ -12,10 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{solana_sdk::pubkey::Pubkey, rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
-use std::sync::Arc;
 use serde::{Deserialize, Serialize};
+use solagent_core::{
+    parameters_json_schema,
+    rig::{
+        completion::ToolDefinition,
+        tool::{Tool, ToolEmbedding},
+    },
+    solana_sdk::pubkey::Pubkey,
+    SolanaAgentKit,
+};
 use solagent_plugin_solana::{mint_nft_to_collection, NFTMetadata};
+use std::sync::Arc;
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct MintNFTArgs {

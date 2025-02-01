@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod get_token_data_by_address;
-pub mod trade;
 pub mod fetch_price;
+pub mod get_token_data_by_address;
 pub mod stake_with_jup;
+pub mod trade;

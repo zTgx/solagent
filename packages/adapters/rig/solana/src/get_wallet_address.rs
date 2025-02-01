@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit};
-use std::sync::Arc;
 use serde::{Deserialize, Serialize};
+use solagent_core::{
+    rig::{
+        completion::ToolDefinition,
+        tool::{Tool, ToolEmbedding},
+    },
+    SolanaAgentKit,
+};
 use solagent_plugin_solana::get_wallet_address;
+use std::sync::Arc;
 
 #[derive(Deserialize)]
 pub struct GetWalletAddressArgs {}

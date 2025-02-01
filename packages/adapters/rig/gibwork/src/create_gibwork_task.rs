@@ -12,9 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema, solana_sdk::pubkey::Pubkey};
-use solagent_plugin_gibwork::{create_gibwork_task, GibworkCreateTaskResponse};
 use serde::{Deserialize, Serialize};
+use solagent_core::{
+    parameters_json_schema,
+    rig::{
+        completion::ToolDefinition,
+        tool::{Tool, ToolEmbedding},
+    },
+    solana_sdk::pubkey::Pubkey,
+    SolanaAgentKit,
+};
+use solagent_plugin_gibwork::{create_gibwork_task, GibworkCreateTaskResponse};
 use std::sync::Arc;
 
 #[derive(Deserialize)]

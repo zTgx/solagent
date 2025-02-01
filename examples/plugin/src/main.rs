@@ -1,4 +1,10 @@
-use solagent_core::{rig::{completion::Prompt, providers::gemini::{self, completion::GEMINI_1_5_FLASH}}, *};
+use solagent_core::{
+    rig::{
+        completion::Prompt,
+        providers::gemini::{self, completion::GEMINI_1_5_FLASH},
+    },
+    *,
+};
 
 #[tokio::main]
 async fn main() {
@@ -27,5 +33,4 @@ async fn main() {
     let response = agent.prompt(&prompt).await.expect("Failed to prompt Gemini");
 
     println!("Gemini response: {response}");
-
 }

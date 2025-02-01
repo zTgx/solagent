@@ -15,7 +15,10 @@
 use base64::{engine::general_purpose, Engine};
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use serde::{Deserialize, Serialize};
-use solagent_core::{SolanaAgentKit, solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTransaction}};
+use solagent_core::{
+    solana_sdk::{commitment_config::CommitmentConfig, transaction::VersionedTransaction},
+    SolanaAgentKit,
+};
 
 #[derive(Serialize)]
 struct StakeRequest {

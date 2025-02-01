@@ -14,7 +14,10 @@
 
 use base64::{engine::general_purpose, Engine};
 use serde::{Deserialize, Serialize};
-use solagent_core::{SolanaAgentKit, solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, transaction::VersionedTransaction}};
+use solagent_core::{
+    solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, transaction::VersionedTransaction},
+    SolanaAgentKit,
+};
 
 #[derive(Serialize)]
 struct TaskRequest {
