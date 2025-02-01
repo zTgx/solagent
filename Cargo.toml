@@ -9,7 +9,7 @@ members = [
     "packages/adapters/rig/helius",
     "packages/plugins/goplus",
     "packages/plugins/solana", 
-    "packages/plugins/helius", "packages/packages/adapters/rig/helius",     
+    "packages/plugins/helius",
 ]
 
 [workspace.package]

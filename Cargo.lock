@@ -1535,10 +1535,6 @@ checksum = "bf151400ff0baff5465007dd2f3e717f3fe502074ca563069ce3a6629d07b289"
 
 [[package]]
 name = "helius"
-version = "0.1.0"
-
-[[package]]
-name = "helius"
 version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f7cb56a9faf2bf6b9f06aca82a510b19d650705d97c229e4d3be08c8c453545d"
@@ -3639,7 +3635,7 @@ dependencies = [
 name = "solagent-plugin-helius"
 version = "0.1.0"
 dependencies = [
- "helius 0.2.4",
+ "helius",
  "reqwest 0.12.12",
  "serde",
  "serde_json",
