@@ -12,14 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod get_balance_other;
-pub use get_balance_other::get_balance_other;
 
-mod deploy_token;
-pub use deploy_token::deploy_token;
 
-mod deploy_collection;
-pub use deploy_collection::deploy_collection;
+
 
 mod fetch_price;
 pub use fetch_price::fetch_price;

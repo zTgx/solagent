@@ -1002,6 +1002,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b42b6fa04a440b495c8b04d0e71b707c585f83cb9cb28cf8cd0d976c315e31b4"
 dependencies = [
  "powerfmt",
+ "serde",
 ]
 
 [[package]]
@@ -1477,7 +1478,7 @@ dependencies = [
  "futures-sink",
  "futures-util",
  "http 0.2.12",
- "indexmap",
+ "indexmap 2.7.1",
  "slab",
  "tokio",
  "tokio-util",
@@ -1496,7 +1497,7 @@ dependencies = [
  "futures-core",
  "futures-sink",
  "http 1.2.0",
- "indexmap",
+ "indexmap 2.7.1",
  "slab",
  "tokio",
  "tokio-util",
@@ -1511,6 +1512,12 @@ checksum = "b0c35f58762feb77d74ebe43bdbc3210f09be9fe6742234d573bacc26ed92b67"
 dependencies = [
  "byteorder",
 ]
+
+[[package]]
+name = "hashbrown"
+version = "0.12.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
 
 [[package]]
 name = "hashbrown"
@@ -1571,6 +1578,12 @@ name = "hermit-abi"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d231dfb89cfffdbc30e7fc41579ed6066ad03abda9e567ccafae602b97ec5024"
+
+[[package]]
+name = "hex"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "histogram"
@@ -1969,12 +1982,24 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
+version = "1.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd070e393353796e801d209ad339e89596eb4c8d430d18ede6a1cced8fafbd99"
+dependencies = [
+ "autocfg",
+ "hashbrown 0.12.3",
+ "serde",
+]
+
+[[package]]
+name = "indexmap"
 version = "2.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8c9c992b02b5b4c94ea26e32fe5bccb7aa7d9f390ab5c1221ff895bc7ea8b652"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.2",
+ "serde",
 ]
 
 [[package]]
@@ -2267,6 +2292,8 @@ dependencies = [
  "borsh 0.10.4",
  "num-derive 0.3.3",
  "num-traits",
+ "serde",
+ "serde_with",
  "solana-program",
  "thiserror 1.0.69",
 ]
@@ -3491,9 +3518,16 @@ version = "3.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6b6f7f2fcb69f747921f79f3926bd1e203fce4fef62c268dd3abfb6d86029aa"
 dependencies = [
+ "base64 0.22.1",
+ "chrono",
+ "hex",
+ "indexmap 1.9.3",
+ "indexmap 2.7.1",
  "serde",
  "serde_derive",
+ "serde_json",
  "serde_with_macros",
+ "time",
 ]
 
 [[package]]
@@ -3618,6 +3652,7 @@ dependencies = [
  "rig-core",
  "serde_json",
  "solana-client",
+ "solana-program",
  "solana-sdk",
 ]
 
@@ -3680,6 +3715,7 @@ dependencies = [
 name = "solagent-plugin-solana"
 version = "0.1.0"
 dependencies = [
+ "mpl-token-metadata",
  "serde",
  "serde_json",
  "solagent-core",
@@ -3903,7 +3939,7 @@ dependencies = [
  "dashmap",
  "futures",
  "futures-util",
- "indexmap",
+ "indexmap 2.7.1",
  "indicatif",
  "log",
  "quinn",
@@ -3971,7 +4007,7 @@ dependencies = [
  "bincode",
  "crossbeam-channel",
  "futures-util",
- "indexmap",
+ "indexmap 2.7.1",
  "log",
  "rand 0.8.5",
  "rayon",
@@ -4790,7 +4826,7 @@ dependencies = [
  "futures-util",
  "governor",
  "histogram",
- "indexmap",
+ "indexmap 2.7.1",
  "itertools 0.12.1",
  "libc",
  "log",
@@ -4858,7 +4894,7 @@ dependencies = [
  "async-trait",
  "bincode",
  "futures-util",
- "indexmap",
+ "indexmap 2.7.1",
  "indicatif",
  "log",
  "rayon",
@@ -5979,7 +6015,7 @@ version = "0.22.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "02a8b472d1a3d7c18e2d61a489aee3453fd9031c33e4f55bd533f4a7adca1bee"
 dependencies = [
- "indexmap",
+ "indexmap 2.7.1",
  "toml_datetime",
  "winnow",
 ]

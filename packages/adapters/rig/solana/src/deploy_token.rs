@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::actions::deploy_token;
-use crate::SolanaAgentKit;
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_solana::deploy_token;
 
 #[derive(Deserialize)]
 pub struct DeployTokenArgs {

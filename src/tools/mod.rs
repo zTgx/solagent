@@ -13,10 +13,8 @@
 // limitations under the License.
 
 pub mod create_solana_tools;
-pub mod deploy_collection;
-pub mod deploy_token;
+
 pub mod fetch_price;
-pub mod get_balance_other;
 pub mod get_wallet_address;
 pub mod gibwork;
 pub mod goplus;

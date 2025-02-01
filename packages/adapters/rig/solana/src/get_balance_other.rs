@@ -12,15 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::get_balance_other, parameters_json_schema, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
-use solana_sdk::pubkey::Pubkey;
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, solana_sdk::pubkey::Pubkey, SolanaAgentKit, parameters_json_schema};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_solana::get_balance_other;
 
 #[derive(Deserialize)]
 pub struct GetBalanceOtherArgs {

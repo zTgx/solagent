@@ -15,53 +15,11 @@
 #![allow(dead_code)]
 
 use lazy_static::lazy_static;
-use mpl_token_metadata::types::Creator;
 use serde::{Deserialize, Serialize};
 use solana_sdk::pubkey::Pubkey;
 use std::collections::HashMap;
 
-/// Metadata for deploying an NFT/Collection.
-///
-/// # Fields
-///
-/// - `name`: The name of the NFT.
-/// - `uri`: The URI for the collection's metadata.
-/// - `basis_points`: Optional. The basis points for the NFT.
-/// - `creators`: Optional. A list of creators associated with the NFT.
-///
-// #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
-#[derive(serde::Serialize, serde::Deserialize)]
-pub struct NFTMetadata {
-    pub(crate) name: String,
-    pub(crate) uri: String,
-    pub(crate) basis_points: Option<u16>,      // Optional basis points
-    pub(crate) creators: Option<Vec<Creator>>, // Optional list of creators
-}
 
-impl NFTMetadata {
-    pub fn new(name: &str, uri: &str, basis_points: Option<u16>, creators: Option<Vec<(Pubkey, u8)>>) -> Self {
-        let creators = creators.map(|creator_tuples| {
-            creator_tuples
-                .into_iter()
-                .map(|(pubkey, share)| Creator { address: pubkey, verified: true, share })
-                .collect::<Vec<Creator>>()
-        });
-
-        NFTMetadata { name: name.to_string(), uri: uri.to_string(), basis_points, creators }
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct DeployedData {
-    pub mint: String,      // mint address
-    pub signature: String, // Tx hash
-}
-
-impl DeployedData {
-    pub fn new(mint: String, signature: String) -> Self {
-        DeployedData { mint, signature }
-    }
-}
 
 /// USDC
 

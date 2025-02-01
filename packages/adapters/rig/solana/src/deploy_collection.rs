@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{actions::deploy_collection, parameters_json_schema, primitives::NFTMetadata, SolanaAgentKit};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema};
 use std::sync::Arc;
+use serde::{Deserialize, Serialize};
+use solagent_plugin_solana::{deploy_collection, NFTMetadata};
 
 #[derive(Deserialize)]
 pub struct DeployCollectionArgs {
