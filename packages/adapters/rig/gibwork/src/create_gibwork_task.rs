@@ -12,17 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{
-    actions::{create_gibwork_task, GibworkCreateTaskResponse},
-    parameters_json_schema, SolanaAgentKit,
-};
-use rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
+use solagent_core::{rig::{completion::ToolDefinition, tool::{Tool, ToolEmbedding}}, SolanaAgentKit, parameters_json_schema, solana_sdk::pubkey::Pubkey};
+use solagent_plugin_gibwork::{create_gibwork_task, GibworkCreateTaskResponse};
 use serde::{Deserialize, Serialize};
-use serde_json::json;
-use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
 #[derive(Deserialize)]
@@ -92,7 +84,13 @@ impl Tool for CreateGibworkTask {
             "#
             .to_string(),
             parameters: parameters_json_schema!(
-                token_address: String,
+                title: String,
+                content: String,
+                requirements: String,
+                tags: Vec<String>,
+                token_mint_address: String,
+                token_amount: u64,
+                payer: Option<Pubkey>,
             ),
         }
     }

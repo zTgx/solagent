@@ -16,7 +16,7 @@ members = [
     "packages/plugins/solana", 
     "packages/plugins/helius",
     "packages/plugins/jupiter", 
-    "packages/plugins/rugcheck", "packages/plugins/solayer", "packages/adapters/rig/solayer", 
+    "packages/plugins/rugcheck", "packages/plugins/solayer", "packages/adapters/rig/solayer", "packages/plugins/gibwork", "packages/adapters/rig/gibwork", 
 ]
 
 [workspace.package]

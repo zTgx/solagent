@@ -3622,6 +3622,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-gibwork"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "reqwest 0.12.12",
+ "serde",
+ "solagent-core",
+]
+
+[[package]]
 name = "solagent-plugin-goplus"
 version = "0.1.13"
 dependencies = [
@@ -3688,6 +3699,17 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core",
+]
+
+[[package]]
+name = "solagent-rig-gibwork"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core",
+ "solagent-plugin-gibwork",
+ "thiserror 2.0.11",
 ]
 
 [[package]]
