@@ -10,8 +10,8 @@ license = "Apache 2.0"
 description = "solagent.rs rig helius"
 
 [dependencies]
-solagent-core = { path = "../../../core" }
-solagent-plugin-helius = { path = "../../../plugins/helius" }
+solagent-core = { path = "../../../solagent-core" }
+solagent-plugin-helius = { path = "../../../solagent-plugins/helius" }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"
 serde_json = "1.0"

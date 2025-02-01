@@ -10,7 +10,7 @@ license = "Apache 2.0"
 description = "solagent plugin gibwork"
 
 [dependencies]
-solagent-core = { path = "../../core" }
+solagent-core = { path = "../../solagent-core" }
 serde = { version = "1.0", features = ["derive"] }
 base64 = "0.22.1"
 reqwest = { version = "0.12", features = ["json"] }

@@ -12,6 +12,6 @@ description = "solagent.rs rig goplus"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-solagent-core = { path = "../../solagent-core" }
-solagent-plugin-goplus = { path = "../../solagent-plugins/goplus" }
+solagent-core = { path = "../../../solagent-core" }
+solagent-plugin-goplus = { path = "../../../solagent-plugins/goplus" }
 thiserror = "2.0.9"

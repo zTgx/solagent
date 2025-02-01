@@ -10,8 +10,8 @@ license = "Apache 2.0"
 description = "solagent.rs rig solayer"
 
 [dependencies]
-solagent-core = { path = "../../../core" }
-solagent-plugin-solayer = { path = "../../../plugins/solayer" }
+solagent-core = { path = "../../../solagent-core" }
+solagent-plugin-solayer = { path = "../../../solagent-plugins/solayer" }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0.9"
 serde_json = "1.0"

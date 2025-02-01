@@ -10,7 +10,7 @@ license = "Apache 2.0"
 description = "solagent.rs plugin solana"
 
 [dependencies]
-solagent-core = { path = "../../core" }
+solagent-core = { path = "../../solagent-core" }
 serde = { version = "1.0", features = ["derive"] }
 spl-token = "7.0.0"
 spl-associated-token-account = "6.0.0"
