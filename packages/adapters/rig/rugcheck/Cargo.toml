@@ -1,0 +1,17 @@
+[package]
+name = "solagent-rig-rugcheck"
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+readme = "README.md"
+keywords = ["solagent", "rig", "rugcheck"]
+license = "Apache 2.0"
+description = "solagent.rs rig rugcheck"
+
+[dependencies]
+solagent-core = { path = "../../../core" }
+solagent-plugin-rugcheck = { path = "../../../plugins/rugcheck" }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0.9"
+serde_json = "1.0"
