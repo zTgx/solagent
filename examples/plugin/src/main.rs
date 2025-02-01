@@ -3,21 +3,26 @@ use solagent_core::{
         completion::Prompt,
         providers::gemini::{self, completion::GEMINI_1_5_FLASH},
     },
+    solana_sdk::signer::keypair::Keypair,
     *,
 };
 
 #[tokio::main]
 async fn main() {
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
+    // Create a new keypair
+    let keypair = Keypair::new();
+    // Encode the secret key to base58
+    let private_key = keypair.to_base58_string();
 
-    let _v = solagent_plugin_goplus::get_solana_token_security_info("0x").await;
+    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+    let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
+
+    let _v =
+        solagent_plugin_goplus::get_solana_token_security_info("So11111111111111111111111111111111111111112").await;
 
     let _v = solagent_plugin_solana::get_tps(&agent).await;
 
     let tool = solagent_rig_goplus::TokenMaliciousInfo::new();
-
-    let token_symbol = "SOL";
 
     let client = gemini::Client::from_env();
     let agent = client
@@ -29,8 +34,10 @@ async fn main() {
         .tool(tool)
         .build();
 
-    let prompt = format!("fetch price of token symbol {}", token_symbol);
-    let response = agent.prompt(&prompt).await.expect("Failed to prompt Gemini");
+    let response = agent
+        .prompt("check token malicious solana So11111111111111111111111111111111111111112")
+        .await
+        .expect("Failed to prompt Gemini");
 
     println!("Gemini response: {response}");
 }

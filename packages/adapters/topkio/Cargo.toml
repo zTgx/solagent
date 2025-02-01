@@ -1,6 +1,0 @@
-[package]
-name = "topkio"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

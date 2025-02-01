@@ -1,7 +1,13 @@
 [package]
 name = "solagent-rig-helius"
-version.workspace = true
-edition.workspace = true
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+readme = "README.md"
+keywords = ["solagent", "rig", "helius"]
+license = "Apache 2.0"
+description = "solagent.rs rig helius"
 
 [dependencies]
 solagent-core = { path = "../../../core" }

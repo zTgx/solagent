@@ -1,9 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "examples/plugin",
     "packages/core",
-    "packages/adapters/topkio",
 
     "packages/adapters/rig/goplus",
     "packages/adapters/rig/solana",
