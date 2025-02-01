@@ -6,7 +6,7 @@ authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs"
 readme = "README.md"
 keywords = ["solagent", "plugin", "solana"]
-license = "Apache 2.0"
+license = "Apache-2.0"
 description = "solagent.rs plugin solana"
 
 [dependencies]
