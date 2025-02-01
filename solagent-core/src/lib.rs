@@ -130,6 +130,7 @@ pub struct Config {
     pub flash_privilege: Option<String>,
     pub flexlend_api_key: Option<String>,
     pub helius_api_key: Option<String>,
+    pub cookie_api_key: Option<String>,
 }
 
 /// Represents a Solana agent that interacts with the blockchain.
