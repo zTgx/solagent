@@ -59,20 +59,9 @@ async fn main() {
 }
 ```
 
-## How to add a plugin
-```rust
-/// Try to keep the names of the `tool` and `plugin` consistent.
-
-// create solagent-plugins
-cargo new --lib solagent-plugins/_NAME_
-// Rename package name to `solagent-plugin-_NAME_ 
-
-// create rig-based tool
-cargo new --lib solagent-adapters/rig/_NAME_
-// Rename package name to `solagent-rig-_NAME_
-
-// ADD examples
-cargo new examples/__REPLACE_NEW_EXAMPLE_NAME__
+## How to add a feature
+```shell
+./scripts/add-tempalate.sh <plugin-name> <tool-name> <example-project-name>
 ```
 
 ## Packages
