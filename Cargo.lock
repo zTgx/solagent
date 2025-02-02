@@ -3670,6 +3670,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-cookie"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "06923cdc93b3a1dc8f664695c3e817d4fdef3d0cb781e1775a016f6b26381562"
+dependencies = [
+ "base64 0.22.1",
+ "reqwest 0.12.12",
+ "serde",
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "solagent-plugin-gibwork"
 version = "0.1.0"
 dependencies = [
@@ -3883,6 +3895,16 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "solagent-rig-cookie"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-cookie 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "thiserror 2.0.11",
 ]
 
 [[package]]

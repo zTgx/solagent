@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::error::Error;
 use solagent_core::{serde_json::Value, SolanaAgentKit};
+use std::error::Error;
 
 /// Retrieve popular content matching search query, created in time range {from} - {to} (YYYY-MM-DD dates).
 ///
@@ -27,21 +27,23 @@ use solagent_core::{serde_json::Value, SolanaAgentKit};
 /// # Returns
 ///
 /// A `Result` that tweets details
-pub async fn search_tweets(agent: &SolanaAgentKit, tweets: &str, from: &str, to: &str) -> Result<Value, Box<dyn Error>> {
+pub async fn search_tweets(
+    agent: &SolanaAgentKit,
+    tweets: &str,
+    from: &str,
+    to: &str,
+) -> Result<Value, Box<dyn Error>> {
     // Get the Cookie API key from the agent's configuration
     let api_key = match agent.config.cookie_api_key.as_ref() {
         Some(key) => key,
         None => return Err("Missing Cookie API key in agent.config.cookie_api_key".into()),
     };
-    
+
     let api_url = "https://api.cookie.fun/v1/hackathon/search";
     let url = format!("{}/{}?from={}&to={}", api_url, tweets, from, to);
     let client = reqwest::Client::new();
 
-    let response = client.get(&url)
-        .header("x-api-key", api_key)
-        .send()
-        .await?;
+    let response = client.get(&url).header("x-api-key", api_key).send().await?;
 
     let json: Value = response.json().await?;
     Ok(json)

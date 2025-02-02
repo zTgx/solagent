@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod get_agent_by_name;
-pub use get_agent_by_name::get_agent_by_name;
-
 mod get_agent_by_ca;
-pub use get_agent_by_ca::get_agent_by_ca;
+pub use get_agent_by_ca::GetAgentByCa;
+
+mod get_agent_by_name;
+pub use get_agent_by_name::GetAgentByTwitterName;
 
 mod search_tweets;
-pub use search_tweets::search_tweets;
+pub use search_tweets::SearchTweets;
