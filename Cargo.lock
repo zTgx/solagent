@@ -3660,6 +3660,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-core"
+version = "0.1.1"
+dependencies = [
+ "rig-core",
+ "serde_json",
+ "solana-client",
+ "solana-program",
+ "solana-sdk",
+]
+
+[[package]]
+name = "solagent-plugin-cookie"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "reqwest 0.12.12",
+ "serde",
+ "solagent-core 0.1.1",
+]
+
+[[package]]
 name = "solagent-plugin-gibwork"
 version = "0.1.0"
 dependencies = [

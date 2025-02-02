@@ -2611,8 +2611,9 @@ checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
 name = "plugin"
 version = "0.1.0"
 dependencies = [
- "solagent-core",
- "solagent-plugin-goplus",
+ "solagent-core 0.1.0",
+ "solagent-plugin-cookie",
+ "solagent-plugin-goplus 0.1.0",
  "solagent-plugin-solana",
  "solagent-rig-goplus",
  "tokio",
@@ -3506,8 +3507,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-core"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a3064f8adefd8b6e7dd6583d4b5f47a55846d9584bb415e9eeceaf25583c7761"
+dependencies = [
+ "rig-core",
+ "serde_json",
+ "solana-client",
+ "solana-program",
+ "solana-sdk",
+]
+
+[[package]]
+name = "solagent-plugin-cookie"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "reqwest 0.12.12",
+ "serde",
+ "solagent-core 0.1.0",
+]
+
+[[package]]
 name = "solagent-plugin-goplus"
 version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde_json",
+]
+
+[[package]]
+name = "solagent-plugin-goplus"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "44c843a76f476ea487992f83b67b2c5364a7f7bd2eb94cc505084f6ab66a67d9"
 dependencies = [
  "reqwest 0.12.12",
  "serde_json",
@@ -3520,7 +3554,7 @@ dependencies = [
  "mpl-token-metadata",
  "serde",
  "serde_json",
- "solagent-core",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-account-decoder",
  "spl-associated-token-account",
  "spl-token 7.0.0",
@@ -3533,8 +3567,8 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
- "solagent-core",
- "solagent-plugin-goplus",
+ "solagent-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-goplus 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
 

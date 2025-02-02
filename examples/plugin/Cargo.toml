@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-solagent-core = "0.1.0"
+solagent-core = "0.1.1"
+solagent-plugin-goplus = "0.1.0"
+solagent-plugin-solana = "0.1.0"
+solagent-plugin-cookie = "0.1.0"
+solagent-rig-goplus = "0.1.0"
 tokio = { version = "1.42.0", features = ["full"] }
-solagent-plugin-goplus = { path = "../../solagent-plugins/goplus" }
-solagent-plugin-solana = { path = "../../solagent-plugins/solana" }
-solagent-rig-goplus = { path = "../../solagent-adapters/rig/goplus" }

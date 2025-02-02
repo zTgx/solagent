@@ -14,9 +14,10 @@ async fn main() {
     // Encode the secret key to base58
     let private_key = keypair.to_base58_string();
 
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+    let config = Config { cookie_api_key: Some("".to_string()), ..Default::default() };
     let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
 
+    let _v = solagent_plugin_cookie::search_tweets(&agent, "ztgx5", "2025-01-01", "2025-01-20").await.unwrap();
     let _v =
         solagent_plugin_goplus::get_solana_token_security_info("So11111111111111111111111111111111111111112").await;
 
