@@ -3898,10 +3898,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "solagent-plugin-xxx"
-version = "0.1.0"
-
-[[package]]
 name = "solagent-rig-cookie"
 version = "0.1.0"
 dependencies = [
@@ -4009,10 +4005,6 @@ dependencies = [
  "solagent-plugin-solayer 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.11",
 ]
-
-[[package]]
-name = "solagent-rig-xxx"
-version = "0.1.0"
 
 [[package]]
 name = "solana-account"
@@ -6867,10 +6859,6 @@ dependencies = [
  "thiserror 1.0.69",
  "time",
 ]
-
-[[package]]
-name = "xxx"
-version = "0.1.0"
 
 [[package]]
 name = "yoke"

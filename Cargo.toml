@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "solagent-core",
 
+    # tools rig-based
     "solagent-adapters/rig/goplus",
     "solagent-adapters/rig/solana",
     "solagent-adapters/rig/helius",
@@ -12,7 +13,9 @@ members = [
     "solagent-adapters/rig/gibwork",
     "solagent-adapters/rig/pyth",
     "solagent-adapters/rig/pumpfun", 
+    "solagent-adapters/rig/cookie",
 
+    # plugins
     "solagent-plugins/goplus",
     "solagent-plugins/solana", 
     "solagent-plugins/helius",
@@ -22,7 +25,7 @@ members = [
     "solagent-plugins/gibwork",  
     "solagent-plugins/pyth",  
     "solagent-plugins/pumpfun", 
-    "solagent-plugins/cookie", "solagent-adapters/rig/cookie", "solagent-plugins/xxx", "solagent-adapters/rig/xxx", "examples/xxx", 
+    "solagent-plugins/cookie",
 ]
 
 exclude = ["examples/plugin"]
