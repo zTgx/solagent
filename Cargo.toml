@@ -21,7 +21,8 @@ members = [
     "solagent-plugins/solayer", 
     "solagent-plugins/gibwork",  
     "solagent-plugins/pyth",  
-    "solagent-plugins/pumpfun", "solagent-plugins/cookie", 
+    "solagent-plugins/pumpfun", 
+    "solagent-plugins/cookie", 
 ]
 
 exclude = ["examples/plugin"]

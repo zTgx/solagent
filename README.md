@@ -107,6 +107,7 @@ cargo new examples/__REPLACE_NEW_EXAMPLE_NAME__
 | rugcheck | Rug check | [solagent-plugin-rugcheck](https://crates.io/crates/solagent-plugin-rugcheck) | ![Version](https://img.shields.io/crates/v/solagent-plugin-rugcheck) |
 | solana | Operations on solana | [solagent-plugin-solana](https://crates.io/crates/solagent-plugin-solana) | ![Version](https://img.shields.io/crates/v/solagent-plugin-solana) |
 | solayer | Stake with solayer | [solagent-plugin-solayer](https://crates.io/crates/solagent-plugin-solayer) | ![Version](https://img.shields.io/crates/v/solagent-plugin-solayer) |
+| cookie | Cookie Data Swarm APIs | [solagent-plugin-cookie](https://crates.io/crates/solagent-plugin-cookie) | ![Version](https://img.shields.io/crates/v/solagent-plugin-cookie) |
  
 
 ## Contributors
