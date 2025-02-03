@@ -71,6 +71,7 @@ async fn main() {
 | solana | Operations on solana | [solagent-rig-solana](https://crates.io/crates/solagent-rig-solana) | ![Version](https://img.shields.io/crates/v/solagent-rig-solana) |
 | solayer | Stake with solayer | [solagent-rig-solayer](https://crates.io/crates/solagent-rig-solayer) | ![Version](https://img.shields.io/crates/v/solagent-rig-solayer) |
 | cookie | Cookie Data Swarm APIs | [solagent-rig-cookie](https://crates.io/crates/solagent-rig-cookie) | ![Version](https://img.shields.io/crates/v/solagent-rig-cookie) |
+| dexscreener | Dexscreener data APIs | [solagent-rig-dexscreener](https://crates.io/crates/solagent-rig-dexscreener) | ![Version](https://img.shields.io/crates/v/solagent-rig-dexscreener) |
  
 
 ### Plugins

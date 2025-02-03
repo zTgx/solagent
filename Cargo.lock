@@ -3695,7 +3695,18 @@ dependencies = [
 
 [[package]]
 name = "solagent-plugin-dexscreener"
-version = "0.1.0"
+version = "0.1.1"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "solagent-plugin-dexscreener"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7caf595948e200e937e1dba61bf800142a383bb51ec5d0518c126d815f3f6039"
 dependencies = [
  "reqwest 0.12.12",
  "serde",
@@ -3931,6 +3942,12 @@ dependencies = [
 [[package]]
 name = "solagent-rig-dexscreener"
 version = "0.1.0"
+dependencies = [
+ "serde",
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-dexscreener 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "thiserror 2.0.11",
+]
 
 [[package]]
 name = "solagent-rig-gibwork"
