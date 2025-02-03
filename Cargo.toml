@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    # core
     "solagent-core",
     "solagent-wallet/solana",
 
@@ -15,6 +16,7 @@ members = [
     "solagent-adapters/rig/pyth",
     "solagent-adapters/rig/pumpfun", 
     "solagent-adapters/rig/cookie",
+    "solagent-adapters/rig/dexscreener",
 
     # plugins
     "solagent-plugins/goplus",
@@ -26,10 +28,13 @@ members = [
     "solagent-plugins/gibwork",  
     "solagent-plugins/pyth",  
     "solagent-plugins/pumpfun", 
-    "solagent-plugins/cookie", "solagent-plugins/dexscreener", "solagent-adapters/rig/dexscreener", "examples/dexscreener",
+    "solagent-plugins/cookie", 
+    "solagent-plugins/dexscreener",  
+    
+    # examples
+    "examples/plugin",
+    "examples/dexscreener",
 ]
-
-exclude = ["examples/plugin"]
 
 [workspace.package]
 version = "0.1.0"
