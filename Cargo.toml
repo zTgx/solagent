@@ -26,7 +26,7 @@ members = [
     "solagent-plugins/gibwork",  
     "solagent-plugins/pyth",  
     "solagent-plugins/pumpfun", 
-    "solagent-plugins/cookie",
+    "solagent-plugins/cookie", "solagent-plugins/dexscreener", "solagent-adapters/rig/dexscreener", "examples/dexscreener",
 ]
 
 exclude = ["examples/plugin"]

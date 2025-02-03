@@ -1,0 +1,6 @@
+[package]
+name = "solagent-plugin-dexscreener"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

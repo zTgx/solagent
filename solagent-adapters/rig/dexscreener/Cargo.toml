@@ -1,0 +1,6 @@
+[package]
+name = "solagent-rig-dexscreener"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
