@@ -6,51 +6,16 @@
 
 </br>
 
-## Usage
-```toml
-[dependencies]
-solagent-core = "0.1.0"
-solagent-rig-goplus = "0.1.0"
-```
+✨ If you would like to help spread the word about solagent.rs, please consider starring the repo!
 
-```rust
-use solagent_core::{
-    rig::{completion::Prompt, providers::openai},
-    solana_sdk::signer::keypair::Keypair,
-    *,
-};
-use solagent_rig_goplus::TokenMaliciousInfo;
+> [!WARNING]
+> Since we are going to release a flood of features in the upcoming months, future updates **will** contain **breaking changes**.
 
-#[tokio::main]
-async fn main() {
-    let keypair = Keypair::new();
-    let private_key = keypair.to_base58_string();
 
-    let config = Config { gemini_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
+## Table of Contens
+* [HowToUse](./docs/how-to-usage.md)
+* [HowToAddNewFeature](./docs/hot-to-add-feature.md)
 
-    let client = openai::Client::from_url("ollama", "http://localhost:11434/v1");
-    let agent = client
-        .agent(llama3.2)
-        .preamble(
-            "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
-        )
-        .tool(TokenMaliciousInfo::new())
-        .build();
-
-    let response = agent
-        .prompt("check token malicious solana So11111111111111111111111111111111111111112")
-        .await
-        .expect("Failed to prompt Gemini");
-
-    println!("Malicious checking result: {response}");
-}
-```
-
-## How to add new feature
-```shell
-./scripts/add-tempalate.sh <name>
-```
 
 ## Packages
 ### Core
