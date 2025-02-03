@@ -34,6 +34,7 @@ pub struct GetTokenDataByTickerOutput {
 #[error("GetTokenDataByTicker error")]
 pub struct GetTokenDataByTickerError;
 
+#[derive(Default)]
 pub struct GetTokenDataByTicker {}
 
 impl GetTokenDataByTicker {
