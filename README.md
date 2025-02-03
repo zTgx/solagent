@@ -10,9 +10,9 @@
 ```toml
 [dependencies]
 solagent-core = "0.1.0"
-solagent-plugin-solana = "0.1.0"
 solagent-rig-goplus = "0.1.0"
 ```
+
 ```rust
 use solagent_core::{
     rig::{
@@ -22,23 +22,15 @@ use solagent_core::{
     solana_sdk::signer::keypair::Keypair,
     *,
 };
+use solagent_rig_goplus::TokenMaliciousInfo;
 
 #[tokio::main]
 async fn main() {
-    // Create a new keypair
     let keypair = Keypair::new();
-    // Encode the secret key to base58
     let private_key = keypair.to_base58_string();
 
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+    let config = Config { gemini_api_key: Some("your_api_key".to_string()), ..Default::default() };
     let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
-
-    let _v =
-        solagent_plugin_goplus::get_solana_token_security_info("So11111111111111111111111111111111111111112").await;
-
-    let _v = solagent_plugin_solana::get_tps(&agent).await;
-
-    let tool = solagent_rig_goplus::TokenMaliciousInfo::new();
 
     let client = gemini::Client::from_env();
     let agent = client
@@ -46,8 +38,7 @@ async fn main() {
         .preamble(
             "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
         )
-        .max_tokens(1024)
-        .tool(tool)
+        .tool(TokenMaliciousInfo::new())
         .build();
 
     let response = agent
@@ -55,11 +46,11 @@ async fn main() {
         .await
         .expect("Failed to prompt Gemini");
 
-    println!("Gemini response: {response}");
+    println!("Malicious checking result: {response}");
 }
 ```
 
-## How to add a feature
+## How to add tool and plugin
 ```shell
 ./scripts/add-tempalate.sh <plugin-name> <tool-name> <example-project-name>
 ```
