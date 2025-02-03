@@ -28,3 +28,27 @@ impl Wallet {
         Wallet { wallet, address }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_wallet_load_valid_key() {
+        // Create a new keypair
+        let keypair = Keypair::new();
+        // Encode the secret key to base58
+        let private_key = keypair.to_base58_string();
+        // Load the wallet using the generated private key
+        let wallet = Wallet::load(&private_key);
+        // Assert that the loaded wallet's address matches the keypair's public key
+        assert_eq!(wallet.address, keypair.pubkey());
+    }
+
+    #[test]
+    #[should_panic(expected = "private key is not valid base58 format!")]
+    fn test_wallet_load_invalid_key() {
+        let invalid_private_key = "invalid_key";
+        Wallet::load(invalid_private_key);
+    }
+}

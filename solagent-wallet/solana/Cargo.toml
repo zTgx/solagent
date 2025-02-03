@@ -1,7 +1,12 @@
 [package]
-name = "solana"
-version.workspace = true
-edition.workspace = true
+name = "solagent-wallet-solana"
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+keywords = ["solagent", "wallet", "solana"]
+license = "Apache-2.0"
+description = "solagent wallet solana"
 
 [dependencies]
 solana-sdk = "2.1.7"
