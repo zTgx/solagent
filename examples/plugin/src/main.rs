@@ -1,8 +1,5 @@
 use solagent_core::{
-    rig::{
-        completion::Prompt,
-        providers::gemini::{self, completion::GEMINI_1_5_FLASH},
-    },
+    rig::{completion::Prompt, providers::openai},
     solana_sdk::signer::keypair::Keypair,
     *,
 };
@@ -25,9 +22,9 @@ async fn main() {
 
     let tool = solagent_rig_goplus::TokenMaliciousInfo::new();
 
-    let client = gemini::Client::from_env();
+    let client = openai::Client::from_url("ollama", "http://localhost:11434/v1");
     let agent = client
-        .agent(GEMINI_1_5_FLASH)
+        .agent("llama3.2")
         .preamble(
             "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
         )

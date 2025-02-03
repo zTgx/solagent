@@ -15,10 +15,7 @@ solagent-rig-goplus = "0.1.0"
 
 ```rust
 use solagent_core::{
-    rig::{
-        completion::Prompt,
-        providers::gemini::{self, completion::GEMINI_1_5_FLASH},
-    },
+    rig::{completion::Prompt, providers::openai},
     solana_sdk::signer::keypair::Keypair,
     *,
 };
@@ -32,9 +29,9 @@ async fn main() {
     let config = Config { gemini_api_key: Some("your_api_key".to_string()), ..Default::default() };
     let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
 
-    let client = gemini::Client::from_env();
+    let client = openai::Client::from_url("ollama", "http://localhost:11434/v1");
     let agent = client
-        .agent(GEMINI_1_5_FLASH)
+        .agent(llama3.2)
         .preamble(
             "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
         )
