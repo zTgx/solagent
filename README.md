@@ -1,7 +1,7 @@
 <div align="center">
 
 # solagent.rs   
-`solagent.rs` - An open-source Rust library for connecting AI agents to Solana protocols. 
+`solagent.rs` - An open-source Agent framework for connecting any AI agents to Solana protocols in Rust. 
 </div>
 
 </br>

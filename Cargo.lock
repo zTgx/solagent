@@ -4009,6 +4009,9 @@ dependencies = [
 [[package]]
 name = "solana"
 version = "0.1.0"
+dependencies = [
+ "solana-sdk",
+]
 
 [[package]]
 name = "solana-account"
