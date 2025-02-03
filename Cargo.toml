@@ -33,7 +33,6 @@ members = [
     
     # examples
     "examples/plugin",
-    "examples/dexscreener",
 ]
 
 [workspace.package]

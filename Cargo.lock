@@ -1023,10 +1023,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "dexscreener"
-version = "0.1.0"
-
-[[package]]
 name = "digest"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3700,6 +3696,11 @@ dependencies = [
 [[package]]
 name = "solagent-plugin-dexscreener"
 version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "solagent-plugin-gibwork"
