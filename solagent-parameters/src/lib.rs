@@ -67,12 +67,11 @@ macro_rules! parameters {
     }};
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use serde_json::json;
-    
+
     #[test]
     fn test_parameters_with_option_string() {
         let schema = parameters!(name: Option<String>);

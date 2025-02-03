@@ -57,6 +57,8 @@ async fn main() {
 | Crate | Package | Version | 
 | --- | --- | --- |
 | Core | [solagent-core](https://crates.io/crates/solagent-core) | ![Version](https://img.shields.io/crates/v/solagent-core) |
+| Wallet | [solagent-wallet-solana](https://crates.io/crates/solagent-wallet-solana) | ![Version](https://img.shields.io/crates/v/solagent-wallet-solana) |
+| Parameters | [solagent-parameters](https://crates.io/crates/solagent-parameters) | ![Version](https://img.shields.io/crates/v/solagent-parameters) |
 
 ### Tools
 | Tools | Description | Package | Version |

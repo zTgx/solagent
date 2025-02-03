@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#![allow(dead_code)]
 
 //! **solagent.rs: Bridging the Gap Between AI and Solana protocols**  
 //! solagent.rs is an open-source Rust library designed to streamline the integration of AI agents with Solana protocols. Built upon the rig framework, solagent.rs empowers developers to construct portable, modular, and lightweight full-stack AI agents capable of interacting with the Solana blockchain.
@@ -35,92 +34,14 @@
 //! ```
 //!
 
+use solagent_wallet_solana::Wallet;
 use solana_client::rpc_client::RpcClient;
-use solana_sdk::{
-    bs58,
-    pubkey::Pubkey,
-    signature::{Keypair, Signer},
-};
 
 pub use rig;
 pub use serde_json;
 pub use solana_client;
 pub use solana_program;
 pub use solana_sdk;
-
-#[doc(hidden)]
-#[macro_export]
-macro_rules! parameters_json_schema {
-    ($($name:ident: $type:ty),* $(,)?) => {{
-        use serde_json::json;
-
-        let mut properties = serde_json::Map::new();
-        $(
-            let property = match stringify!($type) {
-                "String" => json!({
-                    "type": "string"
-                }),
-                "i32" | "i64" | "u64" | "u32" => json!({
-                    "type": "number"
-                }),
-                "bool" => json!({
-                    "type": "boolean"
-                }),
-
-                s if s.starts_with("Vec<") && s.ends_with(">") => {
-
-                    let inner_type_str = &s[4..s.len() - 1];
-                    let inner_type = match inner_type_str {
-                        "String" => json!({
-                            "type": "string"
-                        }),
-                        "i32" | "i64" | "u64" | "u32" => json!({
-                            "type": "number"
-                        }),
-                        "bool" => json!({
-                            "type": "boolean"
-                        }),
-                        _ => json!({
-                            "type": "object"
-                        }),
-                    };
-                    json!({
-                        "type": "array",
-                        "items": inner_type
-                    })
-                }
-                _ => {
-                    json!({
-                        "type": "object"
-                    })
-                }
-            };
-            properties.insert(stringify!($name).to_string(), property);
-        )*
-        json!({
-            "type": "object",
-            "properties": properties,
-        })
-    }};
-}
-
-/// Wallet
-/// - wallet : Wallet keypair for signing transactions
-/// - address: Public key of the wallet
-pub struct Wallet {
-    pub wallet: Keypair,
-    pub address: Pubkey,
-}
-
-impl Wallet {
-    pub fn load(private_key: &str) -> Wallet {
-        let secret_key = bs58::decode(private_key).into_vec().expect("private key is not valid base58 format!");
-        let wallet = Keypair::from_bytes(&secret_key).expect("Invalid private key!");
-        let address = wallet.pubkey();
-
-        Wallet { wallet, address }
-    }
-}
 
 #[derive(Debug, Clone, Default)]
 pub struct Config {
@@ -150,25 +71,10 @@ impl SolanaAgentKit {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_wallet_load_valid_key() {
-        // Create a new keypair
-        let keypair = Keypair::new();
-        // Encode the secret key to base58
-        let private_key = keypair.to_base58_string();
-        // Load the wallet using the generated private key
-        let wallet = Wallet::load(&private_key);
-        // Assert that the loaded wallet's address matches the keypair's public key
-        assert_eq!(wallet.address, keypair.pubkey());
-    }
-
-    #[test]
-    #[should_panic(expected = "private key is not valid base58 format!")]
-    fn test_wallet_load_invalid_key() {
-        let invalid_private_key = "invalid_key";
-        Wallet::load(invalid_private_key);
-    }
+    use solana_sdk::{
+        bs58,
+        signature::{Keypair, Signer},
+    };
 
     #[test]
     fn test_solana_agent_kit_initialization() {

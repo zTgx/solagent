@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     # core
     "solagent-core",
+    "solagent-parameters",
     "solagent-wallet/solana",
 
     # tools rig-based
