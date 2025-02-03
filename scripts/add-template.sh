@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Check if the name is provided
-if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <plugin_name> <rig_name> <example_name>"
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <name>"
     exit 1
 fi
 
 PLUGIN_NAME=$1
-RIG_NAME=$2
-EXAMPLE_NAME=$3
+RIG_NAME=$1
+EXAMPLE_NAME=$1
 
 # Create solagent-plugins
 cargo new --lib solagent-plugins/$PLUGIN_NAME
