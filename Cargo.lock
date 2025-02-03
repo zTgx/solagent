@@ -4007,6 +4007,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana"
+version = "0.1.0"
+
+[[package]]
 name = "solana-account"
 version = "2.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"

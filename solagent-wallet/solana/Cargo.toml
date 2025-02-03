@@ -1,0 +1,6 @@
+[package]
+name = "solana"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
