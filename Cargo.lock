@@ -2723,6 +2723,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
 
 [[package]]
+name = "plugin"
+version = "0.1.0"
+dependencies = [
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-cookie 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-goplus 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-solana 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-rig-goplus 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tokio",
+]
+
+[[package]]
 name = "polyval"
 version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3682,6 +3694,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-dexscreener"
+version = "0.1.1"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "solagent-plugin-dexscreener"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7caf595948e200e937e1dba61bf800142a383bb51ec5d0518c126d815f3f6039"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "solagent-plugin-gibwork"
 version = "0.1.0"
 dependencies = [
@@ -3908,6 +3940,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-rig-dexscreener"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-dexscreener 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "thiserror 2.0.11",
+]
+
+[[package]]
 name = "solagent-rig-gibwork"
 version = "0.1.0"
 dependencies = [
@@ -3921,6 +3963,19 @@ dependencies = [
 [[package]]
 name = "solagent-rig-goplus"
 version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solagent-core 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-goplus 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "thiserror 2.0.11",
+]
+
+[[package]]
+name = "solagent-rig-goplus"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a86688e7b88e7475bbb040005f23afb9dbedc0b07c168380543df956331603a3"
 dependencies = [
  "serde",
  "serde_json",
