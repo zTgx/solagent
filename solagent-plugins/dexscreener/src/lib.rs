@@ -13,4 +13,4 @@
 // limitations under the License.
 
 mod get_token_data_by_ticker;
-pub use get_token_data_by_ticker::get_token_data_by_ticker;
+pub use get_token_data_by_ticker::{get_token_data_by_ticker, JupiterTokenData};
