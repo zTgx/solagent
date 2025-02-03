@@ -47,9 +47,9 @@ async fn main() {
 }
 ```
 
-## How to add tool and plugin
+## How to add new feature
 ```shell
-./scripts/add-tempalate.sh <plugin-name> <tool-name> <example-project-name>
+./scripts/add-tempalate.sh <name>
 ```
 
 ## Packages
