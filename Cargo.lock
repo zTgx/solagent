@@ -3143,6 +3143,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "rig-core"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7f8190b6b290cc0b9bd7ff44156e288f0df82c2d3cbccc9ffa1c44493b38ffc4"
+dependencies = [
+ "futures",
+ "glob",
+ "ordered-float",
+ "reqwest 0.11.27",
+ "schemars",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+ "tracing",
+]
+
+[[package]]
 name = "ring"
 version = "0.17.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3653,7 +3670,7 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "54d4ae336fd77c3bc6f1d9be2a61d0559b3f9c62c9812445dcac50e973bdd1f5"
 dependencies = [
- "rig-core",
+ "rig-core 0.6.1",
  "serde_json",
  "solana-client",
  "solana-program",
@@ -3664,7 +3681,7 @@ dependencies = [
 name = "solagent-core"
 version = "0.1.2"
 dependencies = [
- "rig-core",
+ "rig-core 0.7.0",
  "serde_json",
  "solagent-wallet-solana 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-client",
