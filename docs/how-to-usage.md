@@ -10,7 +10,7 @@ solagent mainly consists of three parts:
 # Installation
 ```toml
 [dependencies]
-solagent-core = "0.1.0"
+solagent-core = "0.1.3"
 solagent-rig-goplus = "0.1.0"
 ```
 
