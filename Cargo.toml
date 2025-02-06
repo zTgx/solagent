@@ -30,10 +30,11 @@ members = [
     "solagent-plugins/pyth",  
     "solagent-plugins/pumpfun", 
     "solagent-plugins/cookie", 
-    "solagent-plugins/dexscreener",  
+    "solagent-plugins/dexscreener",
+    "solagent-plugins/story",
     
     # examples
-    "examples/plugin",
+    "examples/plugin", 
 ]
 
 [workspace.package]

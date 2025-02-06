@@ -3955,6 +3955,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solagent-plugin-story"
+version = "0.1.0"
+dependencies = [
+ "reqwest 0.12.12",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "solagent-rig-cookie"
 version = "0.1.0"
 dependencies = [
