@@ -13,13 +13,11 @@
 // limitations under the License.
 
 use serde::{Deserialize, Serialize};
-use solagent_core::{
-    parameters_json_schema,
-    rig::{
-        completion::ToolDefinition,
-        tool::{Tool, ToolEmbedding},
-    },
+use solagent_core::rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
 };
+use solagent_parameters::parameters;
 use solagent_plugin_jupiter::fetch_price;
 
 #[derive(Debug, Deserialize)]
@@ -63,7 +61,7 @@ impl Tool for FetchPrice {
 
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 token_address: String,
             ),
         }
