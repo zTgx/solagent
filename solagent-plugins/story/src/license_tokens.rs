@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use serde_json::json;
+
 use crate::{StoryBodyParams, StoryConfig, STORY_API_URL};
 
-/// Retrieve a Transaction
+/// Retrieve a LicenseToken
 ///
 /// # Arguments
 ///
 /// * `config` - API Config
-/// * `trx_id` - Transaction ID
+/// * `license_token_id` - License Token ID
 ///
 /// # Returns
 ///
-/// Transaction
-pub async fn get_a_transaction(
+/// License Token data
+pub async fn get_license_token(
     config: &StoryConfig,
-    trx_id: &str,
+    license_token_id: &str,
 ) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
-    let url = format!("{}/transactions/{}", STORY_API_URL, trx_id);
+    let url = format!("{}/licenses/tokens/{}", STORY_API_URL, license_token_id);
 
     let client = reqwest::Client::new();
     let response = client
@@ -43,7 +45,7 @@ pub async fn get_a_transaction(
     Ok(data)
 }
 
-/// Retrieve a paginated, filtered list of Transactions
+/// Retrieve a paginated, filtered list of LicenseTokens
 ///
 /// # Arguments
 ///
@@ -52,37 +54,13 @@ pub async fn get_a_transaction(
 ///
 /// # Returns
 ///
-/// list of Transactions
-pub async fn list_transactions(
+/// list of LicenseTokens
+pub async fn list_license_tokens(
     config: &StoryConfig,
     body: Option<StoryBodyParams>,
 ) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
-    query_transactions(STORY_API_URL, config, body).await
-}
+    let url = format!("{}/licenses/tokens", STORY_API_URL);
 
-/// Retrieve a paginated, filtered list of Latest Transactions
-///
-/// # Arguments
-///
-/// * `config` - API Config
-/// * `story_body_params` - Query Parameters must be wrapped in options object and may be empty. OrderBy must be blockNumber, resourceType or empty.
-///
-/// # Returns
-///
-/// list of Latest Transactions
-pub async fn list_latest_transactions(
-    config: &StoryConfig,
-    body: Option<StoryBodyParams>,
-) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
-    let url = format!("{}/transactions/latest", STORY_API_URL);
-    query_transactions(&url, config, body).await
-}
-
-async fn query_transactions(
-    url: &str,
-    config: &StoryConfig,
-    body: Option<StoryBodyParams>,
-) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
 
     let mut request_builder = client
@@ -93,7 +71,11 @@ async fn query_transactions(
         .header("content-type", "application/json");
 
     if let Some(body_params) = body {
-        let json_body = serde_json::to_string(&body_params)?;
+        let request_data = json!({
+            "options": body_params
+        });
+        let json_body = serde_json::to_string(&request_data)?;
+
         request_builder = request_builder.body(json_body);
     }
 

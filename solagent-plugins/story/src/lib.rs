@@ -15,7 +15,44 @@
 mod transaction;
 pub use transaction::*;
 
-mod license;
-// pub use license::*;
+mod license_tokens;
+pub use license_tokens::*;
 
-const STORY_API_URL: &str = "https://staging-api.storyprotocol.net/api/v2/transactions";
+const STORY_API_URL: &str = "https://staging-api.storyprotocol.net/api/v2";
+
+use serde::{Deserialize, Serialize};
+
+pub struct StoryConfig {
+    pub api_key: String,
+    pub chain: u32,
+}
+
+impl StoryConfig {
+    pub fn new(api_key: &str, chain: u32) -> Self {
+        StoryConfig { api_key: api_key.to_string(), chain }
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StoryPaginationObject {
+    pub after: String,
+    pub before: String,
+    pub limit: u32,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StoryBodyWhereObject {
+    pub block_number: String,
+    pub id: String,
+    pub ip_id: String,
+    pub resource_type: String,
+    pub transaction_hash: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StoryBodyParams {
+    order_by: String,
+    order_direction: String,
+    pagination: StoryPaginationObject,
+    where_obj: StoryBodyWhereObject,
+}
