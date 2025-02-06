@@ -14,10 +14,8 @@
 
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use solagent_core::{
-    parameters_json_schema,
-    rig::{completion::ToolDefinition, tool::Tool},
-};
+use solagent_core::rig::{completion::ToolDefinition, tool::Tool};
+use solagent_parameters::parameters;
 use solagent_plugin_goplus::get_token_malicious_info;
 
 #[derive(Debug, Deserialize)]
@@ -68,7 +66,7 @@ impl Tool for TokenMaliciousInfo {
             ]
               "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 chain_id: String,
                 contract_address: String
             ),
