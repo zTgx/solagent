@@ -14,10 +14,10 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{completion::ToolDefinition, tool::Tool},
     serde_json,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_dexscreener::{get_token_data_by_ticker, JupiterTokenData};
 
 #[derive(Debug, Deserialize)]
@@ -54,8 +54,8 @@ impl Tool for GetTokenDataByTicker {
         ToolDefinition {
             name: "get_token_data_by_ticker".to_string(),
             description: "Get the token data for a given token ticker".to_string(),
-            parameters: parameters_json_schema!(
-                ticker: String,
+            parameters: parameters!(
+                ticker: String
             ),
         }
     }

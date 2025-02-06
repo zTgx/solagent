@@ -14,13 +14,13 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{
         completion::ToolDefinition,
         tool::{Tool, ToolEmbedding},
     },
     SolanaAgentKit,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_helius::{create_webhook, HeliusWebhookResponse};
 use std::sync::Arc;
 
@@ -73,7 +73,7 @@ impl Tool for CreateWebHook {
            
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 account_addresses: Vec<String>,
                 webhook_url: String,
             ),

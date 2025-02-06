@@ -13,10 +13,8 @@
 // limitations under the License.
 
 use serde::{Deserialize, Serialize};
-use solagent_core::{
-    parameters_json_schema,
-    rig::{completion::ToolDefinition, tool::Tool},
-};
+use solagent_core::rig::{completion::ToolDefinition, tool::Tool};
+use solagent_parameters::parameters;
 use solagent_plugin_goplus::get_solana_token_security_info;
 
 #[derive(Debug, Deserialize)]
@@ -66,7 +64,7 @@ impl Tool for SolanaTokenSecurityInfo {
             ]
               "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 chain_id: String,
                 contract_address: String
             ),

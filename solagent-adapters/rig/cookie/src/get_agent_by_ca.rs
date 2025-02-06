@@ -14,10 +14,10 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{completion::ToolDefinition, tool::Tool},
     serde_json, SolanaAgentKit,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_cookie::get_agent_by_ca;
 use std::sync::Arc;
 
@@ -60,7 +60,7 @@ impl Tool for GetAgentByCa {
             Retrieve agent details in specified interval by one of its tokens contract address.
               "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 contract_address: String,
                 interval: Option<u32>,
             ),

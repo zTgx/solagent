@@ -14,13 +14,13 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{
         completion::ToolDefinition,
         tool::{Tool, ToolEmbedding},
     },
     SolanaAgentKit,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_pumpfun::{launch_token_pumpfun, PumpFunTokenOptions, PumpfunTokenResponse};
 use std::sync::Arc;
 
@@ -99,7 +99,7 @@ impl Tool for LaunchPumpfunToken {
             ]
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 token_name: String,
                 token_symbol: String,
                 description: String,

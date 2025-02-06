@@ -13,13 +13,11 @@
 // limitations under the License.
 
 use serde::{Deserialize, Serialize};
-use solagent_core::{
-    parameters_json_schema,
-    rig::{
-        completion::ToolDefinition,
-        tool::{Tool, ToolEmbedding},
-    },
+use solagent_core::rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
 };
+use solagent_parameters::parameters;
 use solagent_plugin_pyth::{fetch_price_by_pyth, fetch_pyth_price_feed_id};
 
 #[derive(Debug, Deserialize)]
@@ -76,7 +74,7 @@ impl Tool for FetchPricePyTh {
 
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 token_symbol: String,
             ),
         }

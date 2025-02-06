@@ -14,10 +14,10 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{completion::ToolDefinition, tool::Tool},
     serde_json, SolanaAgentKit,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_cookie::search_tweets;
 use std::sync::Arc;
 
@@ -61,7 +61,7 @@ impl Tool for SearchTweets {
             Retrieve popular content matching search query, created in time range {from} - {to} (YYYY-MM-DD dates).
               "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 tweets: String,
                 from: String,
                 to: String,            ),
