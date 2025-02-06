@@ -13,13 +13,11 @@
 // limitations under the License.
 
 use serde::{Deserialize, Serialize};
-use solagent_core::{
-    parameters_json_schema,
-    rig::{
-        completion::ToolDefinition,
-        tool::{Tool, ToolEmbedding},
-    },
+use solagent_core::rig::{
+    completion::ToolDefinition,
+    tool::{Tool, ToolEmbedding},
 };
+use solagent_parameters::parameters;
 use solagent_plugin_rugcheck::{fetch_summary_report, TokenCheck};
 
 #[derive(Deserialize)]
@@ -61,7 +59,7 @@ impl Tool for FetchTokenReportSummary {
                 Inputs:
                     - mint: string, the mint address of the token, e.g., "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1" (required).
                 "#.to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 mint: String,
             ),
         }
