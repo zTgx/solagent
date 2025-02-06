@@ -6,7 +6,7 @@ authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs"
 keywords = ["solagent", "rig", "story"]
 license = "Apache-2.0"
-description = "solagent.rs rig story"
+description = "solagent.rs rig story protocol"
 
 [dependencies]
 solagent-core = "0.1.0"
