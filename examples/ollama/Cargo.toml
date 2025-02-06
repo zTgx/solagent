@@ -1,0 +1,9 @@
+[package]
+name = "ollama"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+solagent-core = "0.1.3"
+solagent-rig-pyth = "0.1.1"
+tokio = { version = "1.42.0", features = ["full"] }

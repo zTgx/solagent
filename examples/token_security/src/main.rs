@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{Config, SolanaAgentKit};
-use std::sync::Arc;
+use solagent_plugin_goplus::get_token_security_info;
 
 #[tokio::main]
 async fn main() {
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
-    //stake 0.01 SOL
-    let stake = agent.stake_with_jup(0.01).await.unwrap();
-    println!("Signature: {}", stake);
+    let chain_id = "42161";
+    let mint = "0xEa51801b8F5B88543DdaD3D1727400c15b209D8f";
+
+    let check = get_token_security_info(chain_id, mint).await.unwrap();
+    println!("Token check: {:?}", check);
 }

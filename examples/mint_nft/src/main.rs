@@ -12,15 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{Config, NFTMetadata, SolanaAgentKit};
-use solana_sdk::pubkey::Pubkey;
-use std::sync::Arc;
+use solagent_core::{
+    solana_sdk::{pubkey::Pubkey, signature::Keypair},
+    Config, SolanaAgentKit,
+};
+use solagent_plugin_solana::{mint_nft_to_collection, NFTMetadata};
 
 /// Example on devnet
 /// Mint: 5jcsea3EA3kX7mXpy7YvHVFYTDEJeSEXjyicgThnvWUm
 /// https://explorer.solana.com/address/5jcsea3EA3kX7mXpy7YvHVFYTDEJeSEXjyicgThnvWUm?cluster=devnet
+
 #[tokio::main]
 async fn main() {
+    // Create a new keypair
+    let keypair = Keypair::new();
+    // Encode the secret key to base58
+    let private_key = keypair.to_base58_string();
+
+    let config = Config { cookie_api_key: Some("".to_string()), ..Default::default() };
+    let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
+
     let name = "My First SolanaAgentKit NFT";
     let uri = "uri";
     let royalty_basis_points = Some(500);
@@ -29,8 +40,6 @@ async fn main() {
 
     let collection = Pubkey::from_str_const("collection Mint");
 
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
-    let deployed_data = agent.mint_nft_to_collection(collection, metadata).await.unwrap();
+    let deployed_data = mint_nft_to_collection(&agent, collection, metadata).await.unwrap();
     println!("Mint: {}", deployed_data.mint);
 }

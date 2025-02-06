@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{Config, SolanaAgentKit};
-use std::sync::Arc;
+use solagent_core::{solana_sdk::signature::Keypair, Config, SolanaAgentKit};
+use solagent_plugin_gibwork::create_gibwork_task;
 
 #[tokio::main]
 async fn main() {
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
+    // Create a new keypair
+    let keypair = Keypair::new();
+    // Encode the secret key to base58
+    let private_key = keypair.to_base58_string();
+
+    let config = Config { cookie_api_key: Some("".to_string()), ..Default::default() };
+    let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
+
     // Task details
     let title = "Implement New Feature";
     let content = "We need to implement a new authentication system using JWT tokens";
@@ -30,10 +36,10 @@ async fn main() {
 
     let payer = None;
 
-    let response = agent
-        .create_gibwork_task(title, content, requirements, tags, token_mint_address, token_amount, payer)
-        .await
-        .unwrap();
+    let response =
+        create_gibwork_task(&agent, title, content, requirements, tags, token_mint_address, token_amount, payer)
+            .await
+            .unwrap();
 
     println!("Task created successfully!");
     println!("Task ID: {}", response.task_id);

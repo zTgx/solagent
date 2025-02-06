@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{Config, SolanaAgentKit};
-use std::sync::Arc;
+use solagent_core::{solana_sdk::signature::Keypair, Config, SolanaAgentKit};
+use solagent_plugin_solana::get_balance;
 
 #[tokio::main]
 async fn main() {
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
-    let data = agent.close_empty_token_accounts().await.unwrap();
-    println!("Close data: {:?}", data);
+    // Create a new keypair
+    let keypair = Keypair::new();
+    // Encode the secret key to base58
+    let private_key = keypair.to_base58_string();
+
+    let config = Config { cookie_api_key: Some("".to_string()), ..Default::default() };
+    let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
+
+    let balance = get_balance(&agent, None).await.unwrap();
+    println!("My balance: {}", balance);
 }

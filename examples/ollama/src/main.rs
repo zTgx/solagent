@@ -14,8 +14,9 @@
 
 /// This example requires that you have the [`ollama`](https://ollama.com) server running locally.
 /// More details: https://wale-e.github.io/ai/agent/framework/2025/01/01/hello-world-rig.html
-use rig::{completion::Prompt, providers};
-use solagent::fetch_price::FetchPrice;
+///
+use solagent_core::rig::{completion::Prompt, providers};
+use solagent_rig_pyth::pyth_fetch_price::FetchPricePyTh;
 
 #[tokio::main]
 async fn main() -> Result<(), String> {
@@ -31,7 +32,7 @@ async fn main() -> Result<(), String> {
         .preamble(
             "You are an assistant here to help the user select which tool is most appropriate to perform operations.",
         )
-        .tool(FetchPrice)
+        .tool(FetchPricePyTh)
         .build();
 
     // Prompt the agent and print the response

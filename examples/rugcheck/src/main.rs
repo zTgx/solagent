@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent::{Config, SolanaAgentKit};
-use std::sync::Arc;
+use solagent_plugin_rugcheck::fetch_summary_report;
 
 #[tokio::main]
 async fn main() {
-    let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-    let agent = Arc::new(SolanaAgentKit::new("private_key", "RPC_URL", config));
-    let balance = agent.get_balance(None).await.unwrap();
-    println!("My balance: {}", balance);
+    let mint = "84VUXykQjNvPDm88oT5FRucXeNcrwdQGottJKjkAoqd1".into();
+
+    let check = fetch_summary_report(mint).await.unwrap();
+    println!("Token check: {:?}", check);
 }
