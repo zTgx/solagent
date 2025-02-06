@@ -17,7 +17,9 @@ use solagent_core::{
     parameters_json_schema,
     rig::{completion::ToolDefinition, tool::Tool},
 };
-use solagent_plugin_story::{get_a_transaction, list_transactions, StoryBodyParams, StoryConfig};
+use solagent_plugin_story::{
+    get_a_transaction, list_latest_transactions, list_transactions, StoryBodyParams, StoryConfig,
+};
 
 #[derive(Deserialize)]
 pub struct GetTransactionArgs {
@@ -132,5 +134,59 @@ impl Tool for ListTransactions {
         let data = list_transactions(&args.config, args.body).await.expect("list_transactions");
 
         Ok(ListTransactionsOutput { data })
+    }
+}
+
+// list of Latest Transactions
+
+#[derive(Deserialize)]
+pub struct ListLatestTransactionsArgs {
+    config: StoryConfig,
+    body: Option<StoryBodyParams>,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct ListLatestTransactionsOutput {
+    pub data: serde_json::Value,
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("ListTransactions error")]
+pub struct ListLatestTransactionsError;
+
+#[derive(Default)]
+pub struct ListLatestTransactions {}
+
+impl ListLatestTransactions {
+    pub fn new() -> Self {
+        ListLatestTransactions {}
+    }
+}
+
+impl Tool for ListLatestTransactions {
+    const NAME: &'static str = "list_latest_transactions";
+
+    type Error = ListLatestTransactionsError;
+    type Args = ListLatestTransactionsArgs;
+    type Output = ListLatestTransactionsOutput;
+
+    async fn definition(&self, _prompt: String) -> ToolDefinition {
+        ToolDefinition {
+            name: "list_latest_transactions".to_string(),
+            description: r#"
+            Retrieve a paginated, filtered list of Latest Transactions
+            "#
+            .to_string(),
+            parameters: parameters_json_schema!(
+                config: StoryConfig,
+                body: Option<StoryBodyParams>,
+            ),
+        }
+    }
+
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let data = list_latest_transactions(&args.config, args.body).await.expect("list_latest_transactions");
+
+        Ok(ListLatestTransactionsOutput { data })
     }
 }
