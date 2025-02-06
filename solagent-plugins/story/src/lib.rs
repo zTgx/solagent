@@ -22,6 +22,7 @@ const STORY_API_URL: &str = "https://staging-api.storyprotocol.net/api/v2";
 
 use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct StoryConfig {
     pub api_key: String,
     pub chain: u32,
