@@ -13,10 +13,8 @@
 // limitations under the License.
 
 use serde::{Deserialize, Serialize};
-use solagent_core::{
-    parameters_json_schema,
-    rig::{completion::ToolDefinition, tool::Tool},
-};
+use solagent_core::rig::{completion::ToolDefinition, tool::Tool};
+use solagent_parameters::parameters;
 use solagent_plugin_story::{
     get_a_transaction, list_latest_transactions, list_transactions, StoryBodyParams, StoryConfig,
 };
@@ -69,7 +67,7 @@ impl Tool for GetTransaction {
         
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 config: StoryConfig,
                 trx_id: String,
             ),
@@ -123,7 +121,7 @@ impl Tool for ListTransactions {
             Retrieve a paginated, filtered list of Transactions
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 config: StoryConfig,
                 body: Option<StoryBodyParams>,
             ),
@@ -177,7 +175,7 @@ impl Tool for ListLatestTransactions {
             Retrieve a paginated, filtered list of Latest Transactions
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 config: StoryConfig,
                 body: Option<StoryBodyParams>,
             ),
