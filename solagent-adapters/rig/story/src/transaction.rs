@@ -15,12 +15,9 @@
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     parameters_json_schema,
-    rig::{
-        completion::ToolDefinition,
-        tool::Tool,
-    },
+    rig::{completion::ToolDefinition, tool::Tool},
 };
-use solagent_plugin_story::{get_a_transaction, StoryConfig};
+use solagent_plugin_story::{get_a_transaction, list_transactions, StoryBodyParams, StoryConfig};
 
 #[derive(Deserialize)]
 pub struct GetTransactionArgs {
@@ -38,12 +35,11 @@ pub struct GetTransactionOutput {
 pub struct GetTransactionError;
 
 #[derive(Default)]
-pub struct GetTransaction {
-}
+pub struct GetTransaction {}
 
 impl GetTransaction {
     pub fn new() -> Self {
-        GetTransaction { }
+        GetTransaction {}
     }
 }
 
@@ -82,5 +78,59 @@ impl Tool for GetTransaction {
         let data = get_a_transaction(&args.config, &args.trx_id).await.expect("get_a_transaction");
 
         Ok(GetTransactionOutput { data })
+    }
+}
+
+// List transactions
+
+#[derive(Deserialize)]
+pub struct ListTransactionsArgs {
+    config: StoryConfig,
+    body: Option<StoryBodyParams>,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct ListTransactionsOutput {
+    pub data: serde_json::Value,
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("ListTransactions error")]
+pub struct ListTransactionsError;
+
+#[derive(Default)]
+pub struct ListTransactions {}
+
+impl ListTransactions {
+    pub fn new() -> Self {
+        ListTransactions {}
+    }
+}
+
+impl Tool for ListTransactions {
+    const NAME: &'static str = "list_transactions";
+
+    type Error = ListTransactionsError;
+    type Args = ListTransactionsArgs;
+    type Output = ListTransactionsOutput;
+
+    async fn definition(&self, _prompt: String) -> ToolDefinition {
+        ToolDefinition {
+            name: "list_transactions".to_string(),
+            description: r#"
+            Retrieve a paginated, filtered list of Transactions
+            "#
+            .to_string(),
+            parameters: parameters_json_schema!(
+                config: StoryConfig,
+                body: Option<StoryBodyParams>,
+            ),
+        }
+    }
+
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        let data = list_transactions(&args.config, args.body).await.expect("list_transactions");
+
+        Ok(ListTransactionsOutput { data })
     }
 }
