@@ -55,6 +55,7 @@
 | solayer | Stake with solayer | [solagent-plugin-solayer](https://crates.io/crates/solagent-plugin-solayer) | ![Version](https://img.shields.io/crates/v/solagent-plugin-solayer) |
 | cookie | Cookie Data Swarm APIs | [solagent-plugin-cookie](https://crates.io/crates/solagent-plugin-cookie) | ![Version](https://img.shields.io/crates/v/solagent-plugin-cookie) |
 | dexscreener | Dexscreener data APIs | [solagent-plugin-dexscreener](https://crates.io/crates/solagent-plugin-dexscreener) | ![Version](https://img.shields.io/crates/v/solagent-plugin-dexscreener) |
+| story | Story protocol API | [solagent-plugin-story](https://crates.io/crates/solagent-plugin-story) | ![Version](https://img.shields.io/crates/v/solagent-plugin-story) |
  
 
 ## Contributors

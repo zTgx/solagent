@@ -3957,6 +3957,8 @@ dependencies = [
 [[package]]
 name = "solagent-plugin-story"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bdd7819ea25e9d56530626b86624e20dc0d4ec4ea76089a957e7aca04d9eb930"
 dependencies = [
  "reqwest 0.12.12",
  "serde",
@@ -3965,9 +3967,7 @@ dependencies = [
 
 [[package]]
 name = "solagent-plugin-story"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bdd7819ea25e9d56530626b86624e20dc0d4ec4ea76089a957e7aca04d9eb930"
+version = "0.1.2"
 dependencies = [
  "reqwest 0.12.12",
  "serde",
@@ -4113,7 +4113,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solagent-core 0.1.1",
- "solagent-plugin-story 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solagent-plugin-story 0.1.0",
  "thiserror 2.0.11",
 ]
 
