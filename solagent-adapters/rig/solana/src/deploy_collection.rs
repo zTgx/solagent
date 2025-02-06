@@ -14,13 +14,13 @@
 
 use serde::{Deserialize, Serialize};
 use solagent_core::{
-    parameters_json_schema,
     rig::{
         completion::ToolDefinition,
         tool::{Tool, ToolEmbedding},
     },
     SolanaAgentKit,
 };
+use solagent_parameters::parameters;
 use solagent_plugin_solana::{deploy_collection, NFTMetadata};
 use std::sync::Arc;
 
@@ -101,7 +101,7 @@ impl Tool for DeployCollection {
 
             "#
             .to_string(),
-            parameters: parameters_json_schema!(
+            parameters: parameters!(
                 metadata: NFTMetadata
             ),
         }
