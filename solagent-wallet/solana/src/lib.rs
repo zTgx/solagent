@@ -12,43 +12,114 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use dotenv::dotenv;
 use solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer};
+use std::env;
 
+#[derive(Debug)]
 pub struct Wallet {
-    pub wallet: Keypair,
-    pub address: Pubkey,
+    pub keypair: Keypair,
+    pub pubkey: Pubkey,
+}
+
+impl Default for Wallet {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl Wallet {
-    pub fn load(private_key: &str) -> Wallet {
-        let secret_key = bs58::decode(private_key).into_vec().expect("private key is not valid base58 format!");
-        let wallet = Keypair::from_bytes(&secret_key).expect("Invalid private key!");
-        let address = wallet.pubkey();
+    pub fn new() -> Self {
+        let keypair = Keypair::new();
+        let pubkey = keypair.pubkey();
+        Self { keypair, pubkey }
+    }
 
-        Wallet { wallet, address }
+    pub fn from_env(variable_name: &str) -> Result<Self, String> {
+        dotenv().ok();
+
+        let private_key =
+            env::var(variable_name).map_err(|_| format!("Environment variable '{}' not found", variable_name))?;
+        Self::from_base58(&private_key)
+    }
+
+    pub fn from_base58(private_key: &str) -> Result<Self, String> {
+        let secret_key = bs58::decode(private_key).into_vec().map_err(|_| "Invalid base58 private key".to_string())?;
+
+        let keypair = Keypair::from_bytes(&secret_key).map_err(|_| "Invalid private key bytes".to_string())?;
+
+        let pubkey = keypair.pubkey();
+        Ok(Self { keypair, pubkey })
+    }
+
+    pub fn to_base58(&self) -> String {
+        self.keypair.to_base58_string()
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::env;
 
     #[test]
-    fn test_wallet_load_valid_key() {
-        // Create a new keypair
+    fn test_wallet_from_env_valid() {
+        // Set an environment variable for the test
         let keypair = Keypair::new();
-        // Encode the secret key to base58
         let private_key = keypair.to_base58_string();
-        // Load the wallet using the generated private key
-        let wallet = Wallet::load(&private_key);
-        // Assert that the loaded wallet's address matches the keypair's public key
-        assert_eq!(wallet.address, keypair.pubkey());
+        env::set_var("TEST_PRIVATE_KEY", &private_key);
+
+        let wallet = Wallet::from_env("TEST_PRIVATE_KEY").unwrap();
+        assert_eq!(wallet.pubkey, keypair.pubkey());
+
+        // Clean up the environment variable after the test
+        env::remove_var("TEST_PRIVATE_KEY");
     }
 
     #[test]
-    #[should_panic(expected = "private key is not valid base58 format!")]
-    fn test_wallet_load_invalid_key() {
-        let invalid_private_key = "invalid_key";
-        Wallet::load(invalid_private_key);
+    fn test_wallet_from_env_not_found() {
+        let result = Wallet::from_env("NON_EXISTENT_VARIABLE");
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Environment variable 'NON_EXISTENT_VARIABLE' not found");
+    }
+
+    #[test]
+    fn test_wallet_creation() {
+        let wallet = Wallet::new();
+        assert_ne!(wallet.pubkey, Pubkey::default());
+    }
+
+    #[test]
+    fn test_wallet_from_base58_valid() {
+        let original_keypair = Keypair::new();
+        let private_key = original_keypair.to_base58_string();
+        let wallet = Wallet::from_base58(&private_key).unwrap();
+        assert_eq!(wallet.pubkey, original_keypair.pubkey());
+    }
+
+    #[test]
+    fn test_wallet_from_base58_invalid_base58() {
+        let result = Wallet::from_base58("invalid_key");
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Invalid base58 private key");
+    }
+
+    #[test]
+    fn test_wallet_from_base58_invalid_bytes() {
+        // Create a base58 string that's the wrong length to be a key
+        let invalid_bytes = bs58::encode([0u8; 10]).into_string(); //Incorrect number of bytes
+        let result = Wallet::from_base58(&invalid_bytes);
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Invalid private key bytes");
+    }
+
+    #[test]
+    fn test_wallet_to_base58() {
+        let wallet = Wallet::new();
+        let base58_key = wallet.to_base58();
+        assert!(!base58_key.is_empty());
+
+        let wallet2 = Wallet::from_base58(&base58_key).unwrap();
+        assert_eq!(wallet.pubkey, wallet2.pubkey);
     }
 }
