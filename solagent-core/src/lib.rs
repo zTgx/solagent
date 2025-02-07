@@ -34,14 +34,14 @@
 //! ```
 //!
 
-use solagent_wallet_solana::Wallet;
-use solana_client::rpc_client::RpcClient;
-
 pub use rig;
 pub use serde_json;
 pub use solana_client;
 pub use solana_program;
 pub use solana_sdk;
+
+use solana_client::rpc_client::RpcClient;
+use solana_sdk::{pubkey::Pubkey, signature::Keypair};
 
 #[derive(Debug, Clone, Default)]
 pub struct Config {
@@ -54,108 +54,70 @@ pub struct Config {
     pub cookie_api_key: Option<String>,
 }
 
+pub trait IWallet {
+    fn pubkey(&self) -> Pubkey;
+    fn keypair(&self) -> &Keypair;
+    fn to_base58(&self) -> String;
+}
+
 /// Represents a Solana agent that interacts with the blockchain.
 /// Provides a unified interface for token operations, NFT management, trading and more
-impl SolanaAgentKit {
-    pub fn new(private_key: &str, rpc_url: &str, config: Config) -> Result<Self, String> {
-        let wallet = Wallet::from_base58(private_key)?; // Use the Result from from_base58
+pub struct SolanaAgentKit<W: IWallet> {
+    pub wallet: W,
+    pub config: Config,
+    pub connection: RpcClient,
+}
 
-        let connection = RpcClient::new(rpc_url); // No error handling needed here, RpcClient::new doesn't return a Result
-
-        Ok(Self { wallet, config, connection })
-    }
-
-    pub fn from_env(rpc_url_env_var: &str, config: Config, private_key_env_var: &str) -> Result<Self, String> {
-        let wallet = Wallet::from_env(private_key_env_var)?;
-        let rpc_url = std::env::var(rpc_url_env_var).map_err(|_| format!("Environment variable '{}' not found", rpc_url_env_var))?;
-        let connection = RpcClient::new(&rpc_url);
-        Ok(Self { wallet, config, connection })
+impl<W: IWallet> SolanaAgentKit<W> {
+    pub fn new(wallet: W, rpc_url: &str, config: Config) -> Self {
+        let connection = RpcClient::new(rpc_url);
+        Self { wallet, config, connection }
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use solana_sdk::{
-        bs58,
-        signature::{Keypair, Signer},
-    };
-    use std::env;
+    use solana_sdk::signature::{Keypair, Signer};
 
-    #[test]
-    fn test_solana_agent_kit_new_valid() {
-        let keypair = Keypair::new();
-        let private_key = keypair.to_base58_string();
-        let rpc_url = "https://api.mainnet-beta.solana.com"; // Or a mock URL for testing
-        let config = Config::default(); // Or your test config
+    fn mock_wallet() -> impl IWallet {
+        pub struct MyWallet {
+            pub keypair: Keypair,
+            pub pubkey: Pubkey,
+        }
 
-        let agent_kit = SolanaAgentKit::new(&private_key, rpc_url, config).unwrap();
-        assert_eq!(agent_kit.wallet.pubkey, keypair.pubkey());
-    }
+        impl IWallet for MyWallet {
+            // Implement the trait
+            fn pubkey(&self) -> Pubkey {
+                self.pubkey
+            }
+            fn keypair(&self) -> &Keypair {
+                &self.keypair
+            }
+            fn to_base58(&self) -> String {
+                self.keypair.to_base58_string()
+            }
+        }
 
-    #[test]
-    fn test_solana_agent_kit_new_invalid_key() {
-        let rpc_url = "https://api.mainnet-beta.solana.com"; // Or a mock URL
-        let config = Config::default();
+        impl MyWallet {
+            pub fn new() -> Self {
+                let keypair = Keypair::new();
+                let pubkey = keypair.pubkey();
+                Self { keypair, pubkey }
+            }
+        }
 
-        let result = SolanaAgentKit::new("invalid_key", rpc_url, config);
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Invalid base58 private key"); // Or the specific error from Wallet::from_base58
-    }
-
-    #[test]
-    fn test_solana_agent_kit_from_env_valid() {
-        let keypair = Keypair::new();
-        let private_key = keypair.to_base58_string();
-        env::set_var("TEST_PRIVATE_KEY", &private_key);
-        env::set_var("TEST_RPC_URL", "https://api.mainnet-beta.solana.com"); // Or a mock URL
-        let config = Config::default();
-
-        let agent_kit = SolanaAgentKit::from_env("TEST_RPC_URL", config, "TEST_PRIVATE_KEY").unwrap();
-        assert_eq!(agent_kit.wallet.pubkey, keypair.pubkey());
-
-        env::remove_var("TEST_PRIVATE_KEY");
-        env::remove_var("TEST_RPC_URL");
-    }
-
-    #[test]
-    fn test_solana_agent_kit_from_env_invalid_rpc_url() {
-        let keypair = Keypair::new();
-        let private_key = keypair.to_base58_string();
-        env::set_var("TEST_PRIVATE_KEY", &private_key);
-        let config = Config::default();
-
-        let result = SolanaAgentKit::from_env("NON_EXISTENT_RPC_URL", config, "TEST_PRIVATE_KEY");
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Environment variable 'NON_EXISTENT_RPC_URL' not found");
-
-        env::remove_var("TEST_PRIVATE_KEY");
-    }
-
-    #[test]
-    fn test_solana_agent_kit_from_env_invalid_key() {
-        env::set_var("TEST_RPC_URL", "https://api.mainnet-beta.solana.com"); // Or a mock URL
-        let config = Config::default();
-
-        let result = SolanaAgentKit::from_env("TEST_RPC_URL", config, "NON_EXISTENT_PRIVATE_KEY");
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Environment variable 'NON_EXISTENT_PRIVATE_KEY' not found");
-
-        env::remove_var("TEST_RPC_URL");
+        MyWallet::new()
     }
 
     #[test]
     fn test_solana_agent_kit_initialization() {
-        // Create a new keypair
-        let keypair = Keypair::new();
-        // Encode the secret key to base58
-        let private_key = keypair.to_base58_string();
+        let wallet = mock_wallet();
+        let wallet_pubkey = wallet.pubkey();
         let rpc_url = "https://api.mainnet-beta.solana.com";
         let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-        let agent = SolanaAgentKit::new(&private_key, rpc_url, config);
-        assert_eq!(
-            agent.wallet.address,
-            Keypair::from_bytes(&bs58::decode(private_key).into_vec().unwrap()).unwrap().pubkey()
-        );
+        let agent = SolanaAgentKit::new(wallet, rpc_url, config);
+
+        assert_eq!(agent.wallet.pubkey(), wallet_pubkey);
     }
 }
