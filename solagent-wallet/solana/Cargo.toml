@@ -10,4 +10,4 @@ description = "solagent wallet solana"
 
 [dependencies]
 dotenv = "0.15"
-solagent-core = { path = "../../solagent-core" }
+solagent-core = "0.1.4"

@@ -3259,9 +3259,10 @@ dependencies = [
 [[package]]
 name = "solagent-core"
 version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "381f39a1ff63213d426fd05df0b84bc87426b671c70e6cbe14c9250e3130f81c"
 dependencies = [
  "rig-core",
- "serde_json",
  "solana-client",
  "solana-program",
  "solana-sdk",
