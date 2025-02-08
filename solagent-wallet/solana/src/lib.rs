@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use dotenv::dotenv;
-use solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer};
+use solagent_core::{IWallet, solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer}};
 use std::env;
 
 #[derive(Debug)]
@@ -51,8 +51,18 @@ impl Wallet {
         let pubkey = keypair.pubkey();
         Ok(Self { keypair, pubkey })
     }
+}
 
-    pub fn to_base58(&self) -> String {
+impl IWallet for Wallet {
+    fn pubkey(&self) -> Pubkey {
+        self.pubkey
+    }
+
+    fn keypair(&self) -> &Keypair {
+        &self.keypair
+    }
+
+    fn to_base58(&self) -> String {
         self.keypair.to_base58_string()
     }
 }

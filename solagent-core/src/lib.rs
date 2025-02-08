@@ -21,13 +21,15 @@
 //! Get TPS
 //!
 //! ```rust
-//! use solagent_core::{Config, SolanaAgentKit};
+//! use solagent_core::{ConfigBuilder, SolanaAgentKit};
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!    let config = Config { openai_api_key: Some("your_api_key".to_string()),
-//!             ..Default::default() };
-//!    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
+//!    let wallet = Wallet::from_env("SOLANA_WALLET_VARIABLE");
+//!    let rpc_url = "https://api.mainnet-beta.solana.com";
+//!    let config = ConfigBuilder::default().openai_api_key("test_api_key".to_string()).build();
+//!
+//!    let agent = SolanaAgentKit::new(wallet, rpc_url, config);
 //!    let tps = solagent_plugin_solana::get_tps(&agent).await;
 //!    println!("tps: {}", tps);
 //!}
@@ -37,11 +39,11 @@
 mod config;
 mod iwallet;
 
-pub use config::{Config, ConfigBuilder};
+use config::Config;
+pub use config::ConfigBuilder;
 pub use iwallet::IWallet;
 
 pub use rig;
-pub use serde_json;
 pub use solana_client;
 pub use solana_program;
 pub use solana_sdk;

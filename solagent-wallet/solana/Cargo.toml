@@ -1,6 +1,6 @@
 [package]
 name = "solagent-wallet-solana"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs"
@@ -10,4 +10,4 @@ description = "solagent wallet solana"
 
 [dependencies]
 dotenv = "0.15"
-solana-sdk = "2.1.7"
+solagent-core = { path = "../../solagent-core" }
