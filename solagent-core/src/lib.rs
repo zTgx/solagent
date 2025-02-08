@@ -21,50 +21,45 @@
 //! Get TPS
 //!
 //! ```rust
-//! use solagent_core::{Config, SolanaAgentKit};
+//! use solagent_core::{ConfigBuilder, SolanaAgentKit};
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!    let config = Config { openai_api_key: Some("your_api_key".to_string()),
-//!             ..Default::default() };
-//!    let agent = SolanaAgentKit::new("private_key", "RPC_URL", config);
+//!    let wallet = Wallet::from_env("SOLANA_WALLET_VARIABLE");
+//!    let rpc_url = "https://api.mainnet-beta.solana.com";
+//!    let config = ConfigBuilder::default().openai_api_key("test_api_key".to_string()).build();
+//!
+//!    let agent = SolanaAgentKit::new(wallet, rpc_url, config);
 //!    let tps = solagent_plugin_solana::get_tps(&agent).await;
 //!    println!("tps: {}", tps);
 //!}
 //! ```
 //!
 
-use solagent_wallet_solana::Wallet;
-use solana_client::rpc_client::RpcClient;
+mod config;
+mod iwallet;
+
+use config::Config;
+pub use config::ConfigBuilder;
+pub use iwallet::IWallet;
 
 pub use rig;
-pub use serde_json;
 pub use solana_client;
 pub use solana_program;
 pub use solana_sdk;
 
-#[derive(Debug, Clone, Default)]
-pub struct Config {
-    pub openai_api_key: Option<String>,
-    pub jupiter_referral_account: Option<String>,
-    pub jupiter_fee_bps: Option<u16>, // Assuming fee is represented as a percentage (0-10000)
-    pub flash_privilege: Option<String>,
-    pub flexlend_api_key: Option<String>,
-    pub helius_api_key: Option<String>,
-    pub cookie_api_key: Option<String>,
-}
-
 /// Represents a Solana agent that interacts with the blockchain.
 /// Provides a unified interface for token operations, NFT management, trading and more
-pub struct SolanaAgentKit {
-    pub wallet: Wallet,
+pub struct SolanaAgentKit<W: IWallet> {
+    pub wallet: W,
     pub config: Config,
-    pub connection: RpcClient,
+    pub connection: solana_client::rpc_client::RpcClient,
 }
 
-impl SolanaAgentKit {
-    pub fn new(private_key: &str, rpc_url: &str, config: Config) -> Self {
-        SolanaAgentKit { wallet: Wallet::load(private_key), config, connection: RpcClient::new(rpc_url) }
+impl<W: IWallet> SolanaAgentKit<W> {
+    pub fn new(wallet: W, rpc_url: &str, config: Config) -> Self {
+        let connection = solana_client::rpc_client::RpcClient::new(rpc_url);
+        Self { wallet, config, connection }
     }
 }
 
@@ -72,22 +67,63 @@ impl SolanaAgentKit {
 mod tests {
     use super::*;
     use solana_sdk::{
-        bs58,
+        pubkey::Pubkey,
         signature::{Keypair, Signer},
     };
 
+    fn mock_wallet() -> impl IWallet {
+        pub struct MyWallet {
+            pub keypair: Keypair,
+            pub pubkey: Pubkey,
+        }
+
+        impl IWallet for MyWallet {
+            // Implement the trait
+            fn pubkey(&self) -> Pubkey {
+                self.pubkey
+            }
+            fn keypair(&self) -> &Keypair {
+                &self.keypair
+            }
+            fn to_base58(&self) -> String {
+                self.keypair.to_base58_string()
+            }
+        }
+
+        impl MyWallet {
+            pub fn new() -> Self {
+                let keypair = Keypair::new();
+                let pubkey = keypair.pubkey();
+                Self { keypair, pubkey }
+            }
+        }
+
+        MyWallet::new()
+    }
+
     #[test]
     fn test_solana_agent_kit_initialization() {
-        // Create a new keypair
-        let keypair = Keypair::new();
-        // Encode the secret key to base58
-        let private_key = keypair.to_base58_string();
+        let wallet = mock_wallet();
+        let wallet_pubkey = wallet.pubkey();
         let rpc_url = "https://api.mainnet-beta.solana.com";
         let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
-        let agent = SolanaAgentKit::new(&private_key, rpc_url, config);
-        assert_eq!(
-            agent.wallet.address,
-            Keypair::from_bytes(&bs58::decode(private_key).into_vec().unwrap()).unwrap().pubkey()
-        );
+        let agent = SolanaAgentKit::new(wallet, rpc_url, config);
+
+        assert_eq!(agent.wallet.pubkey(), wallet_pubkey);
+    }
+
+    #[test]
+    fn test_solana_agent_kit_with_config_builder() {
+        let wallet = mock_wallet();
+        let wallet_pubkey = wallet.pubkey();
+
+        let rpc_url = "https://api.mainnet-beta.solana.com";
+        let config = ConfigBuilder::default().openai_api_key("test_api_key".to_string()).jupiter_fee_bps(500).build();
+
+        let agent = SolanaAgentKit::new(wallet, rpc_url, config);
+
+        assert_eq!(agent.config.openai_api_key, Some("test_api_key".to_string()));
+        assert_eq!(agent.config.jupiter_fee_bps, Some(500));
+        assert_eq!(agent.wallet.pubkey(), wallet_pubkey);
     }
 }

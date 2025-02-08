@@ -13,36 +13,68 @@
 // limitations under the License.
 
 use dotenv::dotenv;
-use solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer};
+use solagent_core::{
+    solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer},
+    IWallet,
+};
 use std::env;
 
+/// Represents a wallet containing a keypair and its corresponding public key.
 #[derive(Debug)]
 pub struct Wallet {
+    /// The keypair associated with the wallet.  This contains the private key.
     pub keypair: Keypair,
+    /// The public key associated with the wallet.
     pub pubkey: Pubkey,
 }
 
 impl Default for Wallet {
+    /// Creates a new wallet with a randomly generated keypair.
     fn default() -> Self {
         Self::new()
     }
 }
 
 impl Wallet {
+    /// Creates a new wallet with a randomly generated keypair.
     pub fn new() -> Self {
         let keypair = Keypair::new();
         let pubkey = keypair.pubkey();
         Self { keypair, pubkey }
     }
 
+    /// Creates a wallet from a private key stored in an environment variable.
+    ///
+    /// This function reads the environment variable specified by `variable_name`,
+    /// decodes the base58 encoded private key, and creates a `Wallet` instance.
+    ///
+    /// # Arguments
+    ///
+    /// * `variable_name` - The name of the environment variable containing the private key.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(Wallet)` - If the wallet was successfully created.
+    /// * `Err(String)` - If the environment variable is not found or the private key is invalid.
     pub fn from_env(variable_name: &str) -> Result<Self, String> {
-        dotenv().ok();
+        dotenv().ok(); // Load environment variables from .env file (if present)
 
         let private_key =
             env::var(variable_name).map_err(|_| format!("Environment variable '{}' not found", variable_name))?;
+
         Self::from_base58(&private_key)
     }
 
+    /// Creates a wallet from a base58 encoded private key.
+    ///
+    /// # Arguments
+    ///
+    /// * `private_key` - The base58 encoded private key.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(Wallet)` - If the wallet was successfully created.
+    /// * `Err(String)` - If the private key is invalid or not properly encoded.
     pub fn from_base58(private_key: &str) -> Result<Self, String> {
         let secret_key = bs58::decode(private_key).into_vec().map_err(|_| "Invalid base58 private key".to_string())?;
 
@@ -51,8 +83,22 @@ impl Wallet {
         let pubkey = keypair.pubkey();
         Ok(Self { keypair, pubkey })
     }
+}
 
-    pub fn to_base58(&self) -> String {
+impl IWallet for Wallet {
+    /// Returns the public key of the wallet.
+    fn pubkey(&self) -> Pubkey {
+        self.pubkey
+    }
+
+    /// Returns a reference to the keypair of the wallet.  This provides
+    /// access to the private key.  Be careful with this!
+    fn keypair(&self) -> &Keypair {
+        &self.keypair
+    }
+
+    /// Returns the base58 encoded private key of the wallet.
+    fn to_base58(&self) -> String {
         self.keypair.to_base58_string()
     }
 }

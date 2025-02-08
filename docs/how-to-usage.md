@@ -15,18 +15,19 @@ solagent-rig-goplus = "0.1.0"
 ```
 
 # Usage
-1. Configure api keys
+0. Import solana wallet
 ```rust
-let config = Config { openai_api_key: Some("your_api_key".to_string()), ..Default::default() };
+let wallet = Wallet::from_env("SOLANA_WALLET_VARIABLE");
 ```
 
-2. Configure your wallet and rpc endpoint
+1. Build config
 ```rust
-let keypair = Keypair::new();
-let private_key = keypair.to_base58_string();
+let config = ConfigBuilder::default().openai_api_key("test_api_key".to_string()).build();
+```
 
-let agent = SolanaAgentKit::new(&private_key, "https://api.devnet.solana.com", config);
-
+2. New SolanaAgentKit object
+```rust
+let agent = SolanaAgentKit::new(wallet, "https://api.devnet.solana.com", config);
 ```
 
 3. Configure your tools for the framework you want to use(currently rig supported only)

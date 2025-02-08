@@ -1,0 +1,6 @@
+max_width = 120
+tab_spaces = 4
+use_small_heuristics = "Max"
+match_arm_leading_pipes = "Never"
+merge_derives = true
+reorder_imports = true

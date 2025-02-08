@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn hello_world_works() {
-        let result = "Hello, World!";
-        assert_eq!(result, "Hello, World!");
-    }
+use solana_sdk::{pubkey::Pubkey, signature::Keypair};
+
+pub trait IWallet {
+    fn pubkey(&self) -> Pubkey;
+    fn keypair(&self) -> &Keypair;
+    fn to_base58(&self) -> String;
 }

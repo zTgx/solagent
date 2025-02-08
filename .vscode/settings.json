@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "solagent-core/Cargo.toml",
+        "solagent-wallet/solana/Cargo.toml",
+    ]
+}
