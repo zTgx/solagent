@@ -31,19 +31,19 @@ jobs:
         run: |
           cd solagent-wallet/solana
           cargo fmt --all -- --check
-          cargo clippy -- --all-features
+          cargo clippy
           cargo test --tests --all
 
       - name: Format and lint and test solagent-core
         run: |
           cd solagent-core
           cargo fmt --all -- --check
-          cargo clippy -- --all-features
+          cargo clippy
           cargo test --tests --all
 
       - name: Format and lint and test solagent-parameters
         run: |
           cd solagent-parameters
           cargo fmt --all -- --check
-          cargo clippy -- --all-features
+          cargo clippy
           cargo test --tests --all
