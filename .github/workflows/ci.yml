@@ -15,7 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  solagent-wallet:
+    name: solagent-wallet
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +27,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           rust-version: stable
-
+        
       - name: Format and lint and test solagent-wallet
         run: |
           cd solagent-wallet/solana
@@ -34,6 +35,19 @@ jobs:
           cargo clippy
           cargo test --tests --all
 
+  solagent-core:
+    name: solagent-core
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          rust-version: stable
+        
       - name: Format and lint and test solagent-core
         run: |
           cd solagent-core
@@ -41,6 +55,19 @@ jobs:
           cargo clippy
           cargo test --tests --all
 
+  solagent-parameters:
+    name: solagent-parameters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          rust-version: stable
+        
       - name: Format and lint and test solagent-parameters
         run: |
           cd solagent-parameters
