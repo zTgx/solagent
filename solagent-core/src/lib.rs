@@ -35,34 +35,28 @@
 //!
 
 mod config;
+mod iwallet;
 
 pub use config::{Config, ConfigBuilder};
+pub use iwallet::IWallet;
+
 pub use rig;
 pub use serde_json;
 pub use solana_client;
 pub use solana_program;
 pub use solana_sdk;
 
-use solana_client::rpc_client::RpcClient;
-use solana_sdk::{pubkey::Pubkey, signature::Keypair};
-
-pub trait IWallet {
-    fn pubkey(&self) -> Pubkey;
-    fn keypair(&self) -> &Keypair;
-    fn to_base58(&self) -> String;
-}
-
 /// Represents a Solana agent that interacts with the blockchain.
 /// Provides a unified interface for token operations, NFT management, trading and more
 pub struct SolanaAgentKit<W: IWallet> {
     pub wallet: W,
     pub config: Config,
-    pub connection: RpcClient,
+    pub connection: solana_client::rpc_client::RpcClient,
 }
 
 impl<W: IWallet> SolanaAgentKit<W> {
     pub fn new(wallet: W, rpc_url: &str, config: Config) -> Self {
-        let connection = RpcClient::new(rpc_url);
+        let connection = solana_client::rpc_client::RpcClient::new(rpc_url);
         Self { wallet, config, connection }
     }
 }
@@ -70,7 +64,10 @@ impl<W: IWallet> SolanaAgentKit<W> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use solana_sdk::signature::{Keypair, Signer};
+    use solana_sdk::{
+        pubkey::Pubkey,
+        signature::{Keypair, Signer},
+    };
 
     fn mock_wallet() -> impl IWallet {
         pub struct MyWallet {
