@@ -15,7 +15,7 @@
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     rig::{completion::ToolDefinition, tool::Tool},
-    serde_json, SolanaAgentKit,
+    IWallet, SolanaAgentKit,
 };
 use solagent_parameters::parameters;
 use solagent_plugin_cookie::get_agent_by_name;
@@ -36,17 +36,17 @@ pub struct GetAgentByTwitterNameOutput {
 #[error("GetAgentByTwitterName error")]
 pub struct GetAgentByTwitterNameError;
 
-pub struct GetAgentByTwitterName {
-    agent: Arc<SolanaAgentKit>,
+pub struct GetAgentByTwitterName<W: IWallet> {
+    agent: Arc<SolanaAgentKit<W>>,
 }
 
-impl GetAgentByTwitterName {
-    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
+impl<W: IWallet> GetAgentByTwitterName<W> {
+    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
         GetAgentByTwitterName { agent }
     }
 }
 
-impl Tool for GetAgentByTwitterName {
+impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for GetAgentByTwitterName<W> {
     const NAME: &'static str = "get_agent_by_name";
 
     type Error = GetAgentByTwitterNameError;

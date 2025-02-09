@@ -15,7 +15,7 @@
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     rig::{completion::ToolDefinition, tool::Tool},
-    serde_json, SolanaAgentKit,
+    IWallet, SolanaAgentKit,
 };
 use solagent_parameters::parameters;
 use solagent_plugin_cookie::get_agent_by_ca;
@@ -36,17 +36,17 @@ pub struct GetAgentByCaOutput {
 #[error("GetAgentByCa error")]
 pub struct GetAgentByCaError;
 
-pub struct GetAgentByCa {
-    agent: Arc<SolanaAgentKit>,
+pub struct GetAgentByCa<W: IWallet> {
+    agent: Arc<SolanaAgentKit<W>>,
 }
 
-impl GetAgentByCa {
-    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
+impl<W: IWallet> GetAgentByCa<W> {
+    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
         GetAgentByCa { agent }
     }
 }
 
-impl Tool for GetAgentByCa {
+impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for GetAgentByCa<W> {
     const NAME: &'static str = "get_agent_by_ca";
 
     type Error = GetAgentByCaError;

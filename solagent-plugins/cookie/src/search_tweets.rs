@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{serde_json::Value, SolanaAgentKit};
+use solagent_core::{SolanaAgentKit, IWallet};
 use std::error::Error;
+use serde_json::Value;
 
 /// Retrieve popular content matching search query, created in time range {from} - {to} (YYYY-MM-DD dates).
 ///
@@ -27,8 +28,8 @@ use std::error::Error;
 /// # Returns
 ///
 /// A `Result` that tweets details
-pub async fn search_tweets(
-    agent: &SolanaAgentKit,
+pub async fn search_tweets<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
     tweets: &str,
     from: &str,
     to: &str,

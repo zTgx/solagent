@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{serde_json::Value, SolanaAgentKit};
+use solagent_core::{SolanaAgentKit, IWallet};
 use std::error::Error;
+use serde_json::Value;
 
 /// Retrieve agent details in specified interval by one of its tokens contract address.
 ///
@@ -26,11 +27,12 @@ use std::error::Error;
 /// # Returns
 ///
 /// A `Result` that agent details
-pub async fn get_agent_by_ca(
-    agent: &SolanaAgentKit,
+pub async fn get_agent_by_ca<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
     contract_address: &str,
     interval: Option<u32>,
-) -> Result<Value, Box<dyn Error>> {
+) -> Result<Value, Box<dyn Error>>
+{
     // Get the Cookie API key from the agent's configuration
     let api_key = match agent.config.cookie_api_key.as_ref() {
         Some(key) => key,
