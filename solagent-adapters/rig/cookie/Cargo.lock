@@ -3449,6 +3449,8 @@ dependencies = [
 [[package]]
 name = "solagent-plugin-cookie"
 version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f73fa3c2fe717103d91e598dafe0ce20716be31c205bf2c03c1126251a66875f"
 dependencies = [
  "base64 0.22.1",
  "reqwest 0.12.12",
