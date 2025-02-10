@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{SolanaAgentKit, IWallet};
-use std::error::Error;
 use serde_json::Value;
+use solagent_core::{IWallet, SolanaAgentKit};
+use std::error::Error;
 
 /// Retrieve agent details in specified interval by twitter username.
 ///
