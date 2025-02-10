@@ -81,6 +81,7 @@ jobs:
   solagent-plugin-cookie:
     name: solagent-plugin-cookie
     runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-plugins/cookie/**') || contains(github.event.pull_request.changed_files, 'solagent-plugins/cookie/**') 
 
     steps:
       - name: Checkout Code
@@ -101,6 +102,7 @@ jobs:
   solagent-rig-cookie:
     name: solagent-rig-cookie
     runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-adapters/rig/cookie/**') || contains(github.event.pull_request.changed_files, 'solagent-adapters/rig/cookie/**') 
 
     steps:
       - name: Checkout Code
