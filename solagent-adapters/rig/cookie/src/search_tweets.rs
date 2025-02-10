@@ -15,7 +15,7 @@
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     rig::{completion::ToolDefinition, tool::Tool},
-    serde_json, SolanaAgentKit,
+    IWallet, SolanaAgentKit,
 };
 use solagent_parameters::parameters;
 use solagent_plugin_cookie::search_tweets;
@@ -37,17 +37,17 @@ pub struct SearchTweetsOutput {
 #[error("SearchTweets error")]
 pub struct SearchTweetsError;
 
-pub struct SearchTweets {
-    agent: Arc<SolanaAgentKit>,
+pub struct SearchTweets<W: IWallet> {
+    agent: Arc<SolanaAgentKit<W>>,
 }
 
-impl SearchTweets {
-    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
+impl<W: IWallet> SearchTweets<W> {
+    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
         SearchTweets { agent }
     }
 }
 
-impl Tool for SearchTweets {
+impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for SearchTweets<W> {
     const NAME: &'static str = "search_tweets";
 
     type Error = SearchTweetsError;

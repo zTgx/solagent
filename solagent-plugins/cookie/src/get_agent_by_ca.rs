@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use solagent_core::{serde_json::Value, SolanaAgentKit};
+use serde_json::Value;
+use solagent_core::{IWallet, SolanaAgentKit};
 use std::error::Error;
 
 /// Retrieve agent details in specified interval by one of its tokens contract address.
@@ -26,8 +27,8 @@ use std::error::Error;
 /// # Returns
 ///
 /// A `Result` that agent details
-pub async fn get_agent_by_ca(
-    agent: &SolanaAgentKit,
+pub async fn get_agent_by_ca<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
     contract_address: &str,
     interval: Option<u32>,
 ) -> Result<Value, Box<dyn Error>> {

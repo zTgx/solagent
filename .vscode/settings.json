@@ -2,5 +2,11 @@
     "rust-analyzer.linkedProjects": [
         "solagent-core/Cargo.toml",
         "solagent-wallet/solana/Cargo.toml",
+
+        // plugins
+        "solagent-plugins/cookie/Cargo.toml",
+
+        // tools
+        "solagent-adapters/rig/cookie/Cargo.toml",
     ]
 }
