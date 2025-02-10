@@ -18,6 +18,7 @@ jobs:
   solagent-wallet:
     name: solagent-wallet
     runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-wallet/**') || contains(github.event.pull_request.changed_files, 'solagent-wallet/**')
 
     steps:
       - name: Checkout Code
@@ -38,6 +39,7 @@ jobs:
   solagent-core:
     name: solagent-core
     runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-core/**') || contains(github.event.pull_request.changed_files, 'solagent-core/**')
 
     steps:
       - name: Checkout Code
@@ -58,6 +60,7 @@ jobs:
   solagent-parameters:
     name: solagent-parameters
     runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-parameters/**') || contains(github.event.pull_request.changed_files, 'solagent-parameters/**') 
 
     steps:
       - name: Checkout Code
