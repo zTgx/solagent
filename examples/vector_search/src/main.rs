@@ -27,12 +27,12 @@ async fn main() -> Result<(), anyhow::Error> {
     dotenvy::dotenv().ok();
 
     // Create OpenAI client
-    let openai_client = rig::providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
+    let openai_client =
+        rig::providers::openai::Client::from_url("ollama", "http://localhost:11434/v1");
     let model = openai_client.embedding_model("nomic-embed-text");
 
     // setup Postgres
-    // let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL not set");
-    let database_url = "postgresql://postgres:111@localhost:5432/cainam";
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL not set");
     let pool = PgPoolOptions::new()
         .max_connections(50)
         .idle_timeout(std::time::Duration::from_secs(5))
