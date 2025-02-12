@@ -9,5 +9,6 @@
 
         // tools
         "solagent-adapters/rig/cookie/Cargo.toml",
+        "solagent-adapters/rig/birdeye/Cargo.toml",
     ]
 }
