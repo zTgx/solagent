@@ -1,5 +1,5 @@
+use anyhow::Result;
 use solagent_core::{IWallet, SolanaAgentKit};
-use std::error::Error;
 
 mod primitive;
 pub use primitive::*;
@@ -15,12 +15,12 @@ pub use primitive::*;
 /// # Returns
 ///
 /// A `Result` TokenOverviewResponse
-pub async fn get_token_overview<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
-    address: &str,
-) -> Result<TokenOverviewResponse, Box<dyn Error>> {
-    let api_key =
-        agent.config.birdeye_api_key.as_ref().ok_or("Missing Birdeye API key in agent.config.birdeye_api_key")?;
+pub async fn get_token_overview<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<TokenOverviewResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
 
     let client = reqwest::Client::new();
     let url = format!("{}/defi/token_overview", BIRDEYE_URL);
@@ -50,12 +50,12 @@ pub async fn get_token_overview<W: IWallet>(
 /// # Returns
 ///
 /// A `Result`
-pub async fn get_market_data<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
-    address: &str,
-) -> Result<MarketDataResponse, Box<dyn Error>> {
-    let api_key =
-        agent.config.birdeye_api_key.as_ref().ok_or("Missing Birdeye API key in agent.config.birdeye_api_key")?;
+pub async fn get_market_data<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<MarketDataResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
 
     let client = reqwest::Client::new();
     let url = format!("{}/defi/v3/token/market-data", BIRDEYE_URL);

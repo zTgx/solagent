@@ -3441,6 +3441,7 @@ dependencies = [
 name = "solagent-plugin-birdeye"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "reqwest 0.12.12",
  "serde",
  "solagent-core",

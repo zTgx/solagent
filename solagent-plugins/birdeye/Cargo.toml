@@ -12,3 +12,4 @@ description = "solagent.rs plugin birdeye"
 solagent-core = "0.1.5"
 reqwest = { version = "0.12", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
