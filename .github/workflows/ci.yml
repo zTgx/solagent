@@ -155,7 +155,7 @@ jobs:
         with:
           rust-version: stable
         
-      - name: Format and lint and test solagent-plugin-birdeye
+      - name: Format and lint and test solagent-rig-birdeye
         run: |
           cd solagent-adapters/rig/birdeye
           cargo fmt --all -- --check
