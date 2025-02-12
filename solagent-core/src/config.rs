@@ -23,6 +23,7 @@ pub struct Config {
     pub flexlend_api_key: Option<String>,
     pub helius_api_key: Option<String>,
     pub cookie_api_key: Option<String>,
+    pub birdeye_api_key: Option<String>,
 }
 
 #[derive(Default)]
@@ -34,6 +35,7 @@ pub struct ConfigBuilder {
     flexlend_api_key: Option<String>,
     helius_api_key: Option<String>,
     cookie_api_key: Option<String>,
+    birdeye_api_key: Option<String>,
 }
 
 impl ConfigBuilder {
@@ -72,6 +74,11 @@ impl ConfigBuilder {
         self
     }
 
+    pub fn birdeye_api_key(mut self, key: String) -> Self {
+        self.birdeye_api_key = Some(key);
+        self
+    }
+
     pub fn build(self) -> Config {
         Config {
             openai_api_key: self.openai_api_key,
@@ -81,6 +88,7 @@ impl ConfigBuilder {
             flexlend_api_key: self.flexlend_api_key,
             helius_api_key: self.helius_api_key,
             cookie_api_key: self.cookie_api_key,
+            birdeye_api_key: self.birdeye_api_key,
         }
     }
 }
@@ -99,6 +107,7 @@ mod tests {
         assert!(config.flexlend_api_key.is_none());
         assert!(config.helius_api_key.is_none());
         assert!(config.cookie_api_key.is_none());
+        assert!(config.birdeye_api_key.is_none());
     }
 
     #[test]
@@ -111,6 +120,7 @@ mod tests {
             .flexlend_api_key("test_flexlend_key".to_string())
             .helius_api_key("test_helius_key".to_string())
             .cookie_api_key("test_cookie_key".to_string())
+            .birdeye_api_key("birdeye_api_key".to_string())
             .build();
 
         assert_eq!(config.openai_api_key, Some("test_api_key".to_string()));
@@ -120,5 +130,6 @@ mod tests {
         assert_eq!(config.flexlend_api_key, Some("test_flexlend_key".to_string()));
         assert_eq!(config.helius_api_key, Some("test_helius_key".to_string()));
         assert_eq!(config.cookie_api_key, Some("test_cookie_key".to_string()));
+        assert_eq!(config.birdeye_api_key, Some("birdeye_api_key".to_string()));
     }
 }

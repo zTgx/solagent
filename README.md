@@ -40,6 +40,7 @@
 | cookie | Cookie Data Swarm APIs | [solagent-rig-cookie](https://crates.io/crates/solagent-rig-cookie) | ![Version](https://img.shields.io/crates/v/solagent-rig-cookie) |
 | dexscreener | Dexscreener data APIs | [solagent-rig-dexscreener](https://crates.io/crates/solagent-rig-dexscreener) | ![Version](https://img.shields.io/crates/v/solagent-rig-dexscreener) |
 | story | Story protocol API | [solagent-rig-story](https://crates.io/crates/solagent-rig-story) | ![Version](https://img.shields.io/crates/v/solagent-rig-story) |
+| birdeye | Birdeye API | [solagent-rig-birdeye](https://crates.io/crates/solagent-rig-birdeye) | ![Version](https://img.shields.io/crates/v/solagent-rig-birdeye) |
  
 
 ### Plugins
@@ -57,6 +58,7 @@
 | cookie | Cookie Data Swarm APIs | [solagent-plugin-cookie](https://crates.io/crates/solagent-plugin-cookie) | ![Version](https://img.shields.io/crates/v/solagent-plugin-cookie) |
 | dexscreener | Dexscreener data APIs | [solagent-plugin-dexscreener](https://crates.io/crates/solagent-plugin-dexscreener) | ![Version](https://img.shields.io/crates/v/solagent-plugin-dexscreener) |
 | story | Story protocol API | [solagent-plugin-story](https://crates.io/crates/solagent-plugin-story) | ![Version](https://img.shields.io/crates/v/solagent-plugin-story) |
+| birdeye | Birdeye API | [solagent-plugin-birdeye](https://crates.io/crates/solagent-plugin-birdeye) | ![Version](https://img.shields.io/crates/v/solagent-plugin-birdeye) |
  
 
 ## Contributors

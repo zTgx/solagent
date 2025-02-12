@@ -119,3 +119,45 @@ jobs:
           cargo fmt --all -- --check
           cargo clippy
           cargo test --tests --all
+
+  solagent-plugin-birdeye:
+    name: solagent-plugin-birdeye
+    runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-plugins/birdeye/**') || contains(github.event.pull_request.changed_files, 'solagent-plugins/birdeye/**') 
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          rust-version: stable
+        
+      - name: Format and lint and test solagent-plugin-birdeye
+        run: |
+          cd solagent-plugins/birdeye
+          cargo fmt --all -- --check
+          cargo clippy
+          cargo test --tests --all
+
+  solagent-rig-birdeye:
+    name: solagent-rig-birdeye
+    runs-on: ubuntu-latest
+    if: contains(github.event.push.changed_files, 'solagent-adapters/rig/birdeye/**') || contains(github.event.pull_request.changed_files, 'solagent-adapters/rig/birdeye/**') 
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          rust-version: stable
+        
+      - name: Format and lint and test solagent-rig-birdeye
+        run: |
+          cd solagent-adapters/rig/birdeye
+          cargo fmt --all -- --check
+          cargo clippy
+          cargo test --tests --all
