@@ -5,6 +5,7 @@
 
         // plugins
         "solagent-plugins/cookie/Cargo.toml",
+        "solagent-plugins/birdeye/Cargo.toml",
 
         // tools
         "solagent-adapters/rig/cookie/Cargo.toml",
