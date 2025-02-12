@@ -1,14 +1,20 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use anyhow::Result;
+use rig_tool_macro::tool;
+use solagent_core::{IWallet, SolanaAgentKit};
+use solagent_plugin_birdeye::{get_market_data, get_token_overview, MarketDataResponse, TokenOverviewResponse};
+
+#[tool(description = "Get market data of single token by birdeye api")]
+pub async fn get_market_data_by_birdeye<W: IWallet>(
+    agent: SolanaAgentKit<W>,
+    address: String,
+) -> Result<GetTransactionResponse> {
+    get_market_data(&agent, &address).await
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[tool(description = "Get overview of a token by birdeye api")]
+pub async fn get_token_overview_by_birdeye<W: IWallet>(
+    agent: SolanaAgentKit<W>,
+    address: String,
+) -> Result<GetTransactionResponse> {
+    get_token_overview(&agent, &address).await
 }
