@@ -10,7 +10,9 @@ description = "solagent.rs rig birdeye"
 
 [dependencies]
 solagent-core = "0.1.5"
-rig-tool-macro = "0.4.0"
+solagent-parameters = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
 solagent-plugin-birdeye = "0.1.0"
 anyhow = "1.0"
+thiserror = "2.0.9"
+serde_json = "1.0"
