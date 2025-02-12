@@ -4,10 +4,21 @@ use std::error::Error;
 mod primitive;
 pub use primitive::*;
 
+/// Get overview of a token.
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.HELIUS_API_KEY)
+///
+/// - `address`: Address of a token
+///
+/// # Returns
+///
+/// A `Result` TokenOverviewResponse
 pub async fn get_token_overview<W: IWallet>(
     agent: &SolanaAgentKit<W>,
     address: &str,
-) -> Result<Response, Box<dyn Error>> {
+) -> Result<TokenOverviewResponse, Box<dyn Error>> {
     let api_key =
         agent.config.birdeye_api_key.as_ref().ok_or("Missing Birdeye API key in agent.config.birdeye_api_key")?;
 
@@ -21,7 +32,44 @@ pub async fn get_token_overview<W: IWallet>(
         .header("accept", "application/json")
         .header("x-chain", "solana")
         .send()
+        .await?
+        .json::<TokenOverviewResponse>()
         .await?;
 
-    Ok(resp.json::<Response>().await?)
+    Ok(resp)
+}
+
+/// Get market data of single token
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit
+///
+/// - `address`: Address of a token
+///
+/// # Returns
+///
+/// A `Result`
+pub async fn get_market_data<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
+    address: &str,
+) -> Result<MarketDataResponse, Box<dyn Error>> {
+    let api_key =
+        agent.config.birdeye_api_key.as_ref().ok_or("Missing Birdeye API key in agent.config.birdeye_api_key")?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/v3/token/market-data", BIRDEYE_URL);
+
+    let resp = client
+        .get(url)
+        .query(&[("address", address)])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<MarketDataResponse>()
+        .await?;
+
+    Ok(resp)
 }

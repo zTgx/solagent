@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 pub const BIRDEYE_URL: &str = "https://public-api.birdeye.so";
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Response {
+pub struct TokenOverviewResponse {
     pub data: TokenData,
     pub success: bool,
 }
@@ -220,4 +220,22 @@ pub struct Extensions {
     pub description: String,
     pub discord: String,
     pub medium: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketData {
+    pub address: String,
+    pub price: f64,
+    pub liquidity: f64,
+    pub supply: f64,
+    pub marketcap: f64,
+    pub circulating_supply: f64,
+    pub circulating_marketcap: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct MarketDataResponse {
+    pub data: MarketData,
+    pub success: bool,
 }
