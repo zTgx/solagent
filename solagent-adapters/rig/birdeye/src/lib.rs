@@ -4,9 +4,17 @@ use solagent_core::{
     IWallet, SolanaAgentKit,
 };
 use solagent_parameters::parameters;
-use solagent_plugin_birdeye::{get_market_data, get_token_overview, MarketDataResponse, TokenOverviewResponse};
+use solagent_plugin_birdeye::{
+    get_market_data, get_token_overview, get_wallet_portfolio, MarketDataResponse, TokenOverviewResponse,
+    WalletPortfolioResponse,
+};
 use std::sync::Arc;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Market Data Tool
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
 #[derive(Debug, Deserialize)]
 pub struct MarketDataArgs {
     address: String,
@@ -55,6 +63,11 @@ impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for MarketData<W> 
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Overview Tool
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
 #[derive(Debug, Deserialize)]
 pub struct TokenOverviewArgs {
     address: String,
@@ -100,5 +113,60 @@ impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for TokenOverview<
         let data = get_token_overview(&self.agent, &args.address).await.expect("get_token_overview");
 
         Ok(TokenOverviewOutput { data })
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Wallet portfolio Tool
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Deserialize)]
+pub struct WalletPortfoioArgs {
+    address: String,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct WalletPortfoioOutput {
+    pub data: WalletPortfolioResponse,
+}
+
+#[derive(Debug, thiserror::Error)]
+#[error("WalletPortfoio error")]
+pub struct WalletPortfoioError;
+
+pub struct WalletPortfoio<W: IWallet> {
+    agent: Arc<SolanaAgentKit<W>>,
+}
+
+impl<W: IWallet> WalletPortfoio<W> {
+    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
+        WalletPortfoio { agent }
+    }
+}
+
+impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for WalletPortfoio<W> {
+    const NAME: &'static str = "get_wallet_portfolio";
+
+    type Error = WalletPortfoioError;
+    type Args = WalletPortfoioArgs;
+    type Output = WalletPortfoioOutput;
+
+    async fn definition(&self, _prompt: String) -> ToolDefinition {
+        ToolDefinition {
+            name: "get_wallet_portfolio".to_string(),
+            description: "Get wallet portfoio by birdeye api".to_string(),
+            parameters: parameters!(
+                address: String,
+            ),
+        }
+    }
+
+    async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
+        if let Ok(data) = get_wallet_portfolio(&self.agent, &args.address).await {
+            return Ok(WalletPortfoioOutput { data });
+        }
+
+        Err(WalletPortfoioError)
     }
 }

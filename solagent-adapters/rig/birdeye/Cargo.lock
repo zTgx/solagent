@@ -3448,9 +3448,9 @@ dependencies = [
 
 [[package]]
 name = "solagent-plugin-birdeye"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b24e06612981c8af8d5b5fba7057e954d574b0acdda1ebfcd28f3f3e678cef2"
+checksum = "3f8bffcda529eb2cc0c881ce879d4ee182a31b88fbe2e07f809a0b477189b97d"
 dependencies = [
  "anyhow",
  "reqwest 0.12.12",
@@ -3460,7 +3460,7 @@ dependencies = [
 
 [[package]]
 name = "solagent-rig-birdeye"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "serde",
