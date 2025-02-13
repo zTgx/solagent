@@ -3439,7 +3439,7 @@ dependencies = [
 
 [[package]]
 name = "solagent-plugin-birdeye"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "reqwest 0.12.12",

@@ -73,3 +73,41 @@ pub async fn get_market_data<W: IWallet>(agent: &SolanaAgentKit<W>, address: &st
 
     Ok(resp)
 }
+
+/// Get Wallet Portfolio
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit
+///
+/// - `address`: Address of a wallet
+///
+/// # Returns
+///
+/// A `WalletPortfolioResponse`
+pub async fn get_wallet_portfolio<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
+    wallet_address: &str,
+) -> Result<WalletPortfolioResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/v1/wallet/token_list", BIRDEYE_URL);
+
+    let response = client
+        .get(&url)
+        .query(&[("wallet", wallet_address)])
+        .header("accept", "application/json")
+        .header("X-API-KEY", api_key)
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<WalletPortfolioResponse>()
+        .await?;
+
+    Ok(response)
+}
