@@ -239,3 +239,42 @@ pub struct MarketDataResponse {
     pub data: MarketData,
     pub success: bool,
 }
+
+// Wallet portfolio
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct WalletPortfolioResponse {
+    pub success: bool,
+    pub data: WalletPortfolio,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct WalletPortfolio {
+    pub wallet: String,
+    pub total_usd: Option<f64>,
+    pub items: Vec<TokenMetadata>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct TokenMetadata {
+    pub address: String,
+    pub decimals: u8,
+    pub balance: u64,
+
+    #[serde(rename = "uiAmount")]
+    pub ui_amount: f64,
+
+    #[serde(rename = "chainId")]
+    pub chain_id: String,
+
+    pub name: Option<String>,
+    pub symbol: Option<String>,
+    pub icon: Option<String>,
+
+    #[serde(rename = "logoURI")]
+    pub logo_uri: Option<String>,
+
+    #[serde(rename = "priceUsd")]
+    pub price_usd: Option<f64>,
+
+    pub value_usd: Option<f64>,
+}
