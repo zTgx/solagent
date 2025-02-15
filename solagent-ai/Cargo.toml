@@ -1,0 +1,9 @@
+[package]
+name = "solagent-ai"
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+keywords = ["solagent", "ai"]
+license = "Apache-2.0"
+description = "solagent.rs ai makes it easy to ask questions to your data."
