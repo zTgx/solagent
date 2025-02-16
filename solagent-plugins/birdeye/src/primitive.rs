@@ -278,3 +278,41 @@ pub struct TokenMetadata {
 
     pub value_usd: Option<f64>,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Holder
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct TokenHolderQueryParams {
+    /// Address of a token
+    pub address: String,
+
+    /// offset integer 0 to 10000 Defaults to 0
+    pub offset: Option<u32>,
+
+    /// limit integer 0 to 100 Defaults to 100
+    pub limit: Option<u32>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct TokenHolderResponse {
+    pub data: TokenHolderData,
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct TokenHolderData {
+    pub items: Vec<TokenHolderInfo>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct TokenHolderInfo {
+    pub amount: String,
+    pub decimals: u8,
+    pub mint: String,
+    pub owner: String,
+    pub token_account: String,
+    pub ui_amount: f64,
+}

@@ -8,7 +8,7 @@ pub use primitive::*;
 ///
 /// # Parameters
 ///
-/// * `agent` - An instance of SolanaAgentKit (with .config.HELIUS_API_KEY)
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
 ///
 /// - `address`: Address of a token
 ///
@@ -110,4 +110,46 @@ pub async fn get_wallet_portfolio<W: IWallet>(
         .await?;
 
     Ok(response)
+}
+
+/// Get top holder list of the given token
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `params`: Query Params
+///
+/// # Returns
+///
+/// A `Result` TokenHolderResponse
+pub async fn get_token_holders<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
+    query_params: TokenHolderQueryParams,
+) -> Result<TokenHolderResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/v3/token/holder", BIRDEYE_URL);
+
+    let address = query_params.address;
+    let offset = query_params.offset.unwrap_or(0);
+    let limit = query_params.limit.unwrap_or(100);
+
+    let resp = client
+        .get(url)
+        .query(&[("address", address), ("offset", offset.to_string()), ("limit", limit.to_string())])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<TokenHolderResponse>()
+        .await?;
+
+    Ok(resp)
 }
