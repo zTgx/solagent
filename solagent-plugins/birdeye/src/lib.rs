@@ -153,3 +153,38 @@ pub async fn get_token_holders<W: IWallet>(
 
     Ok(resp)
 }
+
+/// Get metadata of single token
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `address`: Address of a token
+///
+/// # Returns
+///
+/// A `Result` TokenMetadataResponse
+pub async fn get_token_metadata<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<TokenMetadataResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/v3/token/meta-data/single", BIRDEYE_URL);
+
+    let resp = client
+        .get(url)
+        .query(&[("address", address)])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<TokenMetadataResponse>()
+        .await?;
+
+    Ok(resp)
+}

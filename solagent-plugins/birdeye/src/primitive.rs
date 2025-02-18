@@ -316,3 +316,23 @@ pub struct TokenHolderInfo {
     pub token_account: String,
     pub ui_amount: f64,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Metadata
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMetadataResponse {
+    pub data: TokenMetaData,
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMetaData {
+    pub address: String,
+    pub name: String,
+    pub symbol: String,
+    pub decimals: u8,
+    pub extensions: Extensions,
+}
