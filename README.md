@@ -6,12 +6,6 @@
 
 </br>
 
-✨ If you would like to help spread the word about solagent.rs, please consider starring the repo!
-
-> [!WARNING]
-> Since we are going to release a flood of features in the upcoming months, future updates **will** contain **breaking changes**.
-
-
 ## Table of Contens
 * [HowToUse](./docs/how-to-usage.md)
 * [HowToAddNewFeature](./docs/hot-to-add-feature.md)
@@ -23,7 +17,6 @@
 | --- | --- | --- |
 | Core | [solagent-core](https://crates.io/crates/solagent-core) | ![Version](https://img.shields.io/crates/v/solagent-core) |
 | Wallet | [solagent-wallet-solana](https://crates.io/crates/solagent-wallet-solana) | ![Version](https://img.shields.io/crates/v/solagent-wallet-solana) |
-| Parameters | [solagent-parameters](https://crates.io/crates/solagent-parameters) | ![Version](https://img.shields.io/crates/v/solagent-parameters) |
 
 ### Tools
 | Tools | Description | Package | Version |
