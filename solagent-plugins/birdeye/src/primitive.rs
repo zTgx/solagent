@@ -336,3 +336,24 @@ pub struct TokenMetaData {
     pub decimals: u8,
     pub extensions: Extensions,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Price
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenPriceResponse {
+    pub data: TokenPriceData,
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TokenPriceData {
+    pub value: f64,
+    pub update_unix_time: u64,
+    pub update_human_time: String,
+    pub price_change_24h: f64,
+    pub price_in_native: u8,
+}
