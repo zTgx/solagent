@@ -1,14 +1,59 @@
 <div align="center">
 
+[Docs](https://docs.solagent.rs) | [X](https://x.com/ztgx5) | [Telegram](https://t.me/solagent_rs)
+
 # solagent.rs   
-`solagent.rs` - An open-source Agent framework for connecting any AI agents to Solana protocols in Rust. 
+An open-source Agent framework for connecting any AI agents to Solana protocols in Rust. 
+
+![Crates Downloads](https://img.shields.io/crates/d/solagent-core?logo=rust)
+![GitHub License](https://img.shields.io/github/license/zTgx/solagent.rs)
+
 </div>
 
 </br>
 
+# SOLAGENT.RS
+![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/ztgx5)
+
+* **[Agent Frameworks]()**: Rig
+* **[Wallets]()**: keypair, solana
+* **[+50 tools]()**: Birdeye, dexscreener, solana, jupiter, helius nd more
+* **[Chains]()**: Solana
+
+## Quick start
+* Add dependencies
+```toml
+[dependencies]
+# add wallet
+solagent-wallet-solana = "0.1.2"
+
+# add core
+solagent-core = "0.1.5"
+
+# add plugin
+solagent-plugin-birdeye = "0.1.5"
+```
+* Create agent
+```rust
+use solagent_core::{ConfigBuilder, SolanaAgentKit};
+use solagent_plugin_birdeye::get_token_metadata;
+use solagent_wallet_solana::Wallet;
+
+#[tokio::main]
+async fn main() {
+    let wallet = Wallet::from_env("SOLANA_WALLET").unwrap();
+    let config = ConfigBuilder::default().birdeye_api_key("api_key".into()).build();
+
+    let agent = SolanaAgentKit::new(wallet, "https://api.devnet.solana.com", config);
+    let data = get_token_metadata(&agent, "So11111111111111111111111111111111111111112")
+        .await
+        .unwrap();
+    println!("{:#?}", data);
+}
+```
 ## Table of Contens
-* [HowToUse](./docs/how-to-usage.md)
-* [HowToAddNewFeature](./docs/hot-to-add-feature.md)
+* [How-To-Use](./docs/how-to-usage.md)
+* [How-To-Add-NewFeature](./docs/hot-to-add-feature.md)
 
 
 ## Packages
