@@ -374,8 +374,7 @@ pub struct TokenPriceVolumeQueryParams {
 
 impl TokenPriceVolumeQueryParams {
     pub fn new(address: String, vh: String) -> Self {
-        address,
-        vh,
+        Self { address, vh }
     }
 }
 
@@ -394,4 +393,71 @@ pub struct TokenPriceVolumeData {
     volume_usd: f64,
     volume_change_percent: f64,
     price_change_percent: f64,
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Trending
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenTrendingQueryParams {
+    /// Defaults to rank, rank/volume24hUSD/liquidity
+    pub sort_by: String,
+
+    /// Defaults to asc, asc/desc
+    pub sort_type: String,
+
+    /// offset integer 0 to 10000 Defaults to 0
+    pub offset: Option<u32>,
+
+    /// limit integer 0 to 20 Defaults to 20
+    pub limit: Option<u32>,
+}
+
+impl TokenTrendingQueryParams {
+    pub fn new(sort_by: String, sort_type: String, offset: Option<u32>, limit: Option<u32>) -> Self {
+        Self { sort_by, sort_type, offset, limit }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenTrendingResponse {
+    pub data: TokenTrendingData,
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenTrendingData {
+    pub update_unix_time: u64,
+    pub update_time: String,
+    pub tokens: Vec<Token>,
+    pub total: u32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Token {
+    pub address: String,
+    pub decimals: u8,
+    pub liquidity: f64,
+
+    #[serde(rename = "logoURI")]
+    pub logo_uri: Option<String>,
+
+    pub name: String,
+    pub symbol: String,
+
+    #[serde(rename = "volume24hUSD")]
+    pub volume_24h_usd: f64,
+
+    #[serde(rename = "volume24hChangePercent")]
+    pub volume_24h_change_percent: f64,
+
+    pub fdv: f64,
+    pub marketcap: f64,
+    pub rank: u32,
+    pub price: f64,
+
+    #[serde(rename = "price24hChangePercent")]
+    pub price_24h_change_percent: f64,
 }

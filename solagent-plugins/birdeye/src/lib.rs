@@ -235,7 +235,10 @@ pub async fn get_token_price<W: IWallet>(agent: &SolanaAgentKit<W>, address: &st
 /// # Returns
 ///
 /// A `Result` TokenPriceVolumeResponse
-pub async fn get_token_price_volume<W: IWallet>(agent: &SolanaAgentKit<W>, query_params: TokenPriceVolumeQueryParams) -> Result<TokenPriceVolumeResponse> {
+pub async fn get_token_price_volume<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
+    query_params: TokenPriceVolumeQueryParams,
+) -> Result<TokenPriceVolumeResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -257,6 +260,54 @@ pub async fn get_token_price_volume<W: IWallet>(agent: &SolanaAgentKit<W>, query
         .send()
         .await?
         .json::<TokenPriceVolumeResponse>()
+        .await?;
+
+    Ok(resp)
+}
+
+/// Retrieve a dynamic and up-to-date list of trending tokens based on specified sorting criteria.
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `query_params`: TokenTrendingQueryParams
+///
+/// # Returns
+///
+/// A `Result` TokenTrendingResponse
+pub async fn get_token_trending<W: IWallet>(
+    agent: &SolanaAgentKit<W>,
+    query_params: TokenTrendingQueryParams,
+) -> Result<TokenTrendingResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/token_trending", BIRDEYE_URL);
+
+    let sort_by = query_params.sort_by;
+    let sort_type = query_params.sort_type;
+    let offset = query_params.offset.unwrap_or(0);
+    let limit = query_params.limit.unwrap_or(20);
+
+    let resp = client
+        .get(url)
+        .query(&[
+            ("sort_by", sort_by),
+            ("sort_type", sort_type),
+            ("offset", offset.to_string()),
+            ("limit", limit.to_string()),
+        ])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<TokenTrendingResponse>()
         .await?;
 
     Ok(resp)
