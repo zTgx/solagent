@@ -223,3 +223,41 @@ pub async fn get_token_price<W: IWallet>(agent: &SolanaAgentKit<W>, address: &st
 
     Ok(resp)
 }
+
+/// Get price and volume updates of a token
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `query_params`: TokenPriceVolumeQueryParams
+///
+/// # Returns
+///
+/// A `Result` TokenPriceVolumeResponse
+pub async fn get_token_price_volume<W: IWallet>(agent: &SolanaAgentKit<W>, query_params: TokenPriceVolumeQueryParams) -> Result<TokenPriceVolumeResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/price_volume/single", BIRDEYE_URL);
+
+    let address = query_params.address;
+    let vh = query_params.vh;
+
+    let resp = client
+        .get(url)
+        .query(&[("address", address), ("type", vh)])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<TokenPriceVolumeResponse>()
+        .await?;
+
+    Ok(resp)
+}

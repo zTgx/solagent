@@ -357,3 +357,41 @@ pub struct TokenPriceData {
     pub price_change_24h: f64,
     pub price_in_native: u8,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Price Volume
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenPriceVolumeQueryParams {
+    /// Address of a token
+    pub address: String,
+
+    /// Defaults to 24h, option: 1h/2h/4h/8h/24h
+    pub vh: String,
+}
+
+impl TokenPriceVolumeQueryParams {
+    pub fn new(address: String, vh: String) -> Self {
+        address,
+        vh,
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenPriceVolumeResponse {
+    pub data: TokenPriceVolumeData,
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TokenPriceVolumeData {
+    price: f64,
+    update_unix_time: u64,
+    update_human_time: String,
+    volume_usd: f64,
+    volume_change_percent: f64,
+    price_change_percent: f64,
+}
