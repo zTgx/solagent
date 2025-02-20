@@ -13,10 +13,7 @@
 // limitations under the License.
 
 use dotenv::dotenv;
-use solagent_core::{
-    solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer},
-    IWallet,
-};
+use solana_sdk::{bs58, pubkey::Pubkey, signature::Keypair, signer::Signer};
 use std::env;
 
 /// Represents a wallet containing a keypair and its corresponding public key.
@@ -83,22 +80,9 @@ impl Wallet {
         let pubkey = keypair.pubkey();
         Ok(Self { keypair, pubkey })
     }
-}
-
-impl IWallet for Wallet {
-    /// Returns the public key of the wallet.
-    fn pubkey(&self) -> Pubkey {
-        self.pubkey
-    }
-
-    /// Returns a reference to the keypair of the wallet.  This provides
-    /// access to the private key.  Be careful with this!
-    fn keypair(&self) -> &Keypair {
-        &self.keypair
-    }
 
     /// Returns the base58 encoded private key of the wallet.
-    fn to_base58(&self) -> String {
+    pub fn to_base58(&self) -> String {
         self.keypair.to_base58_string()
     }
 }
