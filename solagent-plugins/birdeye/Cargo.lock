@@ -1036,6 +1036,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
+
+[[package]]
 name = "dyn-clone"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3427,11 +3433,10 @@ dependencies = [
 
 [[package]]
 name = "solagent-core"
-version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5fa1e1414f33323ad47f9019688986f890feb6df25fb97d61204bd0cf1e3e5bf"
+version = "0.1.6"
 dependencies = [
  "rig-core",
+ "solagent-wallet-solana",
  "solana-client",
  "solana-program",
  "solana-sdk",
@@ -3445,6 +3450,14 @@ dependencies = [
  "reqwest 0.12.12",
  "serde",
  "solagent-core",
+]
+
+[[package]]
+name = "solagent-wallet-solana"
+version = "0.1.3"
+dependencies = [
+ "dotenv",
+ "solana-sdk",
 ]
 
 [[package]]

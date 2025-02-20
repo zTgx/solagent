@@ -211,15 +211,15 @@ pub struct TokenData {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Extensions {
-    pub coingecko_id: String,
-    pub serum_v3_usdc: String,
-    pub serum_v3_usdt: String,
-    pub website: String,
+    pub coingecko_id: Option<String>,
+    pub serum_v3_usdc: Option<String>,
+    pub serum_v3_usdt: Option<String>,
+    pub website: Option<String>,
     pub telegram: Option<String>,
-    pub twitter: String,
-    pub description: String,
-    pub discord: String,
-    pub medium: String,
+    pub twitter: Option<String>,
+    pub description: Option<String>,
+    pub discord: Option<String>,
+    pub medium: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -335,6 +335,7 @@ pub struct TokenMetaData {
     pub symbol: String,
     pub decimals: u8,
     pub extensions: Extensions,
+    pub logo_uri: Option<String>,
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

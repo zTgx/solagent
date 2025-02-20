@@ -1,5 +1,5 @@
 use anyhow::Result;
-use solagent_core::{IWallet, SolanaAgentKit};
+use solagent_core::SolanaAgentKit;
 
 mod primitive;
 pub use primitive::*;
@@ -15,7 +15,7 @@ pub use primitive::*;
 /// # Returns
 ///
 /// A `Result` TokenOverviewResponse
-pub async fn get_token_overview<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<TokenOverviewResponse> {
+pub async fn get_token_overview(agent: &SolanaAgentKit, address: &str) -> Result<TokenOverviewResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -50,7 +50,7 @@ pub async fn get_token_overview<W: IWallet>(agent: &SolanaAgentKit<W>, address: 
 /// # Returns
 ///
 /// A `Result`
-pub async fn get_market_data<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<MarketDataResponse> {
+pub async fn get_market_data(agent: &SolanaAgentKit, address: &str) -> Result<MarketDataResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -85,10 +85,7 @@ pub async fn get_market_data<W: IWallet>(agent: &SolanaAgentKit<W>, address: &st
 /// # Returns
 ///
 /// A `WalletPortfolioResponse`
-pub async fn get_wallet_portfolio<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
-    wallet_address: &str,
-) -> Result<WalletPortfolioResponse> {
+pub async fn get_wallet_portfolio(agent: &SolanaAgentKit, wallet_address: &str) -> Result<WalletPortfolioResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -123,8 +120,8 @@ pub async fn get_wallet_portfolio<W: IWallet>(
 /// # Returns
 ///
 /// A `Result` TokenHolderResponse
-pub async fn get_token_holders<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
+pub async fn get_token_holders(
+    agent: &SolanaAgentKit,
     query_params: TokenHolderQueryParams,
 ) -> Result<TokenHolderResponse> {
     let api_key = agent
@@ -165,7 +162,7 @@ pub async fn get_token_holders<W: IWallet>(
 /// # Returns
 ///
 /// A `Result` TokenMetadataResponse
-pub async fn get_token_metadata<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<TokenMetadataResponse> {
+pub async fn get_token_metadata(agent: &SolanaAgentKit, address: &str) -> Result<TokenMetadataResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -200,7 +197,7 @@ pub async fn get_token_metadata<W: IWallet>(agent: &SolanaAgentKit<W>, address: 
 /// # Returns
 ///
 /// A `Result` TokenPriceResponse
-pub async fn get_token_price<W: IWallet>(agent: &SolanaAgentKit<W>, address: &str) -> Result<TokenPriceResponse> {
+pub async fn get_token_price(agent: &SolanaAgentKit, address: &str) -> Result<TokenPriceResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -235,8 +232,8 @@ pub async fn get_token_price<W: IWallet>(agent: &SolanaAgentKit<W>, address: &st
 /// # Returns
 ///
 /// A `Result` TokenPriceVolumeResponse
-pub async fn get_token_price_volume<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
+pub async fn get_token_price_volume(
+    agent: &SolanaAgentKit,
     query_params: TokenPriceVolumeQueryParams,
 ) -> Result<TokenPriceVolumeResponse> {
     let api_key = agent
@@ -276,8 +273,8 @@ pub async fn get_token_price_volume<W: IWallet>(
 /// # Returns
 ///
 /// A `Result` TokenTrendingResponse
-pub async fn get_token_trending<W: IWallet>(
-    agent: &SolanaAgentKit<W>,
+pub async fn get_token_trending(
+    agent: &SolanaAgentKit,
     query_params: TokenTrendingQueryParams,
 ) -> Result<TokenTrendingResponse> {
     let api_key = agent
