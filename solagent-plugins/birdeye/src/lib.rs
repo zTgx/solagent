@@ -49,8 +49,8 @@ pub async fn get_token_overview(agent: &SolanaAgentKit, address: &str) -> Result
 ///
 /// # Returns
 ///
-/// A `Result`
-pub async fn get_market_data(agent: &SolanaAgentKit, address: &str) -> Result<MarketDataResponse> {
+/// A `Result` TokenMarketDataResponse
+pub async fn get_market_data(agent: &SolanaAgentKit, address: &str) -> Result<TokenMarketDataResponse> {
     let api_key = agent
         .config
         .birdeye_api_key
@@ -68,7 +68,7 @@ pub async fn get_market_data(agent: &SolanaAgentKit, address: &str) -> Result<Ma
         .header("x-chain", "solana")
         .send()
         .await?
-        .json::<MarketDataResponse>()
+        .json::<TokenMarketDataResponse>()
         .await?;
 
     Ok(resp)
