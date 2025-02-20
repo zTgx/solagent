@@ -302,6 +302,12 @@ pub struct TokenHolderQueryParams {
     pub limit: Option<u32>,
 }
 
+impl TokenHolderQueryParams {
+    pub fn new(address: String, offset: Option<u32>, limit: Option<u32>) -> Self {
+        Self { address, offset, limit }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TokenHolderResponse {
     pub data: TokenHolderData,
@@ -397,7 +403,10 @@ pub struct TokenPriceVolumeData {
     price: f64,
     update_unix_time: u64,
     update_human_time: String,
+
+    #[serde(rename = "volumeUSD")]
     volume_usd: f64,
+
     volume_change_percent: f64,
     price_change_percent: f64,
 }
@@ -435,18 +444,19 @@ pub struct TokenTrendingResponse {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct TokenTrendingData {
     pub update_unix_time: u64,
     pub update_time: String,
-    pub tokens: Vec<Token>,
+    pub tokens: Vec<TokenInfo>,
     pub total: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Token {
+pub struct TokenInfo {
     pub address: String,
     pub decimals: u8,
-    pub liquidity: f64,
+    pub liquidity: Option<f64>,
 
     #[serde(rename = "logoURI")]
     pub logo_uri: Option<String>,
@@ -455,16 +465,16 @@ pub struct Token {
     pub symbol: String,
 
     #[serde(rename = "volume24hUSD")]
-    pub volume_24h_usd: f64,
+    pub volume_24h_usd: Option<f64>,
 
     #[serde(rename = "volume24hChangePercent")]
-    pub volume_24h_change_percent: f64,
+    pub volume_24h_change_percent: Option<f64>,
 
-    pub fdv: f64,
-    pub marketcap: f64,
-    pub rank: u32,
+    pub fdv: Option<f64>,
+    pub marketcap: Option<f64>,
+    pub rank: Option<u32>,
     pub price: f64,
 
     #[serde(rename = "price24hChangePercent")]
-    pub price_24h_change_percent: f64,
+    pub price_24h_change_percent: Option<f64>,
 }
