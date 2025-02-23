@@ -359,3 +359,53 @@ pub async fn get_token_mintburn_tx(
 
     Ok(resp)
 }
+
+/// Search for token and market data by matching a pattern or a specific token, market address.
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `query_params`: TokenOrMarketQueryParams
+///
+/// # Returns
+///
+/// A `Result` TokenOrMarketResponse
+pub async fn search_token_or_market_data(
+    agent: &SolanaAgentKit,
+    query_params: TokenOrMarketQueryParams,
+) -> Result<TokenOrMarketResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/v3/search", BIRDEYE_URL);
+
+    let keyword = query_params.keyword;
+    let target = query_params.target;
+    let offset = query_params.offset.unwrap_or(0);
+    let limit = query_params.limit.unwrap_or(20);
+
+    let resp = client
+        .get(url)
+        .query(&[
+            ("chain", "solana".to_string()),
+            ("keyworkd", keyword),
+            ("target", target),
+            ("sort_by", "volume_24h_usd".to_string()),
+            ("sort_type", "desc".to_string()),
+            ("offset", offset.to_string()),
+            ("limit", limit.to_string()),
+        ])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .send()
+        .await?
+        .json::<TokenOrMarketResponse>()
+        .await?;
+
+    Ok(resp)
+}

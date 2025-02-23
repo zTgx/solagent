@@ -524,3 +524,65 @@ pub struct TokenMintOrBurnItem {
     pub ui_amount: u64,
     pub ui_amount_string: Option<String>,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Search Token Or Market Data
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenOrMarketQueryParams {
+    pub keyword: String,
+
+    /// Defaults to all, including [all/token/market]
+    pub target: String,
+
+    /// offset integer 0 to 10000 Defaults to 0
+    pub offset: Option<u32>,
+
+    /// limit integer 0 to 100 Defaults to 100
+    pub limit: Option<u32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenOrMarketResponse {
+    pub success: bool,
+    pub data: TokenOrMarketData,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenOrMarketData {
+    #[serde(rename = "type")]
+    pub data_type: String,
+
+    pub result: Vec<TokenOrMarketDataItem>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenOrMarketDataItem {
+    pub name: Option<String>,
+    pub symbol: Option<String>,
+    pub address: Option<String>,
+    pub decimals: u64,
+    pub fdv: Option<f64>,
+    pub market_cap: Option<f64>,
+    pub liquidity: u64,
+    pub volume_24h_change_percent: f64,
+    pub price: Option<f64>,
+    pub price_change_24h_percent: Option<f64>,
+    pub network: Option<String>,
+    pub buy_24h: u64,
+    pub buy_24h_change_percent: Option<f64>,
+    pub sell_24h: u64,
+    pub sell_24h_change_percent: Option<f64>,
+    pub trade_24h: u64,
+    pub trade_24h_change_percent: Option<f64>,
+    pub unique_wallet_24h: u64,
+    pub unique_view_24h_change_percent: Option<f64>,
+    pub last_trade_human_time: Option<String>,
+    pub last_trade_unix_time: u64,
+    pub creation_time: Option<String>,
+    pub volume_24h_usd: f64,
+    pub logo_uri: Option<String>,
+    pub verified: bool,
+}
