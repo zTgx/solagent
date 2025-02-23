@@ -478,3 +478,49 @@ pub struct TokenInfo {
     #[serde(rename = "price24hChangePercent")]
     pub price_24h_change_percent: Option<f64>,
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// Token Mint or Burn Transaction
+///
+/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMintOrBurnQueryParams {
+    /// Address of a token
+    pub address: String,
+
+    /// Transaction type, default all, including all/mint/burn
+    pub tx_type: String,
+
+    /// offset integer 0 to 10000 Defaults to 0
+    pub offset: Option<u32>,
+
+    /// limit integer 0 to 100 Defaults to 100
+    pub limit: Option<u32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMintOrBurnResponse {
+    pub success: bool,
+    pub data: TokenMintOrBurnData,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMintOrBurnData {
+    pub items: Vec<TokenMintOrBurnItem>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenMintOrBurnItem {
+    pub amount: Option<String>,
+    pub block_human_time: Option<String>,
+    pub block_time: u64,
+    pub common_type: Option<String>,
+    pub decimals: u32,
+    pub mint: Option<String>,
+    pub program_id: String,
+    pub slot: u64,
+    pub tx_hash: String,
+    pub ui_amount: u64,
+    pub ui_amount_string: Option<String>,
+}

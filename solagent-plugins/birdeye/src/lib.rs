@@ -309,3 +309,53 @@ pub async fn get_token_trending(
 
     Ok(resp)
 }
+
+/// Get mint/burn transaction list of the given token. Only support solana currently
+///
+/// # Parameters
+///
+/// * `agent` - An instance of SolanaAgentKit (with .config.birdeye_api_key)
+///
+/// - `query_params`: TokenMintOrBurnQueryParams
+///
+/// # Returns
+///
+/// A `Result` TokenMintOrBurnResponse
+pub async fn get_token_mintburn_tx(
+    agent: &SolanaAgentKit,
+    query_params: TokenMintOrBurnQueryParams,
+) -> Result<TokenMintOrBurnResponse> {
+    let api_key = agent
+        .config
+        .birdeye_api_key
+        .as_ref()
+        .ok_or_else(|| anyhow::anyhow!("Missing Birdeye API key in agent.config.birdeye_api_key"))?;
+
+    let client = reqwest::Client::new();
+    let url = format!("{}/defi/v3/token/mint-burn-txs", BIRDEYE_URL);
+
+    let address = query_params.address;
+    let tx_type = query_params.tx_type;
+    let offset = query_params.offset.unwrap_or(0);
+    let limit = query_params.limit.unwrap_or(20);
+
+    let resp = client
+        .get(url)
+        .query(&[
+            ("address", address),
+            ("type", tx_type),
+            ("sort_by", "block_time".to_string()),
+            ("sort_type", "desc".to_string()),
+            ("offset", offset.to_string()),
+            ("limit", limit.to_string()),
+        ])
+        .header("X-API-KEY", api_key)
+        .header("accept", "application/json")
+        .header("x-chain", "solana")
+        .send()
+        .await?
+        .json::<TokenMintOrBurnResponse>()
+        .await?;
+
+    Ok(resp)
+}
