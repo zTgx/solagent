@@ -114,7 +114,9 @@ impl Tool for Transfer {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let tx = transfer(&self.agent, &args.to, args.amount, args.mint).await.expect("transfer");
+        let tx = transfer(&self.agent, &args.to, args.amount, args.mint)
+            .await
+            .expect("transfer");
 
         Ok(TransferOutput { tx })
     }

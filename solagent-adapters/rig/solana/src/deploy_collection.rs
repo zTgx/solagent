@@ -108,9 +108,14 @@ impl Tool for DeployCollection {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let res = deploy_collection(&self.agent, &args.metadata).await.expect("deploy_collection");
+        let res = deploy_collection(&self.agent, &args.metadata)
+            .await
+            .expect("deploy_collection");
 
-        Ok(DeployCollectionOutput { mint_address: res.mint, tx_signature: res.signature })
+        Ok(DeployCollectionOutput {
+            mint_address: res.mint,
+            tx_signature: res.signature,
+        })
     }
 }
 

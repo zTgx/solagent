@@ -91,7 +91,9 @@ impl Tool for CloseEmptyTokenAccounts {
     }
 
     async fn call(&self, _args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let data = close_empty_token_accounts(&self.agent).await.expect("close_empty_token_accounts");
+        let data = close_empty_token_accounts(&self.agent)
+            .await
+            .expect("close_empty_token_accounts");
 
         Ok(CloseEmptyTokenAccountsOutput { data })
     }

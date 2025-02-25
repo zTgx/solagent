@@ -128,9 +128,14 @@ impl Tool for MintNFT {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let res = mint_nft_to_collection(&self.agent, args.collection, args.metadata).await.expect("mint_nft");
+        let res = mint_nft_to_collection(&self.agent, args.collection, args.metadata)
+            .await
+            .expect("mint_nft");
 
-        Ok(MintNFTOutput { mint_address: res.mint, tx_signature: res.signature })
+        Ok(MintNFTOutput {
+            mint_address: res.mint,
+            tx_signature: res.signature,
+        })
     }
 }
 

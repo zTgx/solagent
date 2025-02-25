@@ -107,11 +107,21 @@ impl Tool for DeployToken {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let res = deploy_token(&self.agent, args.name, args.uri, args.symbol, args.decimals, args.initial_supply)
-            .await
-            .expect("deploy_token");
+        let res = deploy_token(
+            &self.agent,
+            args.name,
+            args.uri,
+            args.symbol,
+            args.decimals,
+            args.initial_supply,
+        )
+        .await
+        .expect("deploy_token");
 
-        Ok(DeployTokenOutput { mint_address: res.mint, tx_signature: res.signature })
+        Ok(DeployTokenOutput {
+            mint_address: res.mint,
+            tx_signature: res.signature,
+        })
     }
 }
 

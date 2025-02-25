@@ -81,7 +81,9 @@ impl Tool for GetBalanceOther {
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
         let wallet_address = args.wallet_address;
         let token_address = args.token_address;
-        let balance = get_balance_other(&self.agent, wallet_address, token_address).await.expect("get_balance_other");
+        let balance = get_balance_other(&self.agent, wallet_address, token_address)
+            .await
+            .expect("get_balance_other");
 
         Ok(GetBalanceOtherOutput { balance })
     }
