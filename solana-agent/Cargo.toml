@@ -1,0 +1,10 @@
+[package]
+name = "solana-agent"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+solagent-core = "0.1.6"
+solagent-wallet-solana = "0.1.3"
+solagent-rig-solana = "0.1.2"
+anyhow = "1.0"
