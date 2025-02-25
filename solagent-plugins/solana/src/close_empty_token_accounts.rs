@@ -53,7 +53,10 @@ pub struct CloseEmptyTokenAccountsData {
 
 impl CloseEmptyTokenAccountsData {
     pub fn new(signature: String, closed_size: usize) -> Self {
-        CloseEmptyTokenAccountsData { signature, closed_size }
+        CloseEmptyTokenAccountsData {
+            signature,
+            closed_size,
+        }
     }
 }
 
@@ -78,7 +81,7 @@ pub async fn close_empty_token_accounts(
         let accounts = agent
             .connection
             .get_token_accounts_by_owner(
-                &agent.wallet.address,
+                &agent.wallet.pubkey,
                 TokenAccountsFilter::ProgramId(token_program.to_owned()),
             )
             .expect("get_token_accounts_by_owner");
@@ -92,16 +95,22 @@ pub async fn close_empty_token_accounts(
 
             if let solana_account_decoder::UiAccountData::Json(d) = &account.account.data {
                 if let Ok(parsed) = serde_json::from_value::<Parsed>(d.parsed.clone()) {
-                    if parsed.info.token_amount.amount.parse::<u32>().unwrap_or_default() == 0_u32
+                    if parsed
+                        .info
+                        .token_amount
+                        .amount
+                        .parse::<u32>()
+                        .unwrap_or_default()
+                        == 0_u32
                         && parsed.info.mint != USDC
                     {
                         let account_pubkey = Pubkey::from_str_const(&account.pubkey);
                         if let Ok(instruct) = close_account(
                             &token_program,
                             &account_pubkey,
-                            &agent.wallet.address,
-                            &agent.wallet.address,
-                            &[&agent.wallet.address],
+                            &agent.wallet.pubkey,
+                            &agent.wallet.pubkey,
+                            &[&agent.wallet.pubkey],
                         ) {
                             transaction.push(instruct);
                         }
@@ -119,12 +128,14 @@ pub async fn close_empty_token_accounts(
     let recent_blockhash = agent.connection.get_latest_blockhash()?;
     let transaction = Transaction::new_signed_with_payer(
         &transaction,
-        Some(&agent.wallet.address),
-        &[&agent.wallet.wallet],
+        Some(&agent.wallet.pubkey),
+        &[&agent.wallet.keypair],
         recent_blockhash,
     );
 
-    let signature = agent.connection.send_and_confirm_transaction(&transaction)?;
+    let signature = agent
+        .connection
+        .send_and_confirm_transaction(&transaction)?;
     let data = CloseEmptyTokenAccountsData::new(signature.to_string(), closed_size);
     Ok(data)
 }

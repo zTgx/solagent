@@ -22,5 +22,5 @@ use solagent_core::SolanaAgentKit;
 /// # Returns
 /// A string representing the wallet address in base58 format.
 pub fn get_wallet_address(agent: &SolanaAgentKit) -> String {
-    agent.wallet.address.to_string()
+    agent.wallet.pubkey.to_string()
 }

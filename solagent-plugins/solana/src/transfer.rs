@@ -14,7 +14,9 @@
 
 use solagent_core::{
     solana_client::client_error::ClientError,
-    solana_sdk::{program_pack::Pack, pubkey::Pubkey, system_instruction, transaction::Transaction},
+    solana_sdk::{
+        program_pack::Pack, pubkey::Pubkey, system_instruction, transaction::Transaction,
+    },
     SolanaAgentKit,
 };
 use spl_associated_token_account::get_associated_token_address;
@@ -40,7 +42,7 @@ pub async fn transfer(
             let mint = Pubkey::from_str_const(&mint);
             let to = Pubkey::from_str_const(to);
 
-            let from_ata = get_associated_token_address(&mint, &agent.wallet.address);
+            let from_ata = get_associated_token_address(&mint, &agent.wallet.pubkey);
             let to_ata = get_associated_token_address(&mint, &to);
 
             let account_info = &agent.connection.get_account(&mint).expect("get_account");
@@ -53,34 +55,47 @@ pub async fn transfer(
                 &from_ata,
                 &to_ata,
                 &from_ata,
-                &[&agent.wallet.address],
+                &[&agent.wallet.pubkey],
                 adjusted_amount,
             )
             .expect("transfer_instruct");
 
             let transaction = Transaction::new_signed_with_payer(
                 &[transfer_instruction],
-                Some(&agent.wallet.address),
-                &[&agent.wallet.wallet],
-                agent.connection.get_latest_blockhash().expect("new_signed_with_payer"),
+                Some(&agent.wallet.pubkey),
+                &[&agent.wallet.keypair],
+                agent
+                    .connection
+                    .get_latest_blockhash()
+                    .expect("new_signed_with_payer"),
             );
 
-            let signature =
-                agent.connection.send_and_confirm_transaction(&transaction).expect("send_and_confirm_transaction");
+            let signature = agent
+                .connection
+                .send_and_confirm_transaction(&transaction)
+                .expect("send_and_confirm_transaction");
             Ok(signature.to_string())
         }
         None => {
-            let transfer_instruction =
-                system_instruction::transfer(&agent.wallet.address, &Pubkey::from_str_const(to), amount);
+            let transfer_instruction = system_instruction::transfer(
+                &agent.wallet.pubkey,
+                &Pubkey::from_str_const(to),
+                amount,
+            );
             let transaction = Transaction::new_signed_with_payer(
                 &[transfer_instruction],
-                Some(&agent.wallet.address),
-                &[&agent.wallet.wallet],
-                agent.connection.get_latest_blockhash().expect("get_latest_blockhash"),
+                Some(&agent.wallet.pubkey),
+                &[&agent.wallet.keypair],
+                agent
+                    .connection
+                    .get_latest_blockhash()
+                    .expect("get_latest_blockhash"),
             );
 
-            let signature =
-                agent.connection.send_and_confirm_transaction(&transaction).expect("send_and_confirm_transaction");
+            let signature = agent
+                .connection
+                .send_and_confirm_transaction(&transaction)
+                .expect("send_and_confirm_transaction");
             Ok(signature.to_string())
         }
     }

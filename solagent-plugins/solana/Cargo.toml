@@ -1,15 +1,15 @@
 [package]
 name = "solagent-plugin-solana"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs"
 keywords = ["solagent", "plugin", "solana"]
-license = "Apache-2.0"
-description = "solagent.rs plugin solana"
+license = "MIT"
+description = "solagent plugin solana"
 
 [dependencies]
-solagent-core = "0.1.3"
+solagent-core = "0.1.6"
 serde = { version = "1.0", features = ["derive"] }
 spl-token = "7.0.0"
 spl-associated-token-account = "6.0.0"

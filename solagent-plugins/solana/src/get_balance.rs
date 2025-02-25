@@ -29,7 +29,10 @@ use std::str::FromStr;
 /// # Returns
 ///
 /// A `Result` that resolves to the balance as a number (in UI units) or an error if the account doesn't exist.
-pub async fn get_balance(agent: &SolanaAgentKit, token_address: Option<String>) -> Result<f64, ClientError> {
+pub async fn get_balance(
+    agent: &SolanaAgentKit,
+    token_address: Option<String>,
+) -> Result<f64, ClientError> {
     if let Some(token_address) = token_address {
         // Get SPL token account balance
         if let Ok(pubkey) = Pubkey::from_str(&token_address) {
@@ -40,6 +43,6 @@ pub async fn get_balance(agent: &SolanaAgentKit, token_address: Option<String>) 
     }
 
     // Get SOL balance
-    let balance = agent.connection.get_balance(&agent.wallet.address)?;
+    let balance = agent.connection.get_balance(&agent.wallet.pubkey)?;
     Ok(balance as f64 / LAMPORTS_PER_SOL as f64)
 }

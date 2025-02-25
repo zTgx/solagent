@@ -77,14 +77,28 @@ pub struct NFTMetadata {
 }
 
 impl NFTMetadata {
-    pub fn new(name: &str, uri: &str, basis_points: Option<u16>, creators: Option<Vec<(Pubkey, u8)>>) -> Self {
+    pub fn new(
+        name: &str,
+        uri: &str,
+        basis_points: Option<u16>,
+        creators: Option<Vec<(Pubkey, u8)>>,
+    ) -> Self {
         let creators = creators.map(|creator_tuples| {
             creator_tuples
                 .into_iter()
-                .map(|(pubkey, share)| Creator { address: pubkey, verified: true, share })
+                .map(|(pubkey, share)| Creator {
+                    address: pubkey,
+                    verified: true,
+                    share,
+                })
                 .collect::<Vec<Creator>>()
         });
 
-        NFTMetadata { name: name.to_string(), uri: uri.to_string(), basis_points, creators }
+        NFTMetadata {
+            name: name.to_string(),
+            uri: uri.to_string(),
+            basis_points,
+            creators,
+        }
     }
 }

@@ -26,7 +26,9 @@ use solagent_core::{solana_client::client_error::ClientError, SolanaAgentKit};
 pub async fn get_tps(agent: &SolanaAgentKit) -> Result<f64, ClientError> {
     // Fetch recent performance samples
     let limit = 1;
-    let perf_samples = agent.connection.get_recent_performance_samples(Some(limit))?;
+    let perf_samples = agent
+        .connection
+        .get_recent_performance_samples(Some(limit))?;
 
     // Check if there are any samples available
     if !perf_samples.is_empty() {

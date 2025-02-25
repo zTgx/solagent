@@ -14,7 +14,9 @@
 
 use crate::{DeployedData, NFTMetadata};
 use mpl_token_metadata::{
-    instructions::{CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs},
+    instructions::{
+        CreateMasterEditionV3, CreateMetadataAccountV3, CreateMetadataAccountV3InstructionArgs,
+    },
     types::DataV2,
 };
 use solagent_core::{
@@ -41,17 +43,27 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 /// # Returns
 ///
 /// An object containing the collection address and metadata.
-pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) -> Result<DeployedData, ClientError> {
+pub async fn deploy_collection(
+    agent: &SolanaAgentKit,
+    options: &NFTMetadata,
+) -> Result<DeployedData, ClientError> {
     // Create a new mint for the collection
     let collection_mint = Keypair::new();
     let collection_mint_pubkey = collection_mint.pubkey();
 
     // Create token mint account
-    let min_rent = agent.connection.get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
+    let min_rent = agent
+        .connection
+        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
 
     // Create metadata account
-    let metadata_seeds = &["metadata".as_bytes(), mpl_token_metadata::ID.as_ref(), collection_mint_pubkey.as_ref()];
-    let (metadata_account, _) = Pubkey::find_program_address(metadata_seeds, &mpl_token_metadata::ID);
+    let metadata_seeds = &[
+        "metadata".as_bytes(),
+        mpl_token_metadata::ID.as_ref(),
+        collection_mint_pubkey.as_ref(),
+    ];
+    let (metadata_account, _) =
+        Pubkey::find_program_address(metadata_seeds, &mpl_token_metadata::ID);
 
     // Create master edition account
     let master_edition_seeds = &[
@@ -60,14 +72,17 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
         collection_mint_pubkey.as_ref(),
         "edition".as_bytes(),
     ];
-    let (master_edition_account, _) = Pubkey::find_program_address(master_edition_seeds, &mpl_token_metadata::ID);
+    let (master_edition_account, _) =
+        Pubkey::find_program_address(master_edition_seeds, &mpl_token_metadata::ID);
 
     // Create associated token account for the mint
-    let associated_token_account =
-        spl_associated_token_account::get_associated_token_address(&agent.wallet.address, &collection_mint_pubkey);
+    let associated_token_account = spl_associated_token_account::get_associated_token_address(
+        &agent.wallet.pubkey,
+        &collection_mint_pubkey,
+    );
 
     // let create_mint_account_ix = system_instruction::create_account(
-    //     &agent.wallet.address,
+    //     &agent.wallet.pubkey,
     //     &collection_mint.pubkey(),
     //     min_rent,
     //     spl_token::state::Mint::LEN as u64,
@@ -77,16 +92,16 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
     // let init_mint_ix = spl_token::instruction::initialize_mint(
     //     &spl_token::id(),
     //     &collection_mint_pubkey,
-    //     &agent.wallet.address,
-    //     Some(&agent.wallet.address),
+    //     &agent.wallet.pubkey,
+    //     Some(&agent.wallet.pubkey),
     //     0,
     // )
     // .unwrap();
 
     // Create associated token account
     let create_assoc_account_ix = create_associated_token_account(
-        &agent.wallet.address,
-        &agent.wallet.address,
+        &agent.wallet.pubkey,
+        &agent.wallet.pubkey,
         &collection_mint_pubkey,
         &spl_token::id(),
     );
@@ -96,8 +111,8 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
         &spl_token::id(),
         &collection_mint.pubkey(),
         &associated_token_account,
-        &agent.wallet.address,
-        &[&agent.wallet.address],
+        &agent.wallet.pubkey,
+        &[&agent.wallet.pubkey],
         1,
     )
     .expect("mint_to");
@@ -106,9 +121,9 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
     let create_metadata_ix = CreateMetadataAccountV3 {
         metadata: metadata_account,
         mint: collection_mint.pubkey(),
-        mint_authority: agent.wallet.address,
-        payer: agent.wallet.address,
-        update_authority: (agent.wallet.address, false),
+        mint_authority: agent.wallet.pubkey,
+        payer: agent.wallet.pubkey,
+        update_authority: (agent.wallet.pubkey, false),
         system_program: solana_program::system_program::id(),
         rent: Some(sysvar::rent::id()),
     }
@@ -130,19 +145,23 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
     let create_master_edition_ix = CreateMasterEditionV3 {
         edition: master_edition_account,
         mint: collection_mint.pubkey(),
-        update_authority: agent.wallet.address,
-        mint_authority: agent.wallet.address,
-        payer: agent.wallet.address,
+        update_authority: agent.wallet.pubkey,
+        mint_authority: agent.wallet.pubkey,
+        payer: agent.wallet.pubkey,
         metadata: metadata_account,
         token_program: spl_token::id(),
         system_program: solana_program::system_program::id(),
         rent: Some(sysvar::rent::id()),
     }
-    .instruction(mpl_token_metadata::instructions::CreateMasterEditionV3InstructionArgs { max_supply: Some(0) }); // Max supply, 0 means unlimited
+    .instruction(
+        mpl_token_metadata::instructions::CreateMasterEditionV3InstructionArgs {
+            max_supply: Some(0),
+        },
+    ); // Max supply, 0 means unlimited
 
     // Create mint account
     let create_mint_account_ix = system_instruction::create_account(
-        &agent.wallet.address,
+        &agent.wallet.pubkey,
         &collection_mint.pubkey(),
         min_rent,
         82,
@@ -153,8 +172,8 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
     let init_mint_ix = spl_token::instruction::initialize_mint(
         &spl_token::id(),
         &collection_mint.pubkey(),
-        &agent.wallet.address,
-        Some(&agent.wallet.address),
+        &agent.wallet.pubkey,
+        Some(&agent.wallet.pubkey),
         0,
     )
     .expect("initialize_mint");
@@ -170,12 +189,17 @@ pub async fn deploy_collection(agent: &SolanaAgentKit, options: &NFTMetadata) ->
             create_metadata_ix,
             create_master_edition_ix,
         ],
-        Some(&agent.wallet.address),
-        &[&agent.wallet.wallet, &collection_mint],
+        Some(&agent.wallet.pubkey),
+        &[&agent.wallet.keypair, &collection_mint],
         recent_blockhash,
     );
 
-    let signature = agent.connection.send_and_confirm_transaction(&transaction)?;
+    let signature = agent
+        .connection
+        .send_and_confirm_transaction(&transaction)?;
 
-    Ok(DeployedData::new(collection_mint_pubkey.to_string(), signature.to_string()))
+    Ok(DeployedData::new(
+        collection_mint_pubkey.to_string(),
+        signature.to_string(),
+    ))
 }

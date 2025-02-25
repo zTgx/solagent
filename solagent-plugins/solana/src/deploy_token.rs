@@ -58,10 +58,12 @@ pub async fn deploy_token(
     let mint_pubkey = mint.pubkey();
 
     // Create token mint account
-    let min_rent = agent.connection.get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
+    let min_rent = agent
+        .connection
+        .get_minimum_balance_for_rent_exemption(spl_token::state::Mint::LEN)?;
 
     let create_mint_account_ix = system_instruction::create_account(
-        &agent.wallet.address,
+        &agent.wallet.pubkey,
         &mint_pubkey,
         min_rent,
         spl_token::state::Mint::LEN as u64,
@@ -71,8 +73,8 @@ pub async fn deploy_token(
     let initialize_mint_ix = spl_token_instruction::initialize_mint(
         &spl_token::id(),
         &mint_pubkey,
-        &agent.wallet.address,
-        Some(&agent.wallet.address),
+        &agent.wallet.pubkey,
+        Some(&agent.wallet.pubkey),
         decimals,
     )
     .expect("initialize_mint");
@@ -102,24 +104,29 @@ pub async fn deploy_token(
         metadata,
         master_edition: None,
         mint: (mint_pubkey, true),
-        authority: agent.wallet.address,
-        payer: agent.wallet.address,
-        update_authority: (agent.wallet.address, true),
+        authority: agent.wallet.pubkey,
+        payer: agent.wallet.pubkey,
+        update_authority: (agent.wallet.pubkey, true),
         system_program: system_program::ID,
         sysvar_instructions: solana_program::sysvar::instructions::ID,
         spl_token_program: Some(spl_token::ID),
     };
     let create_metadata_ix = create_ix.instruction(args);
 
-    let mut instructions = vec![create_mint_account_ix, initialize_mint_ix, create_metadata_ix];
+    let mut instructions = vec![
+        create_mint_account_ix,
+        initialize_mint_ix,
+        create_metadata_ix,
+    ];
 
     if let Some(supply) = initial_supply {
-        let associated_token_account = get_associated_token_address(&agent.wallet.address, &mint_pubkey);
+        let associated_token_account =
+            get_associated_token_address(&agent.wallet.pubkey, &mint_pubkey);
 
         let create_associated_token_account_ix =
             spl_associated_token_account::instruction::create_associated_token_account(
-                &agent.wallet.address,
-                &agent.wallet.address,
+                &agent.wallet.pubkey,
+                &agent.wallet.pubkey,
                 &mint_pubkey,
                 &spl_token::id(),
             );
@@ -128,8 +135,8 @@ pub async fn deploy_token(
             &spl_token::id(),
             &mint_pubkey,
             &associated_token_account,
-            &agent.wallet.address,
-            &[&agent.wallet.address],
+            &agent.wallet.pubkey,
+            &[&agent.wallet.pubkey],
             supply,
         )
         .expect("mint_to");
@@ -141,16 +148,24 @@ pub async fn deploy_token(
     let recent_blockhash = agent.connection.get_latest_blockhash()?;
     let transaction = Transaction::new_signed_with_payer(
         &instructions,
-        Some(&agent.wallet.address),
-        &[&agent.wallet.wallet, &mint],
+        Some(&agent.wallet.pubkey),
+        &[&agent.wallet.keypair, &mint],
         recent_blockhash,
     );
 
-    let signature = agent.connection.send_and_confirm_transaction_with_spinner_and_config(
-        &transaction,
-        CommitmentConfig::finalized(),
-        RpcSendTransactionConfig { skip_preflight: true, ..Default::default() },
-    )?;
+    let signature = agent
+        .connection
+        .send_and_confirm_transaction_with_spinner_and_config(
+            &transaction,
+            CommitmentConfig::finalized(),
+            RpcSendTransactionConfig {
+                skip_preflight: true,
+                ..Default::default()
+            },
+        )?;
 
-    Ok(DeployedData::new(mint_pubkey.to_string(), signature.to_string()))
+    Ok(DeployedData::new(
+        mint_pubkey.to_string(),
+        signature.to_string(),
+    ))
 }
