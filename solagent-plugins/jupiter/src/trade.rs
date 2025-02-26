@@ -18,7 +18,8 @@ use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     solana_sdk::{
-        commitment_config::CommitmentConfig, program_pack::Pack, pubkey::Pubkey, transaction::VersionedTransaction,
+        commitment_config::CommitmentConfig, program_pack::Pack, pubkey::Pubkey,
+        transaction::VersionedTransaction,
     },
     SolanaAgentKit,
 };
@@ -74,7 +75,11 @@ pub async fn trade(
 ) -> Result<String, Box<dyn std::error::Error>> {
     // Convert strings to Pubkeys
     let output_mint = Pubkey::from_str(output_mint)?;
-    let input_mint = input_mint.as_deref().map(Pubkey::from_str).transpose()?.unwrap_or(spl_token::native_mint::id());
+    let input_mint = input_mint
+        .as_deref()
+        .map(Pubkey::from_str)
+        .transpose()?
+        .unwrap_or(spl_token::native_mint::id());
 
     // Use defaults if not provided
     let slippage_bps = slippage_bps.unwrap_or(300);
@@ -107,28 +112,39 @@ pub async fn trade(
     // Get swap transaction
     let swap_request = SwapRequest {
         quote_response,
-        user_public_key: agent.wallet.address.to_string(),
+        user_public_key: agent.wallet.pubkey.to_string(),
         wrap_and_unwrap_sol: true,
         dynamic_compute_unit_limit: true,
         prioritization_fee_lamports: "auto".to_string(),
         fee_account: None,
     };
 
-    let swap_response: SwapResponse =
-        client.post(format!("{}/swap", JUP_API)).json(&swap_request).send().await?.json().await?;
+    let swap_response: SwapResponse = client
+        .post(format!("{}/swap", JUP_API))
+        .json(&swap_request)
+        .send()
+        .await?
+        .json()
+        .await?;
 
-    let swap_transaction =
-        general_purpose::STANDARD.decode(&swap_response.swap_transaction).expect("decode swap_transaction");
+    let swap_transaction = general_purpose::STANDARD
+        .decode(&swap_response.swap_transaction)
+        .expect("decode swap_transaction");
 
     let versioned_transaction: VersionedTransaction = bincode::deserialize(&swap_transaction)?;
 
-    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+    let signed_transaction =
+        VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.keypair])?;
 
     let signature = agent.connection.send_transaction(&signed_transaction)?;
 
     let latest_blockhash = agent.connection.get_latest_blockhash()?;
 
-    agent.connection.confirm_transaction_with_spinner(&signature, &latest_blockhash, CommitmentConfig::confirmed())?;
+    agent.connection.confirm_transaction_with_spinner(
+        &signature,
+        &latest_blockhash,
+        CommitmentConfig::confirmed(),
+    )?;
 
     Ok(signature.to_string())
 }

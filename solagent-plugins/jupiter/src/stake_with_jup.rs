@@ -29,7 +29,10 @@ use solagent_core::{
 /// # Returns
 ///
 /// Transaction signature as a string
-pub async fn stake_with_jup(agent: &SolanaAgentKit, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
+pub async fn stake_with_jup(
+    agent: &SolanaAgentKit,
+    amount: f64,
+) -> Result<String, Box<dyn std::error::Error>> {
     // Convert SOL amount to lamports
     let amount_lamports = (amount * 1e9) as u64;
 
@@ -42,28 +45,35 @@ pub async fn stake_with_jup(agent: &SolanaAgentKit, amount: f64) -> Result<Strin
     // Get stake transaction
     let client = reqwest::Client::new();
     let stake_request = serde_json::json!({
-        "account": agent.wallet.address.to_string(),
+        "account": agent.wallet.pubkey.to_string(),
     });
 
     let response = client.post(&stake_url).json(&stake_request).send().await?;
 
     let data: serde_json::Value = response.json().await?;
-    let transaction_data =
-        general_purpose::STANDARD.decode(data["transaction"].as_str().expect("decode transaction"))?;
+    let transaction_data = general_purpose::STANDARD
+        .decode(data["transaction"].as_str().expect("decode transaction"))?;
 
     let mut versioned_transaction: VersionedTransaction = bincode::deserialize(&transaction_data)?;
 
     let blockhash = agent.connection.get_latest_blockhash()?;
-    versioned_transaction.message.set_recent_blockhash(blockhash);
+    versioned_transaction
+        .message
+        .set_recent_blockhash(blockhash);
 
     // Sign and send transaction
-    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+    let signed_transaction =
+        VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.keypair])?;
 
     let signature = agent.connection.send_transaction(&signed_transaction)?;
 
     // Confirm transaction
     let latest_blockhash = agent.connection.get_latest_blockhash()?;
-    agent.connection.confirm_transaction_with_spinner(&signature, &latest_blockhash, CommitmentConfig::confirmed())?;
+    agent.connection.confirm_transaction_with_spinner(
+        &signature,
+        &latest_blockhash,
+        CommitmentConfig::confirmed(),
+    )?;
 
     Ok(signature.to_string())
 }
