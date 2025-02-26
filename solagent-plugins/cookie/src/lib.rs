@@ -1,22 +1,101 @@
-// Copyright 2025 zTgx
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+use serde_json::Value;
+use solagent_core::SolanaAgentKit;
+use std::error::Error;
 
-mod get_agent_by_name;
-pub use get_agent_by_name::get_agent_by_name;
+/// Retrieve agent details in specified interval by one of its tokens contract address.
+///
+/// # Parameters
+///
+/// - `agent`: An instance of `SolanaAgentKit`.
+/// - `contract_address`: Contract address of one of the tokens contracts (matches case insensitive)
+/// - `interval`: An optional Interval for twitter stats and deltas (_3Days, _7Days). If not provided, returns the _7Days.
+///
+/// # Returns
+///
+/// A `Result` that agent details
+pub async fn get_agent_by_ca(
+    agent: &SolanaAgentKit,
+    contract_address: &str,
+    interval: Option<u32>,
+) -> Result<Value, Box<dyn Error>> {
+    // Get the Cookie API key from the agent's configuration
+    let api_key = match agent.config.cookie_api_key.as_ref() {
+        Some(key) => key,
+        None => return Err("Missing Cookie API key in agent.config.cookie_api_key".into()),
+    };
 
-mod get_agent_by_ca;
-pub use get_agent_by_ca::get_agent_by_ca;
+    let api_url = "https://api.cookie.fun/v2/agents/contractAddress";
+    let url = format!("{}/{}?interval=_{}Days", api_url, contract_address, interval.unwrap_or(7));
+    let client = reqwest::Client::new();
 
-mod search_tweets;
-pub use search_tweets::search_tweets;
+    let response = client.get(&url).header("x-api-key", api_key).send().await?;
+
+    let json: Value = response.json().await?;
+    Ok(json)
+}
+
+/// Retrieve agent details in specified interval by twitter username.
+///
+/// # Parameters
+///
+/// - `agent`: An instance of `SolanaAgentKit`.
+/// - `twitter_name`: Twitter username of agent (matches case insensitive)
+/// - `interval`: An optional Interval for twitter stats and deltas (_3Days, _7Days). If not provided, returns the _7Days.
+///
+/// # Returns
+///
+/// A `Result` that agent details
+pub async fn get_agent_by_name(
+    agent: &SolanaAgentKit,
+    twitter_name: &str,
+    interval: Option<u32>,
+) -> Result<Value, Box<dyn Error>> {
+    // Get the Cookie API key from the agent's configuration
+    let api_key = match agent.config.cookie_api_key.as_ref() {
+        Some(key) => key,
+        None => return Err("Missing Cookie API key in agent.config.cookie_api_key".into()),
+    };
+
+    let api_url = "https://api.cookie.fun/v2/agents/twitterUsername";
+    let url = format!("{}/{}?interval=_{}Days", api_url, twitter_name, interval.unwrap_or(7));
+    let client = reqwest::Client::new();
+
+    let response = client.get(&url).header("x-api-key", api_key).send().await?;
+
+    let json: Value = response.json().await?;
+    Ok(json)
+}
+
+/// Retrieve popular content matching search query, created in time range {from} - {to} (YYYY-MM-DD dates).
+///
+/// # Parameters
+///
+/// - `agent`: An instance of `SolanaAgentKit`.
+/// - `search_query`: Word or phrase to be searched for in text
+/// - `from`: Only consider content created after given date, eg. 2025-01-01
+/// - `to`: Only consider content created before given date, eg. 2025-01-20
+///
+/// # Returns
+///
+/// A `Result` that tweets details
+pub async fn search_tweets(
+    agent: &SolanaAgentKit,
+    tweets: &str,
+    from: &str,
+    to: &str,
+) -> Result<Value, Box<dyn Error>> {
+    // Get the Cookie API key from the agent's configuration
+    let api_key = match agent.config.cookie_api_key.as_ref() {
+        Some(key) => key,
+        None => return Err("Missing Cookie API key in agent.config.cookie_api_key".into()),
+    };
+
+    let api_url = "https://api.cookie.fun/v1/hackathon/search";
+    let url = format!("{}/{}?from={}&to={}", api_url, tweets, from, to);
+    let client = reqwest::Client::new();
+
+    let response = client.get(&url).header("x-api-key", api_key).send().await?;
+
+    let json: Value = response.json().await?;
+    Ok(json)
+}
