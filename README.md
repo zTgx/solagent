@@ -25,13 +25,13 @@ An open-source Agent framework for connecting any AI agents to Solana protocols 
 ```toml
 [dependencies]
 # add wallet
-solagent-wallet-solana = "0.1.2"
+solagent-wallet-solana = "0.1.3"
 
 # add core
-solagent-core = "0.1.5"
+solagent-core = "0.1.6"
 
 # add plugin
-solagent-plugin-birdeye = "0.1.5"
+solagent-plugin-birdeye = "0.1.7"
 ```
 * Create agent
 ```rust
