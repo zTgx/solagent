@@ -41,11 +41,19 @@ struct StakeResponse {
 /// # Returns
 ///
 /// Transaction signature
-pub async fn stake_with_solayer(agent: &SolanaAgentKit, amount: f64) -> Result<String, Box<dyn std::error::Error>> {
-    let url = format!("https://app.solayer.org/api/action/restake/ssol?amount={}", amount);
+pub async fn stake_with_solayer(
+    agent: &SolanaAgentKit,
+    amount: f64,
+) -> Result<String, Box<dyn std::error::Error>> {
+    let url = format!(
+        "https://app.solayer.org/api/action/restake/ssol?amount={}",
+        amount
+    );
     let mut headers = HeaderMap::new();
     headers.insert(CONTENT_TYPE, HeaderValue::from_static("application/json"));
-    let request = StakeRequest { account: agent.wallet.address.to_string() };
+    let request = StakeRequest {
+        account: agent.wallet.pubkey.to_string(),
+    };
     let client = reqwest::Client::new();
     let response = client
         .post(&url)
@@ -56,26 +64,38 @@ pub async fn stake_with_solayer(agent: &SolanaAgentKit, amount: f64) -> Result<S
         .map_err(|e| format!("Failed to send request: {}", e))?;
 
     if !response.status().is_success() {
-        let error_data: serde_json::Value =
-            response.json().await.map_err(|e| format!("Failed to parse error response: {}", e))?;
-        let message = error_data.get("message").and_then(|v| v.as_str()).unwrap_or("Staking request failed");
+        let error_data: serde_json::Value = response
+            .json()
+            .await
+            .map_err(|e| format!("Failed to parse error response: {}", e))?;
+        let message = error_data
+            .get("message")
+            .and_then(|v| v.as_str())
+            .unwrap_or("Staking request failed");
         return Err(message.to_string().into());
     }
 
-    let stake_response: StakeResponse =
-        response.json().await.map_err(|e| format!("Failed to parse stake response: {}", e))?;
+    let stake_response: StakeResponse = response
+        .json()
+        .await
+        .map_err(|e| format!("Failed to parse stake response: {}", e))?;
 
     let transaction_data = general_purpose::STANDARD.decode(stake_response.transaction.as_str())?;
 
     let versioned_transaction: VersionedTransaction = bincode::deserialize(&transaction_data)?;
 
-    let signed_transaction = VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.wallet])?;
+    let signed_transaction =
+        VersionedTransaction::try_new(versioned_transaction.message, &[&agent.wallet.keypair])?;
 
     let signature = agent.connection.send_transaction(&signed_transaction)?;
 
     let latest_blockhash = agent.connection.get_latest_blockhash()?;
 
-    agent.connection.confirm_transaction_with_spinner(&signature, &latest_blockhash, CommitmentConfig::confirmed())?;
+    agent.connection.confirm_transaction_with_spinner(
+        &signature,
+        &latest_blockhash,
+        CommitmentConfig::confirmed(),
+    )?;
 
     Ok(signature.to_string())
 }
