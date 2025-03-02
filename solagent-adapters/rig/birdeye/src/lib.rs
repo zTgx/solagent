@@ -1,11 +1,11 @@
 use serde::{Deserialize, Serialize};
 use solagent_core::{
     rig::{completion::ToolDefinition, tool::Tool},
-    IWallet, SolanaAgentKit,
+    SolanaAgentKit,
 };
 use solagent_parameters::parameters;
 use solagent_plugin_birdeye::{
-    get_market_data, get_token_overview, get_wallet_portfolio, MarketDataResponse, TokenOverviewResponse,
+    get_market_data, get_token_overview, get_wallet_portfolio, TokenMarketDataResponse, TokenOverviewResponse,
     WalletPortfolioResponse,
 };
 use std::sync::Arc;
@@ -22,24 +22,24 @@ pub struct MarketDataArgs {
 
 #[derive(Deserialize, Serialize)]
 pub struct MarketDataOutput {
-    pub data: MarketDataResponse,
+    pub data: TokenMarketDataResponse,
 }
 
 #[derive(Debug, thiserror::Error)]
 #[error("MarketData error")]
 pub struct MarketDataError;
 
-pub struct MarketData<W: IWallet> {
-    agent: Arc<SolanaAgentKit<W>>,
+pub struct MarketData {
+    agent: Arc<SolanaAgentKit>,
 }
 
-impl<W: IWallet> MarketData<W> {
-    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
+impl MarketData {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         MarketData { agent }
     }
 }
 
-impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for MarketData<W> {
+impl Tool for MarketData {
     const NAME: &'static str = "get_market_data";
 
     type Error = MarketDataError;
@@ -82,17 +82,17 @@ pub struct TokenOverviewOutput {
 #[error("MarketData error")]
 pub struct TokenOverviewError;
 
-pub struct TokenOverview<W: IWallet> {
-    agent: Arc<SolanaAgentKit<W>>,
+pub struct TokenOverview {
+    agent: Arc<SolanaAgentKit>,
 }
 
-impl<W: IWallet> TokenOverview<W> {
-    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
+impl TokenOverview {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         TokenOverview { agent }
     }
 }
 
-impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for TokenOverview<W> {
+impl Tool for TokenOverview {
     const NAME: &'static str = "get_token_overview";
 
     type Error = TokenOverviewError;
@@ -135,17 +135,17 @@ pub struct WalletPortfoioOutput {
 #[error("WalletPortfoio error")]
 pub struct WalletPortfoioError;
 
-pub struct WalletPortfoio<W: IWallet> {
-    agent: Arc<SolanaAgentKit<W>>,
+pub struct WalletPortfoio {
+    agent: Arc<SolanaAgentKit>,
 }
 
-impl<W: IWallet> WalletPortfoio<W> {
-    pub fn new(agent: Arc<SolanaAgentKit<W>>) -> Self {
+impl WalletPortfoio {
+    pub fn new(agent: Arc<SolanaAgentKit>) -> Self {
         WalletPortfoio { agent }
     }
 }
 
-impl<W: IWallet + std::marker::Send + std::marker::Sync> Tool for WalletPortfoio<W> {
+impl Tool for WalletPortfoio {
     const NAME: &'static str = "get_wallet_portfolio";
 
     type Error = WalletPortfoioError;
