@@ -1,15 +1,15 @@
 [package]
 name = "solagent-rig-pyth"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["zTgx <beautifularea@gmail.com>"]
 repository = "https://github.com/zTgx/solagent.rs"
 keywords = ["solagent", "rig", "pyth"]
-license = "Apache-2.0"
-description = "solagent.rs rig pyth"
+license = "MIT"
+description = "solagent rig pyth"
 
 [dependencies]
-solagent-core = "0.1.3"
+solagent-core = "0.1.6"
 solagent-parameters = "0.1.0"
 solagent-plugin-pyth = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
