@@ -65,7 +65,9 @@ impl Tool for FetchTokenReportDetailed {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let token_check = fetch_detailed_report(args.mint).await.expect("fetch_detailed_report");
+        let token_check = fetch_detailed_report(args.mint)
+            .await
+            .expect("fetch_detailed_report");
         Ok(FetchTokenReportDetailedOutput { token_check })
     }
 }
