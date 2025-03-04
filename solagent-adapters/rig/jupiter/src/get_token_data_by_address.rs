@@ -1,22 +1,5 @@
-// Copyright 2025 zTgx
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 use serde::{Deserialize, Serialize};
-use solagent_core::rig::{
-    completion::ToolDefinition,
-    tool::{Tool, ToolEmbedding},
-};
+use solagent_core::rig::{completion::ToolDefinition, tool::Tool};
 use solagent_parameters::parameters;
 use solagent_plugin_jupiter::get_token_data_by_address;
 
@@ -74,28 +57,10 @@ impl Tool for GetTokenData {
     }
 
     async fn call(&self, args: Self::Args) -> Result<Self::Output, Self::Error> {
-        let data = get_token_data_by_address(&args.mint).await.expect("get_token_data_by_address");
+        let data = get_token_data_by_address(&args.mint)
+            .await
+            .expect("get_token_data_by_address");
 
         Ok(GetTokenDataOutput { data })
     }
-}
-
-#[derive(Debug, thiserror::Error)]
-#[error("Init error")]
-pub struct InitError;
-
-impl ToolEmbedding for GetTokenData {
-    type InitError = InitError;
-    type Context = ();
-    type State = ();
-
-    fn init(_state: Self::State, _context: Self::Context) -> Result<Self, Self::InitError> {
-        Ok(GetTokenData {})
-    }
-
-    fn embedding_docs(&self) -> Vec<String> {
-        vec!["Get the token data for a given token mint address.".into()]
-    }
-
-    fn context(&self) -> Self::Context {}
 }
