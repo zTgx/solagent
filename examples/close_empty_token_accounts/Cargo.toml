@@ -1,9 +1,0 @@
-[package]
-name = "close_empty_token_accounts"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-solagent-core = "0.1.3"
-solagent-plugin-solana = "0.1.1"
-tokio = { version = "1.42.0", features = ["full"] }

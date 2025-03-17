@@ -1,8 +1,0 @@
-[package]
-name = "rugcheck"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
-solagent-plugin-rugcheck = "0.1.0"
-tokio = { version = "1.42.0", features = ["full"] }
