@@ -1,0 +1,11 @@
+[package]
+name = "solagent-adapter-langchain"
+version = "0.1.0"
+edition = "2021"
+authors = ["zTgx <beautifularea@gmail.com>"]
+repository = "https://github.com/zTgx/solagent.rs"
+keywords = ["solagent", "adapter", "langchain"]
+license = "MIT"
+description = "solagent adapter langchain"
+
+[dependencies]
