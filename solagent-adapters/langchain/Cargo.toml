@@ -9,3 +9,4 @@ license = "MIT"
 description = "solagent adapter langchain"
 
 [dependencies]
+langchain-rust = "4.6.0"
