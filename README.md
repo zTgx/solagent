@@ -10,20 +10,17 @@ An open-source Agent framework for connecting any AI agents to Solana protocols 
 </br>
 
 # SOLAGENT.RS
-![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/ztgx5)
-![GitHub License](https://img.shields.io/github/license/zTgx/solagent.rs)
-
-* **[Agent Frameworks]()**: Rig
+* **[Agent Frameworks]()**: Rig, langchain-rust
 * **[Wallets]()**: keypair, solana
-* **[+50 tools]()**: Birdeye, dexscreener, solana, jupiter, helius nd more
-* **[Chains]()**: Solana
+* **[tools]()**: Birdeye, dexscreener, solana, jupiter, helius and more
+* **[Chains]()**: Solana only
 
 ## Quick start
 * Add dependencies
 ```toml
 [dependencies]
 # add wallet
-solagent-wallet-solana = "0.1.3"
+solagent-wallet-solana = "0.1.4"
 
 # add core
 solagent-core = "0.1.6"
