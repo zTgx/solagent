@@ -35,15 +35,26 @@ solagent-plugins = { version = "0.3", features = ["swap"] }  # Optional plugins
 ```rust
 use solagent::prelude::*;
 
-let agent = SolAgent::new()
-    .with_plugin(OrcaSwapPlugin::default())
-    .with_plugin(PortLendingPlugin::new(lending_config));
+use solagent::prelude::*;
 
-let tx = agent.swap(SwapParams {
-    input_token: Token::SOL,
-    amount: 1.0,
-    output_token: Token::USDC
-}).await?;
+#[tokio::main]
+async fn main() {
+  let mut agent = DeFiAgent::new()
+      .with_plugin(ArbPlugin::new(ArbConfig {
+          max_slippage: 0.5,
+          routes: vec![
+              Route::new()
+                  .add_pool(Pool::Orca(OrcaConfig::v2())),
+              // ... 其他交易池
+          ],
+      }));
+  
+  let tx = agent.swap(SwapParams {
+      input_token: Token::SOL,
+      amount: 1.0,
+      output_token: Token::USDC
+  }).await?;
+
 ```
 
 ### TypeScript
