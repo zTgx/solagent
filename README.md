@@ -24,12 +24,18 @@
 
 
 ## 🛠️ Usage Examples
-### >>> Rust
+### Rust
 --- 
 ```toml
 [dependencies]
-solagent = { version = "0.3", features = ["core"] }
-solagent-plugins = { version = "0.3", features = ["swap"] }  # Optional plugins
+# add wallet
+solagent-wallet-solana = "0.1.3"
+
+# add core
+solagent-core = "0.1.6"
+
+# add plugin
+solagent-plugin-birdeye = "0.1.7"
 ```
 ### Rust (Backend Services)
 ```rust
@@ -54,7 +60,7 @@ async fn main() {
       amount: 1.0,
       output_token: Token::USDC
   }).await?;
-
+}
 ```
 
 ### TypeScript

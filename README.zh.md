@@ -23,7 +23,7 @@
 
 ## 🛠️ 使用示例
 
-### >>> Rust
+### Rust
 ---
 ```toml
 [dependencies]
