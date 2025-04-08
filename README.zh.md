@@ -4,10 +4,10 @@
 [![Rust](https://img.shields.io/badge/Rust-1.83%2B-orange)](https://www.rust-lang.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org)
 
-> 专为 Solana DeFi 打造的轻量级智能代理工具包
+> 专为 Solana DeFAI 打造的轻量级智能代理工具包
 
 ## 🚀 核心特性
-🎯 **专注 Solana** - 为 Solana DeFi 操作优化  
+🎯 **专注 Solana** - 为 Solana DeFAI 操作优化  
 🪶 **轻量级** - 仅核心必要功能，无冗余  
 🔌 **插件架构** - 核心+插件模块化设计  
 🛠️ **可扩展** - 轻松创建自定义插件/脚本  
