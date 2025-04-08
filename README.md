@@ -2,7 +2,7 @@
 
 [Docs](https://docs.solagent.rs) | [X](https://x.com/ztgx5) | [Telegram](https://t.me/solagent_rs)
 
-# solagent.rs
+# solagent
 
 </div>
 
@@ -12,7 +12,7 @@
 [![Rust](https://img.shields.io/badge/Rust-1.83%2B-orange)](https://www.rust-lang.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org)
 
-> The lightweight, plugin-oriented DeFi toolkit for AI agents on Solana
+> A streamlined modular toolkit for connecting AI agents to Solana’s financial protocols and ecosystem.
 
 ## 🌟 Core Features
 

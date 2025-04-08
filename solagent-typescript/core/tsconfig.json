@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "module": "commonjs",
     "declaration": true,
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "types": ["jest", "node"],
+    "paths": {
+      "@/*": ["src/*"],
+      "@solagent/*": ["node_modules/@solagent/*"]
+    }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "test"]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist", "coverage", "**/*.spec.ts"],
 }
