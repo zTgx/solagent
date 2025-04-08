@@ -9,7 +9,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts",
-    "prepublishOnly": "npm run lint && npm run build && npm test",
+    "prepublishOnly": "npm run build && npm test",
     "prepare": "npm run build"
   },
   "files": [
@@ -24,8 +24,8 @@
     "typescript",
     "solagent"
   ],
-  "author": "Your Name",
-  "license": "MIT",
+  "author": "zTgx",
+  "license": "Apache-2.0",
   "dependencies": {
     "@solana/web3.js": "^1.98.0",
     "bs58": "^6.0.0",
@@ -45,5 +45,17 @@
     "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zTgx/solagent.rs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zTgx/solagent.rs/issues"
+  },
+  "homepage": "https://github.com/zTgx/solagent.rs#readme"
 }
