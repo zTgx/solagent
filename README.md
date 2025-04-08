@@ -1,11 +1,18 @@
+<div align="center">
+
+[Docs](https://docs.solagent.rs) | [X](https://x.com/ztgx5) | [Telegram](https://t.me/solagent_rs)
 
 # solagent.rs
+
+</div>
+
+[中文文档](./README.zh.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![Rust](https://img.shields.io/badge/Rust-1.83%2B-orange)](https://www.rust-lang.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org)
 
-> The lightweight, plugin-oriented DeFAI toolkit for AI agents on Solana
+> The lightweight, plugin-oriented DeFi toolkit for AI agents on Solana
 
 ## 🌟 Core Features
 
@@ -22,71 +29,9 @@
 | ✅ High-performance base layer | ✅ Browser compatible |
 | ✅ Security-critical operations | ✅ Rapid prototyping |
 
-
-## 🛠️ Usage Examples
-### Rust
---- 
-```toml
-[dependencies]
-# add wallet
-solagent-wallet-solana = "0.1.3"
-
-# add core
-solagent-core = "0.1.6"
-
-# add plugin
-solagent-plugin-birdeye = "0.1.7"
-```
-### Rust (Backend Services)
-```rust
-use solagent::prelude::*;
-
-use solagent::prelude::*;
-
-#[tokio::main]
-async fn main() {
-  let mut agent = DeFiAgent::new()
-      .with_plugin(ArbPlugin::new(ArbConfig {
-          max_slippage: 0.5,
-          routes: vec![
-              Route::new()
-                  .add_pool(Pool::Orca(OrcaConfig::v2())),
-              // ... 其他交易池
-          ],
-      }));
-  
-  let tx = agent.swap(SwapParams {
-      input_token: Token::SOL,
-      amount: 1.0,
-      output_token: Token::USDC
-  }).await?;
-}
-```
-
-### TypeScript
-```bash
-npm install @solagent/core @solagent/swap-plugin  # Modular packages
-```
-### TypeScript (Browser/DApps)
-```typescript
-import { SolAgent } from '@solagent/core';
-import { RaydiumPlugin } from '@solagent/raydium-plugin';
-
-const agent = new SolAgent()
-  .use(new RaydiumPlugin({ version: 'v4' }));
-
-const { txId } = await agent.swap({
-  inputMint: 'So111...',
-  amount: 1,
-  outputMint: 'EPjFW...'
-});
-```
-
 ## 📚 Documentation
 
 - [API Reference](https://docs.solagent.rs)
-- [Plugin Development Guide](./docs/PLUGINS.md)
-- [Security Best Practices](./docs/SECURITY.md)
 
 ## 🤝 Contributing
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
@@ -94,4 +39,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
 - Testing requirements
 - PR review process
 
-[中文文档](./README.zh.md)
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=zTgx/solagent.rs&type=Date)](https://star-history.com/#zTgx/solagent.rs&Date)

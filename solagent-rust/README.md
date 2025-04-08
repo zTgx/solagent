@@ -1,16 +1,7 @@
-<div align="center">
 
-[Docs](https://docs.solagent.rs) | [X](https://x.com/ztgx5) | [Telegram](https://t.me/solagent_rs)
 
-# solagent.rs   
-An open-source Agent framework for connecting any AI agents to Solana protocols in Rust. 
-
-</div>
-
-</br>
-
-# SOLAGENT.RS
-* **[Agent Frameworks]()**: Rig, langchain-rust
+# SOLAGENT
+* **[Agent Frameworks]()**: Rig
 * **[Wallets]()**: keypair, solana
 * **[tools]()**: Birdeye, dexscreener, solana, jupiter, helius and more
 * **[Chains]()**: Solana only
