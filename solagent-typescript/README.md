@@ -5,6 +5,7 @@ About solagent-typescript
 ├── core
 ├── docs
 ├── examples
+├── LICENSE
 ├── plugins
 ├── README.md
 ├── scripts
