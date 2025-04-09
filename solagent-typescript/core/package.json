@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@solagent/wallet": "^1.0.0",
+    "@solagent/wallet": "^1.0.1",
     "@solana/web3.js": "^1.98.0"
   },
   "devDependencies": {
