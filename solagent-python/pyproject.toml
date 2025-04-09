@@ -1,0 +1,22 @@
+[project]
+name = "solagent"
+version = "0.0.1"
+authors = [
+  { name="zTgx", email="beautifularea@gmail.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "Apache-2.0"
+
+[project.urls]
+Homepage = "https://github.com/pypa/solagent"
+Issues = "https://github.com/zTgx/solagent.rs/issues"
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
