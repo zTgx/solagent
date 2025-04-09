@@ -1,0 +1,45 @@
+{
+  "name": "@solagent/core",
+  "version": "1.0.1",
+  "description": "Core library for solagent toolkit",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@solagent/wallet": "^1.0.1",
+    "@solana/web3.js": "^1.98.0"
+  },
+  "devDependencies": {
+    "@types/bs58": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.1",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zTgx/solagent.rs.git"
+  },
+  "keywords": [
+    "solagent",
+    "core"
+  ],
+  "author": "zTgx",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zTgx/solagent.rs/issues"
+  },
+  "homepage": "https://github.com/zTgx/solagent.rs#readme"
+}
