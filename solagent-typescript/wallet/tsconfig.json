@@ -1,22 +1,21 @@
 {
-    "compilerOptions": {
-      "target": "ES2022",
-      "module": "commonjs",
-      "declaration": true,
-      "sourceMap": true,
-      "outDir": "./dist",
-      "rootDir": "./",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "moduleResolution": "node",
-      "baseUrl": ".",
-      "types": ["jest", "node"],
-      "paths": {
-        "@/*": ["src/*"]
-      }
-    },
-    "include": ["src/**/*", "tests/**/*"],
-    "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@solagent/wallet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript Solana wallet utilities for SolAgent ecosystem",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,9 +12,7 @@
     "prepublishOnly": "npm run build && npm test",
     "prepare": "npm run build"
   },
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist"],
   "engines": {
     "node": ">=16.0.0"
   },

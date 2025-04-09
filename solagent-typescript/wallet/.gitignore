@@ -1,0 +1,24 @@
+# Typescript Project
+# Ignore node_modules directory
+node_modules/
+# Ignore build artifacts
+dist/
+# Ignore log files
+*.log
+# Ignore environment variables
+.env
+# Ignore coverage reports
+coverage/
+# Ignore IDE specific files
+.idea/
+# Ignore OS generated files
+.DS_Store
+# Ignore temporary files
+*.tmp
+# Ignore backup files
+*~
+# Ignore cache files
+.cache/
+*.tgz
+
+
