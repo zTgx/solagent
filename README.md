@@ -23,15 +23,6 @@
 🛠️ **Extensible** - Easily create custom plugins/scripts  
 🌐 **Multi-Language** - Native Rust + TypeScript + Python support  
 
-🌟 Why solagent?
-
-| Feature          | Rust           | TypeScript       | Python           |
-|------------------|----------------|------------------|------------------|
-| **Wallet**       | ✅ Full        | ✅ Full          | 🟡 Placeholder   |
-| **RPC Client**   | ✅ Async       | ✅ Web3.js       | 🔜 Coming        |
-| **Security**     | 🔒 Memory-safe | 🛡️ Type-safe    | 🐍 Easy-binding  |
-| **Use Case**     | High-frequency | DApp Frontend    | Scripting/AI     |
-
 ## 📚 Documentation
 
 - [API Reference](https://docs.solagent.rs)
