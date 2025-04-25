@@ -1,3 +1,10 @@
+# ⚠️ Archived: Project Moved to @solagentlabs
+
+This repository is deprecated. The project has evolved into:  
+[Rust SDK](https://github.com/solagentLabs/solagent-rs)  
+[Typescript SDK](https://github.com/solagentLabs/solagent-ts)  
+[Python SDK](https://github.com/solagentLabs/solagent-py)  
+
 <div align="center">
 
 [Docs](https://docs.solagent.rs) | [X](https://x.com/ztgx5) | [Telegram](https://t.me/solagent_rs)
