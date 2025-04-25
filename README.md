@@ -1,4 +1,4 @@
-# ⚠️ Archived: Project Moved to @solagentlabs
+# ⚠️ Archived: Project Moved to [@solagentlabs](https://github.com/orgs/solagentlabs/repositories)
 
 This repository is deprecated. The project has evolved into:  
 [Rust SDK](https://github.com/solagentLabs/solagent-rs)  
