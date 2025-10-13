@@ -92,13 +92,3 @@ async fn main() {
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=zTgx/solagent.rs&type=Date)](https://star-history.com/#zTgx/solagent.rs&Date)
-
-## Support solagent.rs
-Thank you for your support of solagent.rs! Donation Addresses:    
-
-**Solana: qsvR7V3DtbbxAEs4TkGiQL9N9Z1GccfV6Q6Vm2oHViS**  
-**Ethereum: 0x972b8d20f5847B03Df43d9A595B7e83A7bbCD951**  
-
-## Supporters  
-SendAI: [solscan.io](https://solscan.io/tx/nf3B1zaTZcLuCLVTkLFHuTqjVjLUwXHkCnN3Tdm7PHSDunjJD6tZHYHgijJKbCcchHaxVYWM4uEgieQyLjRBCR4)  
-
