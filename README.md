@@ -1,11 +1,3 @@
-
-
-# SOLAGENT
-* **[Agent Frameworks]()**: Rig
-* **[Wallets]()**: keypair, solana
-* **[tools]()**: Birdeye, dexscreener, solana, jupiter, helius and more
-* **[Chains]()**: Solana only
-
 ## Quick start
 * Add dependencies
 ```toml
@@ -37,10 +29,6 @@ async fn main() {
     println!("{:#?}", data);
 }
 ```
-## Table of Contens
-* [How-To-Use](./docs/how-to-usage.md)
-* [How-To-Add-NewFeature](./docs/hot-to-add-feature.md)
-
 
 ## Packages
 ### Core
@@ -82,12 +70,6 @@ async fn main() {
 | dexscreener | Dexscreener data APIs | [solagent-plugin-dexscreener](https://crates.io/crates/solagent-plugin-dexscreener) | ![Version](https://img.shields.io/crates/v/solagent-plugin-dexscreener) | ![Crates Downloads](https://img.shields.io/crates/d/solagent-plugin-dexscreener?logo=rust) |
 | birdeye | Birdeye API | [solagent-plugin-birdeye](https://crates.io/crates/solagent-plugin-birdeye) | ![Version](https://img.shields.io/crates/v/solagent-plugin-birdeye) | ![Crates Downloads](https://img.shields.io/crates/d/solagent-plugin-birdeye?logo=rust) |
  
-
-## Contributors
-
-<a href="https://github.com/zTgx/solagent.rs/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=zTgx/solagent.rs" />
-</a>
 
 ## Star History
 
